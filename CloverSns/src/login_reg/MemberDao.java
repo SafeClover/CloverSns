@@ -3,12 +3,8 @@ package login_reg;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Vector;
-
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.sql.DataSource;
 
 import clover.db.DBConnectionMgr;
 
@@ -115,6 +111,54 @@ public class MemberDao {
 		}
 		  
 		return mem_list;
+	}
+	
+public String[] SearchFriends(String keyword){
+		
+		try{
+			//keyword가 null값인지 확인
+			String sql = "select mem_name from member where mem_name like '%?%'";
+			
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, keyword);
+			
+			rs = stmt.executeQuery();
+			int size = getResultSetSize(rs);
+			if(size == 0){
+				return null;
+			}else{
+				String[] searchResult = new String[size];
+				int i = 0;
+				while(rs.next()){
+		            searchResult[i] = rs.getString("mem_name");
+		            i++;
+		         }
+				return searchResult;
+			}
+		}
+		catch(Exception err){
+			System.out.println("LoginConfirm : " + err);
+		}
+		finally{
+			pool.freeConnection(con, stmt, rs);
+		}
+		return null;
+		
+		
+	}
+	
+	public static int getResultSetSize(ResultSet resultSet) { //resultset size 리턴하는 메서드
+	    int size = -1;
+
+	    try {
+	        resultSet.last(); 
+	        size = resultSet.getRow();
+	        resultSet.beforeFirst();
+	    } catch(SQLException e) {
+	        return size;
+	    }
+
+	    return size;
 	}
 
 }
