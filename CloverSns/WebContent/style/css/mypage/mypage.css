@@ -1,0 +1,36 @@
+/*
+myPage.css
+*/
+ 
+body {
+	margin-top: 100px;
+	overflow: visible;
+}
+
+img {
+	display: block;
+	float: left;
+}
+
+table{
+	margin-left: 2%;
+}
+
+tr td{
+	padding: 50px;
+	
+}
+
+.row-fluid {
+  width: 100%;
+}
+
+.profilesize{
+	width: 500px;
+	height: 350px
+}
+
+.picturesize {
+  width: 200px;
+  height: 200px;
+}
