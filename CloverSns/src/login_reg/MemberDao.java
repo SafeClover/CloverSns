@@ -113,27 +113,29 @@ public class MemberDao {
 		return mem_list;
 	}
 	
-public String[] SearchFriends(String keyword){
-		
+public Vector<MemberDto> SearchFriends(String keyword){
+		Vector<MemberDto> v = new Vector<MemberDto>();
 		try{
 			//keyword가 null값인지 확인
-			String sql = "select mem_name from member where mem_name like '%?%'";
+			String sql = "select mem_name, mem_id from member where mem_name like '%"+keyword+"%'";
 			
 			stmt = con.prepareStatement(sql);
-			stmt.setString(1, keyword);
+
 			
 			rs = stmt.executeQuery();
 			int size = getResultSetSize(rs);
 			if(size == 0){
 				return null;
 			}else{
-				String[] searchResult = new String[size];
 				int i = 0;
 				while(rs.next()){
-		            searchResult[i] = rs.getString("mem_name");
+					MemberDto dto = new MemberDto();
+		            dto.setMem_name(rs.getString("mem_name"));
+		            dto.setMem_id(rs.getString("mem_id"));
+		            v.add(dto);
 		            i++;
 		         }
-				return searchResult;
+				return v;
 			}
 		}
 		catch(Exception err){

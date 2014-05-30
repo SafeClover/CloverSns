@@ -1,4 +1,6 @@
 
+<%@page import="login_reg.MemberDto"%>
+<%@page import="java.util.Vector"%>
 <%@ page contentType="text/html; charset=EUC-KR"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -6,6 +8,16 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR" />
 	<title>Insert title here</title>
 	<link href="/CloverSns/style/css/bootstrap.css" rel="stylesheet" type="text/css">
+	<script  type="text/javascript">
+		function fnFriendRequest(name, id){
+			
+			var del=confirm(name+"님께 친구 요청을 보내시겠습니까?");
+			alert(del);
+			if (del == true){
+					location.href="./company_del_ok.asp?board_idx="+board_idx 
+			}
+		}
+	</script>
 	<style>
 	
 	#custom-search-input {
@@ -82,7 +94,7 @@
 			<h2>친구 찾기</h2>
 			<div id="custom-search-input">
 				<div class="input-group col-md-12">
-					<input type="text" name="keyword" class="search-query form-control" placeholder="Search" /> 
+					<input type="text" name="keyword" class="search-query form-control" placeholder="Search" title="r"/> 
 					<span class="input-group-btn">
 						<button class="btn btn-danger" type="submit">
 							<span class=" glyphicon glyphicon-search"></span>
@@ -103,27 +115,40 @@
  -->
     <section class="col-xs-12 col-sm-6 col-md-12">
     <%
-    	String[] searchResult = request.getAttribute("searchResult");
-    	for()
-    %>
-		<article class="search-result row">
-			<div class="col-xs-12 col-sm-12 col-md-3">
-				<a href="#" title="Lorem ipsum" class="thumbnail"><img src="http://lorempixel.com/250/140/people" alt="Lorem ipsum" /></a>
-			</div>
-			<div class="col-xs-12 col-sm-12 col-md-2">
-				<ul class="meta-search">
-					<li><i class="glyphicon glyphicon-calendar"></i> <span>02/15/2014</span></li>
-					<!-- <li><i class="glyphicon glyphicon-time"></i> <span>4:28 pm</span></li>
-					<li><i class="glyphicon glyphicon-tags"></i> <span>People</span></li> -->
-				</ul>
-			</div>
-			<div class="col-xs-12 col-sm-12 col-md-7 excerpet">
-				<!-- <h3><a href="#" title="">Voluptatem, exercitationem, suscipit, distinctio</a></h3>
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem, exercitationem, suscipit, distinctio, qui sapiente aspernatur molestiae non corporis magni sit sequi iusto debitis delectus doloremque.</p>						 -->
-                <span class="plus">친구 추가 <a href="#" title="Lorem ipsum"><i class="glyphicon glyphicon-plus"></i></a></span>
-			</div>
-			<span class="clearfix borda"></span>
-		</article>
+    	Vector searchResult = (Vector)request.getAttribute("searchResult");
+		if(searchResult == null){
+		%>
+			검색결과가 없습니다.
+		<%	
+		}else{
+	    	for(int i =0; i< searchResult.size();i++){
+	    		MemberDto dto = (MemberDto)searchResult.get(i);
+	    %>
+			<article class="search-result row">
+				<div class="col-xs-12 col-sm-12 col-md-3">
+					<a href="#" title="Lorem ipsum" class="thumbnail"><img src="http://lorempixel.com/250/140/people" alt="Lorem ipsum" /></a>
+				</div>
+				<div class="col-xs-12 col-sm-12 col-md-2">
+					<ul class="meta-search">
+						<li><i class="glyphicon glyphicon-calendar"></i> <span><%= dto.getMem_name()%></span></li>
+						<!-- <li><i class="glyphicon glyphicon-time"></i> <span>4:28 pm</span></li>
+						<li><i class="glyphicon glyphicon-tags"></i> <span>People</span></li> -->
+					</ul>
+				</div>
+				<div class="col-xs-12 col-sm-12 col-md-7 excerpet">
+					<!-- <h3><a href="#" title="">Voluptatem, exercitationem, suscipit, distinctio</a></h3>
+					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem, exercitationem, suscipit, distinctio, qui sapiente aspernatur molestiae non corporis magni sit sequi iusto debitis delectus doloremque.</p>						 -->
+	                <span class="plus">친구추가
+						<input type="button" onclick="fnFriendRequest('<%= dto.getMem_name()%>','<%= dto.getMem_id()%>')"><i class="glyphicon glyphicon-plus"></i></input>
+	                <!-- <a href="#" title="Lorem ipsum"></a> -->
+	                </span>
+				</div>
+				<span class="clearfix borda"></span>
+			</article>
+			<%
+	    	}
+		}
+		%>
 	</section>
 </div>
 </body>

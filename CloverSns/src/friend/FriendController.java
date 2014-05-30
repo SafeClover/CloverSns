@@ -1,6 +1,7 @@
 package friend;
 
 import java.io.IOException;
+import java.util.Vector;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import login_reg.MemberDao;
+import login_reg.MemberDto;
 
 public class FriendController extends HttpServlet{
 
@@ -25,10 +27,10 @@ public class FriendController extends HttpServlet{
 		
 		String keyword = req.getParameter("keyword");
 		MemberDao dao = new MemberDao();
-		String[] searchResult = dao.SearchFriends(keyword);
+		Vector<MemberDto> searchResult = dao.SearchFriends(keyword);
 		req.setAttribute("searchResult", searchResult);
 		
-		RequestDispatcher view = req.getRequestDispatcher("SearchFriends.jsp");
+		RequestDispatcher view = req.getRequestDispatcher("/clover/friends/SearchFriends.jsp");
 		view.forward(req, resp);
 	}
 
