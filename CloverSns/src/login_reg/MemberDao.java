@@ -162,5 +162,25 @@ public Vector<MemberDto> SearchFriends(String keyword){
 
 	    return size;
 	}
+	
+	public void friendRequest(String id_get, String id_req){ //模备脚没
+		System.out.println("dao");
+		try{
+			String sql = "INSERT INTO alarm(id, id2) "
+					+"VALUES(id_get, String id_req)";
+
+			stmt = con.prepareStatement(sql);
+			stmt.executeUpdate();
+			
+			System.out.println("模备脚没肯丰");
+			
+			}
+		catch(Exception err){
+			System.out.println("MemberInsert() : " + err);
+		}
+		finally{
+			pool.freeConnection(con, stmt, rs);
+		}
+	}
 
 }

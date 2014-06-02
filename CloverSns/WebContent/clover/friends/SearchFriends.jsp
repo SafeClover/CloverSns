@@ -9,13 +9,11 @@
 	<title>Insert title here</title>
 	<link href="/CloverSns/style/css/bootstrap.css" rel="stylesheet" type="text/css">
 	<script  type="text/javascript">
-		function fnFriendRequest(name, id){
-			
+		function fnFriendRequest(name){
 			var del=confirm(name+"님께 친구 요청을 보내시겠습니까?");
 			alert(del);
-			if (del == true){
-					location.href="./company_del_ok.asp?board_idx="+board_idx 
-			}
+			document.friendRequest.submit();
+			
 		}
 	</script>
 	<style>
@@ -88,22 +86,23 @@
 </head>
 
 <body>
-	<form method="post" action="/CloverSns/friend.action">
-	<div class="container">
-		<div class="row">
-			<h2>친구 찾기</h2>
-			<div id="custom-search-input">
-				<div class="input-group col-md-12">
-					<input type="text" name="keyword" class="search-query form-control" placeholder="Search" title="r"/> 
-					<span class="input-group-btn">
-						<button class="btn btn-danger" type="submit">
-							<span class=" glyphicon glyphicon-search"></span>
-						</button>
-					</span>
+	<form method="post" name="search" action="/CloverSns/friend.action">
+		<div class="container">
+			<div class="row">
+				<h2>친구 찾기</h2>
+				<div id="custom-search-input">
+					<div class="input-group col-md-12">
+						<input type="text" name="keyword" class="search-query form-control" placeholder="Search" title="r"/> 
+						<span class="input-group-btn">
+							<button class="btn btn-danger" type="submit">
+								<span class=" glyphicon glyphicon-search"></span>
+							</button>
+						</span>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
+		<input type="hidden" name="command" value="search" />
 	</form> 
 	
 	<div class="container container-result">
@@ -130,19 +129,24 @@
 				</div>
 				<div class="col-xs-12 col-sm-12 col-md-2">
 					<ul class="meta-search">
-						<li><i class="glyphicon glyphicon-calendar"></i> <span><%= dto.getMem_name()%></span></li>
+						<li><i class="glyphicon glyphicon-calendar"></i> <span><%= dto.getMem_name()%><%=dto.getMem_id()%></span></li>
 						<!-- <li><i class="glyphicon glyphicon-time"></i> <span>4:28 pm</span></li>
 						<li><i class="glyphicon glyphicon-tags"></i> <span>People</span></li> -->
 					</ul>
 				</div>
-				<div class="col-xs-12 col-sm-12 col-md-7 excerpet">
-					<!-- <h3><a href="#" title="">Voluptatem, exercitationem, suscipit, distinctio</a></h3>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem, exercitationem, suscipit, distinctio, qui sapiente aspernatur molestiae non corporis magni sit sequi iusto debitis delectus doloremque.</p>						 -->
-	                <span class="plus">친구추가
-						<input type="button" onclick="fnFriendRequest('<%= dto.getMem_name()%>','<%= dto.getMem_id()%>')"><i class="glyphicon glyphicon-plus"></i></input>
-	                <!-- <a href="#" title="Lorem ipsum"></a> -->
-	                </span>
-				</div>
+				<form action="/CloverSns/friend.action" name="friendRequest" method="post">
+					<div class="col-xs-12 col-sm-12 col-md-7 excerpet">
+						<!-- <h3><a href="#" title="">Voluptatem, exercitationem, suscipit, distinctio</a></h3>
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem, exercitationem, suscipit, distinctio, qui sapiente aspernatur molestiae non corporis magni sit sequi iusto debitis delectus doloremque.</p>						 -->
+		                <span class="plus">친구추가
+							<input type="button" onclick="fnFriendRequest('<%= dto.getMem_name()%>')"><i class="glyphicon glyphicon-plus"></i></input>
+		                <!-- <a href="#" title="Lorem ipsum"></a> -->
+		                </span>
+					</div>
+					<input type="hidden" name="command" value="friendRequest"/>
+					<input type="hidden" name="id_get" value="<%= dto.getMem_id()%>" />
+					<input type="hidden" name="id_req" value="kwonjy123" />
+				</form>
 				<span class="clearfix borda"></span>
 			</article>
 			<%

@@ -24,12 +24,19 @@ public class FriendController extends HttpServlet{
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		req.setCharacterEncoding("euc-kr");
-		
-		String keyword = req.getParameter("keyword");
 		MemberDao dao = new MemberDao();
-		Vector<MemberDto> searchResult = dao.SearchFriends(keyword);
-		req.setAttribute("searchResult", searchResult);
-		
+		System.out.println(req.getParameter("command"));
+		if(req.getParameter("command").equals("search")){
+			String keyword = req.getParameter("keyword");
+			Vector<MemberDto> searchResult = dao.SearchFriends(keyword);
+			req.setAttribute("searchResult", searchResult);
+			
+		}
+		else if(req.getParameter("command").equals("friendRequest")){
+			req.getParameter("id_get");
+			req.getParameter("id_req");
+			System.out.println("controller");
+		}
 		RequestDispatcher view = req.getRequestDispatcher("/clover/friends/SearchFriends.jsp");
 		view.forward(req, resp);
 	}
