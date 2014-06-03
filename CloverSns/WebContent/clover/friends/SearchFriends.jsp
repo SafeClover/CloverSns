@@ -2,19 +2,23 @@
 <%@page import="login_reg.MemberDto"%>
 <%@page import="java.util.Vector"%>
 <%@ page contentType="text/html; charset=EUC-KR"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR" />
+	<meta charset="EUC-KR" />
 	<title>Insert title here</title>
 	<link href="/CloverSns/style/css/bootstrap.css" rel="stylesheet" type="text/css">
 	<script  type="text/javascript">
 		function fnFriendRequest(name){
 			var del=confirm(name+"님께 친구 요청을 보내시겠습니까?");
-			alert(del);
-			document.friendRequest.submit();
 			
+			if(del==true){
+				
+				document.friendRequesting.submit();
+			
+			}
 		}
+		
 	</script>
 	<style>
 	
@@ -113,6 +117,7 @@
 	</hgroup>
  -->
     <section class="col-xs-12 col-sm-6 col-md-12">
+				<form action="/CloverSns/friend.action" name="friendRequesting" method="post">
     <%
     	Vector searchResult = (Vector)request.getAttribute("searchResult");
 		if(searchResult == null){
@@ -134,25 +139,24 @@
 						<li><i class="glyphicon glyphicon-tags"></i> <span>People</span></li> -->
 					</ul>
 				</div>
-				<form action="/CloverSns/friend.action" name="friendRequest" method="post">
 					<div class="col-xs-12 col-sm-12 col-md-7 excerpet">
 						<!-- <h3><a href="#" title="">Voluptatem, exercitationem, suscipit, distinctio</a></h3>
 						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem, exercitationem, suscipit, distinctio, qui sapiente aspernatur molestiae non corporis magni sit sequi iusto debitis delectus doloremque.</p>						 -->
-		                <span class="plus">친구추가
-							<input type="button" onclick="fnFriendRequest('<%= dto.getMem_name()%>')"><i class="glyphicon glyphicon-plus"></i></input>
+		                <span class="plus">
+							<button type="button" onclick="fnFriendRequest('<%= dto.getMem_name()%>')" style="background:white; border:white;">친구추가&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
 		                <!-- <a href="#" title="Lorem ipsum"></a> -->
 		                </span>
 					</div>
 					<input type="hidden" name="command" value="friendRequest"/>
-					<input type="hidden" name="id_get" value="<%= dto.getMem_id()%>" />
-					<input type="hidden" name="id_req" value="kwonjy123" />
-				</form>
+					<input type="hidden" name="id_get" value="<%=dto.getMem_id()%>" />
+					<!-- <input type="hidden" name="id_req" value="kwonjy123" /> -->
 				<span class="clearfix borda"></span>
 			</article>
 			<%
 	    	}
 		}
 		%>
+				</form>
 	</section>
 </div>
 </body>

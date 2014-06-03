@@ -117,7 +117,7 @@ public Vector<MemberDto> SearchFriends(String keyword){
 		Vector<MemberDto> v = new Vector<MemberDto>();
 		try{
 			//keyword가 null값인지 확인
-			String sql = "select mem_name, mem_id from member where mem_name like '%"+keyword+"%'";
+			String sql = "select mem_name, mem_id from member where mem_name like '%"+keyword+"%' and mem_id != 'admin'";
 			
 			stmt = con.prepareStatement(sql);
 
@@ -164,19 +164,61 @@ public Vector<MemberDto> SearchFriends(String keyword){
 	}
 	
 	public void friendRequest(String id_get, String id_req){ //친구신청
-		System.out.println("dao");
+		System.out.println(id_get+","+id_req);
 		try{
-			String sql = "INSERT INTO alarm(id, id2) "
-					+"VALUES(id_get, String id_req)";
+			String sql = "INSERT INTO alarm(get_id, send_id) "
+					+"VALUES(?, ?)";
 
 			stmt = con.prepareStatement(sql);
+			stmt.setString(1, id_get);
+			stmt.setString(2, id_req);
 			stmt.executeUpdate();
 			
 			System.out.println("친구신청완료");
 			
 			}
 		catch(Exception err){
-			System.out.println("MemberInsert() : " + err);
+			System.out.println("AlarmInsert() : " + err);
+		}
+		finally{
+			pool.freeConnection(con, stmt, rs);
+		}
+	}
+	
+	public Vector getFriendAlarm(String get_id){
+		Vector v = new Vector();
+		try{
+			String sql = "select send_id from alarm where get_id=?";
+			 
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, get_id);
+			rs = stmt.executeQuery();
+			
+			while(rs.next()){
+				v.add(rs.getString("send_id"));
+			}
+			
+		}
+		catch(Exception err){
+			System.out.println("getFriendAlarm : " + err);
+		}
+		return v;
+	}
+	
+	public void FriendInsert(String send_id, String get_id){
+		try{
+			String sql = "INSERT INTO friends(get_id, send_id) "+"VALUES(?,?)";
+
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, get_id);
+			stmt.setString(2, send_id);
+			stmt.executeUpdate();
+			
+			System.out.println("친구신청완료");
+			
+			}
+		catch(Exception err){
+			System.out.println("FriendInsert() : " + err);
 		}
 		finally{
 			pool.freeConnection(con, stmt, rs);

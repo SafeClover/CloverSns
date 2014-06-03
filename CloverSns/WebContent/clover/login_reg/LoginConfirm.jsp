@@ -28,4 +28,5 @@
 	else if(confirm.equals("true")){
 		response.sendRedirect("/CloverSns/clover/main/index.jsp");
 	}
+	session.setAttribute("id", mem_id);
 %>
