@@ -9,7 +9,9 @@
 <script src="/CloverSns/style/js/jquery-2.1.1.min.js"></script>
 <script src="/CloverSns/style/js/bootstrap.js"></script>
 <script>
-<% String id = (String)session.getAttribute("id"); %>
+<% 
+session.setAttribute("id", "admin");
+String id = (String)session.getAttribute("id"); %>
 	function fnGetalarm(){
 		document.getalarm.submit();
 	}
@@ -29,13 +31,30 @@
 </head>
 <body>
 <nav class="navbar navbar-fixed-top navbar-inverse" role="navigation">
-        <div class="dropdown">
+        <div class="dropdown clearfix">
 			<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 				<span id="main_icon" class="glyphicon glyphicon-align-justify"></span>
 			</a>
 			<ul class="dropdown-menu" onclick="fnGetalarm()">
 				<li><a href="#"><span class="glyphicon glyphicon-user"></span> 친구목록</a></li>
-				<form method="post" action="/CloverSns/friend.action" name="getalarm" >
+				
+				<form style="color: #dddddd">
+				<li class="dropdown-submenu">
+					<a href="#">
+						<span class="glyphicon glyphicon-comment"></span> 댓글,감상평알림
+						<span class="badge ">42</span>
+					</a>
+					 <ul class="dropdown-menu">
+						<li><a href="#">jQuery</a></li>
+						<li><a href="#">jQueryUI</a></li>
+						<li><a href="#">jQueryUI</a></li>
+						<li><a href="#">jQueryUI</a></li>
+						<li><a href="#">jQueryUI</a></li>
+						<li><a href="#">jQueryUI</a></li>	
+					</ul>
+				</li>
+				</form>
+				<form method="post" action="/CloverSns/friend.action" name="getalarm" style="color: #dddddd">
 					<li class="dropdown-submenu" >
 						<a href="#">
 							<span class="glyphicon glyphicon-bell"></span> 친구신청알림
@@ -43,7 +62,7 @@
 						</a>
 						<ul class="dropdown-menu">
 						<%
-							Vector v = (Vector)request.getAttribute("getfriendAlarm");
+							Vector v = (Vector)request.getAttribute("getAlarm");
 							if(v != null){
 								for(int i = 0;i<v.size();i++){
 						%>
@@ -51,6 +70,10 @@
 									<input type="hidden" name="id_send" value="<%=v.get(i)%>" />
 						<%
 								}
+							}else{
+								%>
+								<li>친구 신청이 없습니다.</li>
+								<%
 							}
 						%>								
 						</ul>	
@@ -58,16 +81,6 @@
 					<input type="hidden" name="command" value="getFriendAlarm" />
 					<!-- <input type="hidden" name="id_get" value="scvasas" /> -->
 				</form>
-				<li class="dropdown-submenu">
-					<a href="#">
-						<span class="glyphicon glyphicon-comment"></span> 댓글,감상평알림
-						<span class="badge ">42</span>
-					</a>
-					<ul class="dropdown-menu">
-						<li><a href="#">jQuery</a></li>
-						<li><a href="#">jQueryUI</a></li>	
-					</ul>
-				</li>
 				<li>
 					<a href="#"><span class="glyphicon glyphicon-cloud"></span> 채팅</a>
 				</li>
