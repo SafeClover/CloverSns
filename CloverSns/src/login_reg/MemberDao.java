@@ -205,7 +205,7 @@ public Vector<MemberDto> SearchFriends(String keyword){
 		return v;
 	}
 	
-	public void FriendInsert(String send_id, String get_id){
+	public void FriendInsert(String send_id, String get_id){	//친구 수락 후 친구목록에 추가
 		try{
 			String sql = "INSERT INTO friends(get_id, send_id) "+"VALUES(?,?)";
 
@@ -213,8 +213,14 @@ public Vector<MemberDto> SearchFriends(String keyword){
 			stmt.setString(1, get_id);
 			stmt.setString(2, send_id);
 			stmt.executeUpdate();
-			
 			System.out.println("친구신청완료");
+			
+			sql = "delete from alarm where send_id=? and get_id=?";
+			stmt.setString(1, send_id);
+			stmt.setString(2, get_id);
+			stmt.executeUpdate();
+			
+			System.out.println("알람 삭제 완료");
 			
 			}
 		catch(Exception err){

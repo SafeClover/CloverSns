@@ -53,6 +53,7 @@ public class FriendController extends HttpServlet{
 			Vector v = dao.getFriendAlarm(id_get);
 			System.out.println(v.size());
 			req.setAttribute("getAlarm", v);
+			
 			view = req.getRequestDispatcher("/clover/bar/header.jsp");
 			
 		}else if(req.getParameter("command").equals("acceptedfriend")){	//친구요청을 수락할 때

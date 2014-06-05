@@ -11,7 +11,10 @@
 <script>
 <% 
 session.setAttribute("id", "admin");
-String id = (String)session.getAttribute("id"); %>
+String id = (String)session.getAttribute("id"); 
+
+							Vector v = (Vector)request.getAttribute("getAlarm");
+%>
 	function fnGetalarm(){
 		document.getalarm.submit();
 	}
@@ -54,7 +57,7 @@ String id = (String)session.getAttribute("id"); %>
 					</ul>
 				</li>
 				</form>
-				<form method="post" action="/CloverSns/friend.action" name="getalarm" style="color: #dddddd">
+				<form method="post" action="/CloverSns/friend.action" name="getalarm" >
 					<li class="dropdown-submenu" >
 						<a href="#">
 							<span class="glyphicon glyphicon-bell"></span> 친구신청알림
@@ -62,7 +65,6 @@ String id = (String)session.getAttribute("id"); %>
 						</a>
 						<ul class="dropdown-menu">
 						<%
-							Vector v = (Vector)request.getAttribute("getAlarm");
 							if(v != null){
 								for(int i = 0;i<v.size();i++){
 						%>

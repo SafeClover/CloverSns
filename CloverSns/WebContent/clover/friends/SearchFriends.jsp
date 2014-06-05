@@ -117,7 +117,7 @@
 	</hgroup>
  -->
     <section class="col-xs-12 col-sm-6 col-md-12">
-				<form action="/CloverSns/friend.action" name="friendRequesting" method="post">
+	<form action="/CloverSns/friend.action" name="friendRequesting" method="post">
     <%
     	Vector searchResult = (Vector)request.getAttribute("searchResult");
 		if(searchResult == null){
