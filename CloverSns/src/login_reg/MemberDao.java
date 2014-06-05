@@ -145,7 +145,7 @@ public Vector<MemberDto> SearchFriends(String keyword){
 			pool.freeConnection(con, stmt, rs);
 		}
 		return null;
-		
+		  
 		
 	}
 	
