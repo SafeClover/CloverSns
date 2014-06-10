@@ -5,7 +5,7 @@
 <head>
 <link href="/CloverSns/style/css/bootstrap.css" rel="stylesheet" />
 <link href="/CloverSns/style/css/bar/header.css" rel="stylesheet" />
-<script src="/CloverSns/clover/bar/ajax.js"></script>
+<script src="/CloverSns/clover/style/js/ajax.js"></script>
 <script src="/CloverSns/style/js/jquery-2.1.1.min.js"></script>
 <script src="/CloverSns/style/js/bootstrap.js"></script>
 <script>
