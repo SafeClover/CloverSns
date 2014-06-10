@@ -1,4 +1,8 @@
+<%@page import="content.ContentDto"%>
+<%@page import="java.util.Vector"%>
 <%@ page contentType="text/html; charset=EUC-KR" %>
+<jsp:useBean id="dao" class="content.ContentDao"></jsp:useBean>
+<jsp:useBean id="dto" class="content.ContentDto"></jsp:useBean>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,7 +27,36 @@
 
 </head>
 <body style="overflow: scroll;">
-   
+
+	<% 
+		Vector v = dao.getContest();
+	
+		int totalRecord = 0; // 전체 글의 갯수
+		int numPerPage = 10; // 한 페이지당 보여질 글의 갯수
+		int pagePerBlock = 5; // 한 블럭당 페이지 수
+		int totalPage = 0; // 전체 페이지 수
+		int totalBlock = 0; // 전체 블럭 수
+		int nowPage = 0; // 현재 페이지 번호
+		int nowBlock = 0; // 현재 블럭 번호
+		int beginPerPage = 0; // 페이지당 시작 번호
+		
+		totalRecord = v.size();
+		totalPage = (int)(Math.ceil((double)totalRecord/numPerPage));
+
+		
+		if(request.getParameter("nowPage") != null)
+			nowPage = Integer.parseInt(request.getParameter("nowPage"));
+
+
+		if(request.getParameter("nowBlock") != null)
+			nowBlock = Integer.parseInt(request.getParameter("nowBlock"));
+
+
+		beginPerPage = nowPage * numPerPage;
+
+
+		totalBlock = (int)(Math.ceil((double)totalPage/pagePerBlock));
+	%>
 
       <div class="row">
       
@@ -34,7 +67,7 @@
          
       </div> <!-- row 끝 -->
 
-   
+
    <!-- 제목 입니다. -->
    <div class="container">
       <div class="row">
@@ -46,77 +79,60 @@
            <div id="transition-timer-carousel" class="carousel slide transition-timer-carousel" data-ride="carousel">
             <!-- Indicators -->
             <ol class="carousel-indicators">
-               <li data-target="#transition-timer-carousel" data-slide-to="0" class="active"></li>
-               <li data-target="#transition-timer-carousel" data-slide-to="1"></li>
-               <li data-target="#transition-timer-carousel" data-slide-to="2"></li>
-               <li data-target="#transition-timer-carousel" data-slide-to="3"></li>
-               <li data-target="#transition-timer-carousel" data-slide-to="4"></li>
+            	<% 
+            	for(int i=0; i<3; i++){
+            		if(i == 0){
+            	%>      <li class="active" data-target="#transition-timer-carousel" data-slide-to="<%= i %>" id="list"></li>
+					<%}else{ %>
+						<li data-target="#transition-timer-carousel" data-slide-to="<%= i %>" id="list"></li>
+				<% 		}
+            	} %>
             </ol>
-   
-            <!-- Wrapper for slides -->
-            <div class="carousel-inner">
-               <div class="item active">
-                  <a href="#" data-toggle="modal" data-target=".pop1">
-                     <img class="image" src="/CloverSns/style/img/Koala.jpg" />
-                  </a>
-                       <div class="carousel-caption">
-                           <h1 class="carousel-caption-header">Slide 1</h1>
-                           <p class="carousel-caption-text hidden-sm hidden-xs">
-                               코알라
-                           </p>
-                       </div>
-                   </div>
-                   
-                   <div class="item">
-                      <a href="#" data-toggle="modal" data-target=".pop1">
-                          <img class="image" src="/CloverSns/style/img/Penguins.jpg" />
-                      </a>
-                       <div class="carousel-caption">
-                           <h1 class="carousel-caption-header">Slide 2</h1>
-                           <p class="carousel-caption-text hidden-sm hidden-xs">
-                               펭귄
-                           </p>
-                       </div>
-                   </div>
-                   
-                   <div class="item">
-                      <a href="#" data-toggle="modal" data-target=".pop1">
-                          <img class="image" src="/CloverSns/style/img/Chrysanthemum.jpg" />
-                       </a>
-                       <div class="carousel-caption">
-                           <h1 class="carousel-caption-header">Slide 3</h1>
-                           <p class="carousel-caption-text hidden-sm hidden-xs">
-                               ??
-                           </p>
-                       </div>
-                   </div>
-                   
-                   <div class="item">
-                      <a href="#" data-toggle="modal" data-target=".pop1">
-                          <img class="image" src="/CloverSns/style/img/Tulips.jpg" />
-                       </a>
-                       <div class="carousel-caption">
-                           <h1 class="carousel-caption-header">Slide 4</h1>
-                           <p class="carousel-caption-text hidden-sm hidden-xs">
-                               튤립
-                           </p>
-                       </div>
-                   </div>
-                   
-                   <div class="item">
-                      <a href="#" data-toggle="modal" data-target=".pop1">
-                          <img class="image" src="/CloverSns/style/img/Desert.jpg" />
-                       </a>
-                       <div class="carousel-caption">
-                           <h1 class="carousel-caption-header">Slide 5</h1>
-                           <p class="carousel-caption-text hidden-sm hidden-xs">
-                               사막
-                           </p>
-                       </div>
-                   </div>
-                   
-               </div> <!-- carousel-inner 끝 -->
-   
+
+			<!-- 카루셀 레이아웃 -->
+			<div class="carousel-inner">
+				<% 
+					for(int i=0; i<3; i++){ 
+						dto = (ContentDto)v.get(i);
+						
+						if(i == 0){
+				 %>
+							<div class="item active">
+								<a href="#" data-toggle="modal"
+									data-target=".contest<%= dto.getUpNo() %>"> <img
+									class="image" src="/CloverSns/img/<%= dto.getImg_route() %>"
+									style="width: 500px; height: 400px;" />
+								</a>
+								<div class="carousel-caption">
+									<h1 class="carousel-caption-header"><%= dto.getSubject() %></h1>
+									<p class="carousel-caption-text hidden-sm hidden-xs">
+										<%= dto.getId() %>
+									</p>
+								</div>
+							</div>
+				<% }
+						else{
+				%>
+							<div class="item">
+								<a href="#" data-toggle="modal"
+									data-target=".contest<%= dto.getUpNo() %>"> <img
+									class="image" src="/CloverSns/img/<%= dto.getImg_route() %>"
+									style="width: 500px; height: 400px;" />
+								</a>
+								<div class="carousel-caption">
+									<h1 class="carousel-caption-header"><%= dto.getSubject() %></h1>
+									<p class="carousel-caption-text hidden-sm hidden-xs">
+										<%= dto.getId() %>
+									</p>
+								</div>
+							</div>
+							
+				<%
+						}
+					} %>
+				
+			</div> 
+			<!-- 카루셀 끝 -->
             <!-- Controls -->
             <a class="left carousel-control" href="#transition-timer-carousel" data-slide="prev">
                <span class="glyphicon glyphicon-chevron-left"></span>
@@ -130,98 +146,30 @@
          </div>
        </div>
    </div>
+   <!-- 윗 부분 레이아웃 끝 -->
    
    <hr/>
    
    <!-- 사진 리스트입니다!(for문 쓰면 될거에요) -->
    <div class="container">
+   
       <div class="row">
-      
+   	  <% 
+   		for(int i=beginPerPage; i<beginPerPage + numPerPage; i++){
+   			if(i == totalRecord){
+   				break;
+   			}
+   			
+   			dto = (ContentDto)v.get(i); 	
+   	  %>
          <div class="col portfolio-item">
-            <a href="#" data-toggle="modal" data-target=".pop1">
-               <img class="img img-responsive img-thumbnail" src="/CloverSns/style/img/1.jpg">
-               <h3>글 제목</h3>
+            <a href="#" data-toggle="modal" data-target=".contest<%= dto.getUpNo() %>">
+               <img class="img img-responsive img-thumbnail" src="/CloverSns/img/<%= dto.getImg_route() %>" style="width: 150px; height: 150px;">
+               <h3><%= dto.getSubject() %></h3>
             </a>
-            <p>작성자 : </p>
-         </div> <!-- col4 끝 -->
-         <div class="col portfolio-item">
-            <a href="#" data-toggle="modal" data-target=".pop1">
-               <img class="img img-responsive img-thumbnail" src="/CloverSns/style/img/1.jpg">
-               <h3>글 제목</h3>
-            </a>
-            <p>작성자 : </p>
-         </div> <!-- col4 끝 -->
-         <div class="col portfolio-item">
-            <a href="#" data-toggle="modal" data-target=".pop1">
-               <img class="img img-responsive img-thumbnail" src="/CloverSns/style/img/1.jpg">
-               <h3>글 제목</h3>
-            </a>
-            <p>작성자 : </p>
-         </div> <!-- col4 끝 -->
-         <div class="col portfolio-item">
-            <a href="#" data-toggle="modal" data-target=".pop1">
-               <img class="img img-responsive img-thumbnail" src="/CloverSns/style/img/1.jpg">
-               <h3>글 제목</h3>
-            </a>
-            <p>작성자 : </p>
-         </div> <!-- col4 끝 -->
-         <div class="col portfolio-item">
-            <a href="#" data-toggle="modal" data-target=".pop1">
-               <img class="img img-responsive img-thumbnail" src="/CloverSns/style/img/1.jpg">
-               <h3>글 제목</h3>
-            </a>
-            <p>작성자 : </p>
-         </div> <!-- col4 끝 -->
-         <div class="col portfolio-item">
-            <a href="#" data-toggle="modal" data-target=".pop1">
-               <img class="img img-responsive img-thumbnail" src="/CloverSns/style/img/1.jpg">
-               <h3>글 제목</h3>
-            </a>
-            <p>작성자 : </p>
-         </div> <!-- col4 끝 -->
-         <div class="col portfolio-item">
-            <a href="#" data-toggle="modal" data-target=".pop1">
-               <img class="img img-responsive img-thumbnail" src="/CloverSns/style/img/1.jpg">
-               <h3>글 제목</h3>
-            </a>
-            <p>작성자 : </p>
-         </div> <!-- col4 끝 -->
-         <div class="col portfolio-item">
-            <a href="#" data-toggle="modal" data-target=".pop1">
-               <img class="img img-responsive img-thumbnail" src="/CloverSns/style/img/1.jpg">
-               <h3>글 제목</h3>
-            </a>
-            <p>작성자 : </p>
-         </div> <!-- col4 끝 -->
-         <div class="col portfolio-item">
-            <a href="#" data-toggle="modal" data-target=".pop1">
-               <img class="img img-responsive img-thumbnail" src="/CloverSns/style/img/1.jpg">
-               <h3>글 제목</h3>
-            </a>
-            <p>작성자 : </p>
-         </div> <!-- col4 끝 -->
-         <div class="col portfolio-item">
-            <a href="#" data-toggle="modal" data-target=".pop1">
-               <img class="img img-responsive img-thumbnail" src="/CloverSns/style/img/1.jpg">
-               <h3>글 제목</h3>
-            </a>
-            <p>작성자 : </p>
-         </div> <!-- col4 끝 -->
-         <div class="col portfolio-item">
-            <a href="#" data-toggle="modal" data-target=".pop1">
-               <img class="img img-responsive img-thumbnail" src="/CloverSns/style/img/1.jpg">
-               <h3>글 제목</h3>
-            </a>
-            <p>작성자 : </p>
-         </div> <!-- col4 끝 -->
-         <div class="col portfolio-item">
-            <a href="#" data-toggle="modal" data-target=".pop1">
-               <img class="img img-responsive img-thumbnail" src="/CloverSns/style/img/1.jpg">
-               <h3>글 제목</h3>
-            </a>
-            <p>작성자 : </p>
-         </div> <!-- col4 끝 -->
-                  
+            <p>작성자 : <%= dto.getId() %></p>
+         </div> <!-- col4 끝 -->    
+      <% } %>             
       </div> <!-- row 끝 -->
       
       <hr/>
@@ -231,45 +179,66 @@
 
             <div class="paging">
                 <ul class="pagination">
-                    <li><a href="#">&laquo;</a>
-                    </li>
-                    <li class="active"><a href="#">1</a>
-                    </li>
-                    <li><a href="#">2</a>
-                    </li>
-                    <li><a href="#">3</a>
-                    </li>
-                    <li><a href="#">4</a>
-                    </li>
-                    <li><a href="#">5</a>
-                    </li>
-                    <li><a href="#">&raquo;</a>
-                    </li>
-                </ul>
+                	<%
+                		if(nowBlock==0){ //첫번째 블럭일때 클릭방지
+                	%>
+                   		<li class="disabled"><a>&laquo;</a></li>                			
+                    <% 
+                		}else{
+                			%>
+                   		<li><a href="ContestBoard.jsp?nowBlock=<%=nowBlock-1%>&nowPage=<%=pagePerBlock*(nowBlock-1)%>">&laquo;</a></li>                			
+                		<% 
+                		}
+                		for(int i=0; i<pagePerBlock; i++){ //for문 돌면서 블럭 출력
+	                    	if(i == 0){ %>
+	                    		<script>document.getElementById("list2").class="active";</script>
+	                    	<% } 
+	                    	if((nowBlock*pagePerBlock) + i<totalPage){//필요한 페이지만 블럭에 나타나도록 
+	                    		if(i == nowPage){
+	                    	%>		<li class="active"><a href="ContestBoard.jsp?nowBlock=<%=nowBlock%>&nowPage=<%=(nowBlock*pagePerBlock) + i%>" id="list2"><%=(nowBlock*pagePerBlock) + i + 1%></a></li>
+		                    <%	}else{
+	                    	%>		<li><a href="ContestBoard.jsp?nowBlock=<%=nowBlock%>&nowPage=<%=(nowBlock*pagePerBlock) + i%>" id="list2"><%=(nowBlock*pagePerBlock) + i + 1%></a></li>		
+		                    <%
+		                    	}
+	                    	} 
+                    	} 
+                    	if(nowBlock+1<totalBlock){
+                    	%>
+                    		<li><a href="ContestBoard.jsp?nowBlock=<%=nowBlock+1%>&nowPage=<%=pagePerBlock*(nowBlock+1)%>">&raquo;</a></li>
+                		<%
+                    	}else{ //마지막 블럭일 때 클릭 방지 
+                		%>
+                    		<li class="disabled"><a>&raquo;</a></li>                			
+                		<% 
+                		}%>
+                </ul>	
             </div>
-
         </div>
-      
    </div> <!-- container 끝 -->
-   
-   <!-- 모달 (Popover) 창 -->
-   <div class="container">
+
+
+   	<!-- 모달 (Popover) 창 -->
+   	<% 
+   	for(int i=0; i<v.size(); i++){
+   		dto = (ContentDto)v.get(i);
+   	%>
+   	<div class="container">
       <div class="row">
-         <div class="modal fade pop1">
+         <div class="modal fade contest<%= dto.getUpNo() %> aaa">
             <div class="modal-dialog">
                <div class="modal-content">
                   <div class="modal-header">
                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                     	X
                      </button>
-                     <h3 class="modal-title">모달 창 제목</h3>
-                     <h5>작성일 : </h5>
+                     <h3 class="modal-title"><%= dto.getSubject() %></h3>
+                     <h5>작성일 : <%= dto.getRegdate() %></h5>
                   </div> <!-- 모달 헤더끝 -->
                   <div class="modal-body">
-                     <img src="/CloverSns/style/img/Chrysanthemum.jpg" class="img-responsive center-block">
+                     <img src="/CloverSns/img/<%= dto.getImg_route() %>" class="img-responsive center-block">
                      <div class="modal-body">
-                        작성자 : <br/>
-                        내용 : <br/>
-                     
+                        작성자 : <%= dto.getId() %><br/>
+                        내용 : <%= dto.getContent() %><br/>
                      </div>
                   </div> <!-- 모달 바디 끝 -->
                   <div class="modal-footer">
@@ -280,7 +249,8 @@
          </div> <!-- 모달 pop1 끝 -->
       </div> <!-- row 끝 -->
    </div> <!-- container 끝 -->
+<% } %>
 
-<jsp:include page="/clover/bar/footer.jsp"></jsp:include>
+	<jsp:include page="/clover/bar/footer.jsp"></jsp:include>
 
 </body>

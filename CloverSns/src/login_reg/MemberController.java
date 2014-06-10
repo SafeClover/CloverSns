@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
 public class MemberController extends HttpServlet {
 
 	@Override
@@ -46,7 +47,12 @@ public class MemberController extends HttpServlet {
 		}
 		else if(cmd.equals("ID_CHECK")){
 			String id = req.getParameter("id");
+			
 			nextPage = "/clover/login_reg/idCheck.jsp?id=" + id;
+		}
+		else if(cmd.equals("INFO_EDIT")){
+			
+			nextPage = "/clover/infoedit/InfoEdit_proc.jsp";
 		}
 		
 		RequestDispatcher view = req.getRequestDispatcher(nextPage);

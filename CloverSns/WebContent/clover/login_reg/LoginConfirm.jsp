@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=EUC-KR"%>
-<<jsp:useBean id="dao" class="login_reg.MemberDao" />
+<jsp:useBean id="dao" class="login_reg.MemberDao" />
 
 <%
 	String mem_id = (String)request.getAttribute("mem_id");
@@ -26,7 +26,7 @@
 		return;
 	}
 	else if(confirm.equals("true")){
-		response.sendRedirect("/CloverSns/clover/main/index.jsp");
+		response.sendRedirect("Login.index?index=Login");
 	}
 	session.setAttribute("id", mem_id);
 %>

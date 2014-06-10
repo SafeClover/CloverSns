@@ -43,6 +43,7 @@
 		<url-pattern>*.question</url-pattern>
 	</servlet-mapping>
 	
+	
 	<servlet>
 		<servlet-name>friend</servlet-name>
 		<servlet-class>friend.FriendController</servlet-class>
@@ -51,6 +52,16 @@
 	<servlet-mapping>
 		<servlet-name>friend</servlet-name>
 		<url-pattern>/friend.action</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>index</servlet-name>
+		<servlet-class>index.mvc.IndexController</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>index</servlet-name>
+		<url-pattern>*.index</url-pattern>
 	</servlet-mapping>
 
 </web-app>

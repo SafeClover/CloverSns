@@ -5,12 +5,12 @@ public class ServiceDto {
    private String	title;
    private String	id;      
    private String	boardContent;
-   private String	uploadDate;   
+   private String	regDate;   
    private int		count;
    private int		pos;
    private int		depth;
    private String	pw;
-   private String division;
+   private String 	division;
    
    public String getDivision() {
 	return division;
@@ -42,11 +42,11 @@ public int getBoardUpNo() {
    public void setBoardContent(String boardContent) {
       this.boardContent = boardContent;
    }
-   public String getUploadDate() {
-      return uploadDate;
+   public String getRegDate() {
+      return regDate;
    }
-   public void setUploadDate(String uploadDate) {
-      this.uploadDate = uploadDate;
+   public void setRegDate(String regDate) {
+      this.regDate = regDate;
    }
    public int getCount() {
       return count;

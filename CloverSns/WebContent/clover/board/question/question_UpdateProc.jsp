@@ -27,14 +27,3 @@
 <%
 	}
 %>
-<script>
-	document.onkeydown = trapRefresh;
-	function trapRefresh(){
-		if(event.keyCode == 116){
-			event.keyCode = 0;
-			event.cancelBubble = true;
-			event.returnValue = false;
-			document.service.location.reload();
-		}
-	}
-</script>

@@ -38,7 +38,7 @@
 </script>
 </head>
 <BODY>
-<h2 align="center">공지사항</h2>
+<h2 align="center">공지사항<br/><br/></h2>
 <%!public String getParam(HttpServletRequest req, String pName){
 		if(req.getParameter("keyWord") != null){
 			return req.getParameter("keyWord");
@@ -100,7 +100,7 @@
 	<tr>
 		<form method="post" action="list.notice" name="notice">
 		<input type="hidden" name="notice" value="LIST" />
-			<td align="right">
+			<td align="right" width="60%">
 				<a href="list.notice?notice=POST">[글쓰기]</a>
 				<a href="javascript:list()">[처음으로]</a>
 			</td>
@@ -139,7 +139,7 @@
 		
 		<td><%= dto.getBoardUpNo() %></td>
 		<td><a href="javascript:read('<%=dto.getBoardUpNo()%>')"><%= dto.getTitle() %></a></td>
-		<td><%= dto.getUploadDate() %></td>
+		<td><%= dto.getRegDate() %></td>
 		<td><%=dto.getCount() %></td>
 	</tr>
 	
@@ -189,7 +189,7 @@
 			</select>
 
 			<input type="text" size="16" name="keyWord" value='<%= getParam(request, "keyWord") %>'/>
-			<input type="button" value="찾기" onClick="check()"/>
+			<input class="btn btn-default" type="button" value="찾기" onClick="check()"/>
 			<input type="hidden" name="page" value= "0"/>
 		</td>
 	</tr>

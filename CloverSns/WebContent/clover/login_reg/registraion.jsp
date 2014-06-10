@@ -152,7 +152,7 @@
 			
 			<p>
 				<label for="birth">생년월일</label>
-				<select name="year" size="6">
+				<select name="year">
 					<%
 						for(int i=1930; i<2014; i++){
 					%>
@@ -167,7 +167,7 @@
 					%>
 				</select>년
 				
-				<select name="month" size="6">
+				<select name="month">
 					<%
 						for(int i=0; i<12; i++){
 					%>
@@ -177,11 +177,11 @@
 					%>
 				</select>월
 				
-				<select name="day" size="6">
+				<select name="day">
 					<%
 						for(int i=0; i<31; i++){
 					%>
-							<option size="6"><%=i + 1%></option>
+							<option><%=i + 1%></option>
 					<%
 						}
 					%>

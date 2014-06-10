@@ -10,8 +10,9 @@
 
 <%
 	int num = Integer.parseInt(request.getParameter("boardUpNo"));
+	System.out.println("replyproc : " + num);
 
-ServiceDto parent = dao.getBoard(num);
+	ServiceDto parent = dao.getBoard(num);
 	dao.replyUpdatePos(parent);
 	
 	dto.setPos(parent.getPos());
@@ -21,14 +22,3 @@ ServiceDto parent = dao.getBoard(num);
 	
 	response.sendRedirect("list.question?question=LIST");
 %>
-<script>
-	document.onkeydown = trapRefresh;
-	function trapRefresh(){
-		if(event.keyCode == 116){
-			event.keyCode = 0;
-			event.cancelBubble = true;
-			event.returnValue = false;
-			document.service.location.reload();
-		}
-	}
-</script>

@@ -8,6 +8,7 @@ public class MemberDto {
 	private		String		mem_email;
 	private		String		mem_gender;
 	private		String		mem_regDate;
+	private		String		mem_img;
 	
 	public String getMem_id() {
 		return mem_id;
@@ -51,6 +52,11 @@ public class MemberDto {
 	public void setMem_regDate(String mem_regDate) {
 		this.mem_regDate = mem_regDate;
 	}
-	
+	public String getMem_img() {
+		return mem_img;
+	}
+	public void setMem_img(String mem_img) {
+		this.mem_img = mem_img;
+	}
 	
 }

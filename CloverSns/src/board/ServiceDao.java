@@ -54,7 +54,7 @@ public class ServiceDao {
             dto.setPw(rs.getString("pw"));
             dto.setTitle(rs.getString("title"));
             dto.setDivision(rs.getString("division"));
-            dto.setUploadDate(rs.getString("uploadDate"));
+            dto.setRegDate(rs.getString("regdate"));
             
             v.add(dto);
          }
@@ -97,7 +97,7 @@ public class ServiceDao {
 	            dto.setPw(rs.getString("pw"));
 	            dto.setTitle(rs.getString("title"));
 	            dto.setDivision(rs.getString("division"));
-	            dto.setUploadDate(rs.getString("uploadDate"));
+	            dto.setRegDate(rs.getString("regdate"));
 	            
 	            v.add(dto);
 	         }
@@ -126,7 +126,7 @@ public class ServiceDao {
    
    // 공지사항 insert
    public void insertNotice(ServiceDto dto){
-		String sql = "INSERT INTO service(title, boardContent, uploadDate, count, pos, division) VALUES(?, ?, now(), 0, 0, ?)";
+		String sql = "INSERT INTO service(title, boardContent, regDate, count, pos, division) VALUES(?, ?, now(), 0, 0, ?)";
 		try{
 			updatePos(con);
 			
@@ -145,7 +145,7 @@ public class ServiceDao {
    
    // 문의게시판 insert
    public void insertQuestion(ServiceDto dto){
-      String sql = "insert into service(title, id, boardContent, uploadDate, "
+      String sql = "insert into service(title, id, boardContent, regDate, "
          + "count, pos, depth, pw, division) "
          + "values(?,?,?,now(),?,?,?,?,?)";
 
@@ -199,7 +199,7 @@ public class ServiceDao {
              dto.setPos(rs.getInt("pos"));
              dto.setPw(rs.getString("pw"));
              dto.setTitle(rs.getString("title"));
-             dto.setUploadDate(rs.getString("uploadDate"));
+             dto.setRegDate(rs.getString("regDate"));
          }
       }
       catch(Exception err){
@@ -250,10 +250,12 @@ public class ServiceDao {
    // 부모글을 가져오는 메서드
    public void replyUpdatePos(ServiceDto dto){
       try{
-         String sql = "update service set pos=pos+1 where pos>? and division=question";
+         String sql = "update service set pos=pos+1 where pos>? and division='question'";
          stmt = con.prepareStatement(sql);
          stmt.setInt(1, dto.getPos());
+         
          stmt.executeUpdate();
+         
       }
       catch(Exception err){
          System.out.println("replyUpdatePos : " + err);
@@ -266,10 +268,10 @@ public class ServiceDao {
 // 실제 저장할 답변글
    public void replyBoard(ServiceDto dto) {
       try {
-         String sql = "insert into service(title, id, boardContent, uploadDate, "
-               + "count, pos, depth, pw, division) " + "values(?,?,?,now(),?,?,?,?,question)";
+         String sql = "insert into service(title, id, boardContent, regDate, "
+               + "count, pos, depth, pw, division) " + "values(?,?,?,now(),?,?,?,?,'question')";
+         
          stmt = con.prepareStatement(sql);
-
          stmt.setString(1, dto.getTitle());
          stmt.setString(2, dto.getId());
          stmt.setString(3, dto.getBoardContent());
@@ -277,7 +279,9 @@ public class ServiceDao {
          stmt.setInt(5, dto.getPos() + 1);
          stmt.setInt(6, dto.getDepth() + 1);
          stmt.setString(7, dto.getPw());
+         
          stmt.executeUpdate();
+         
       } catch (Exception err) {
          System.out.println("replyBoard : " + err);
       } finally {

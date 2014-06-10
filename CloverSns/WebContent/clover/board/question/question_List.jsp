@@ -28,15 +28,6 @@
 		document.read.boardUpNo.value=param;
 		document.read.submit();
 	}
-	document.onkeydown = trapRefresh;
-	function trapRefresh(){
-		if(event.keyCode == 116){
-			event.keyCode = 0;
-			event.cancelBubble = true;
-			event.returnValue = false;
-			document.service.location.reload();
-		}
-	}
 </script>
 </head>
 <BODY>
@@ -131,7 +122,7 @@
 						<img alt="" src="../image/re.gif">
 				<% } %><a href="javascript:read('<%= dto.getBoardUpNo() %>')"><%= dto.getTitle() %></td>
 				<td><%=dto.getId() %></td>
-				<td><%=dto.getUploadDate()%></td>
+				<td><%=dto.getRegDate()%></td>
 				<td><%=dto.getCount()%></td>
 			</tr>
 			
@@ -183,7 +174,7 @@
 
 
 			<input type="text" size="16" name="keyWord" value='<%= getParam(request, "keyWord") %>' />
-			<input type="button" value="찾기" onClick="check()" />
+			<input class="btn btn-default" type="button" value="찾기" onClick="check()" />
 			<input type="hidden" name="page" value= "0" />
 		</td>
 	</tr>

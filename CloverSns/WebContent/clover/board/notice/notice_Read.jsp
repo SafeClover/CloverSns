@@ -1,7 +1,9 @@
 <%@page import="board.ServiceDto"%>
 <%@ page contentType="text/html; charset=EUC-KR"%>
 <html>
-<head><title>JSPBoard</title>
+<head>
+<script src="/CloverSns/style/js/bootstrap.js"></script>
+<link href="/CloverSns/style/css/bootstrap.css" rel="stylesheet">
 <script type="text/javascript">
 	function fnDelete(param){
 		var del = confirm("정말 삭제하시겠습니까?");
@@ -41,31 +43,29 @@
 	String title = dto.getTitle();
 	String content = dto.getBoardContent();
 	int count = dto.getCount();
-	String uploaddate = dto.getUploadDate();
+	String regdate = dto.getRegDate();
 	
 %>
 
 <br><br>
 <table align=center width=70% border=0 cellspacing=3 cellpadding=0>
- <tr>
-  <td bgcolor=9CA2EE height=25 align=center class=m><%= title %></td>
+ <tr style="border-bottom: 1px solid #ddd">
+  <td height=25 align=center class=m><h2><%= title %><br/><br/></h2></td>
  </tr>
  <tr>
   <td colspan=2>
    <table border=0 cellpadding=3 cellspacing=0 width=100%> 
 
-    <tr>
-		 <td align=center bgcolor=#dddddd width=10%> 등록날짜 </td>
-		 <td bgcolor=#ffffe8><%= uploaddate %></td>
+    <tr style="border-bottom: 1px solid #ddd;" height="40px">
+		<td align=center width=10%> 등록날짜 </td>
+		<td><%= regdate %></td>
+		<td colspan=4 align=right>
+			조회수 : <%= count %>
+		</td>
 	</tr>
 
    <tr> 
-    <td colspan=4><%= content %></td>
-   </tr>
-   <tr>
-    <td colspan=4 align=right>
-    	조회수 : <%= count %>
-    </td>
+    <td colspan=4 height="200px"><%= content %></td>
    </tr>
    </table>
   </td>
