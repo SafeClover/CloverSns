@@ -39,26 +39,26 @@
 			</tr>
 			<tr>
 				<td  valign="top" align="center" width="100px">
-					<a href="service_main.html" target="service">
-						<img src="/CloverSns/style/img/1.jpg" /><h3>고객센터 메인</h3>
+					<a href="/CloverSns/clover/board/service_main.html" target="service">
+						<img src="/CloverSns/style/img/BoardImg/client.jpg" /><h3>고객센터</h3>
 					</a>
 				</td>
 				
 				<td  valign="top" align="center" width="100px">
-					<a href="notice/notice_List.jsp" target="service">
-						<img src="/CloverSns/style/img/1.jpg"  /><h3>공지사항</h3>
+					<a href="/CloverSns/clover/board/notice/notice_List.jsp" target="service">
+						<img src="/CloverSns/style/img/BoardImg/notice.jpg"  /><h3>공지사항</h3>
 					</a>
 				</td>
 				
 				<td  valign="top" align="center" width="100px">
-					<a href="question/question_List.jsp" target="service">
-					<img src="/CloverSns/style/img/1.jpg" /><h3>문의게시판</h3>
+					<a href="/CloverSns/clover/board/question/question_List.jsp" target="service">
+					<img src="/CloverSns/style/img/BoardImg/question.jpg" /><h3>문의 게시판</h3>
 					</a>
 				</td>
 				
 				<td  valign="top" align="center" width="100px">
 					<a href="/CloverSns/clover/board/qna/Q&A_List.jsp" target="service">
-						<img src="/CloverSns/style/img/1.jpg" /><h3>Q&A준비중</h3>
+						<img src="/CloverSns/style/img/BoardImg/QnA.jpg" /><h3>자주 찾는 질문</h3>
 					</a>
 				</td>
 			</tr>
@@ -67,8 +67,11 @@
 		<tbody>
 			<tr >
 				<td colspan="4" valign="top">
-					<iframe id="service" name="service" src="service_main.html" scrolling="no" style="width: 100%; height: 500px;"></iframe>
+					<iframe id="service" name="service" src="service_main.html" scrolling="yes" style="width: 100%; height: 500px;"></iframe>
+			
 				</td>
+		
+			
 			</tr>
 		</tbody>	
 		

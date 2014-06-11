@@ -30,7 +30,7 @@ public class ContentDao {
 		Vector v = new Vector();
 		String sql;
 		try{
-			sql = "select * from content where privacy = 'privacy' and id=?";
+			sql = "select * from content where privacy = 'privacy' and id=? order by regdate desc";
 			
 			stmt = con.prepareStatement(sql);
 			
@@ -67,33 +67,35 @@ public class ContentDao {
 		String sql = "insert into content(img_route, regdate, subject, id, name, content, privacy)" +
 				"values(?,now(),?,?,?,?,?)";
 		try{
-		stmt = con.prepareStatement(sql);
-		
-		stmt.setString(1, dto.getImg_route());
-		stmt.setString(2, dto.getSubject());
-		stmt.setString(3, dto.getId());
-		stmt.setString(4, dto.getName());
-		stmt.setString(5, dto.getContent());
-		stmt.setString(6, dto.getPrivacy());
-		
-		stmt.executeUpdate();
+			stmt = con.prepareStatement(sql);
+			
+			stmt.setString(1, dto.getImg_route());
+			stmt.setString(2, dto.getSubject());
+			stmt.setString(3, dto.getId());
+			stmt.setString(4, dto.getName());
+			stmt.setString(5, dto.getContent());
+			stmt.setString(6, dto.getPrivacy());
+			
+			stmt.executeUpdate();
 		}
 		catch(Exception err){
-		System.out.println("insertMypage : " + err);
+			System.out.println("insertMypage : " + err);
 		}
 		finally{
-		pool.freeConnection(con, stmt, rs);
+			pool.freeConnection(con, stmt, rs);
 		}
 	}
 	
 	// 아워클로버 select 쿼리
-	public Vector getOurclover(){
+	public Vector getOurclover(String id){
 		Vector v = new Vector();
 		String sql;
 		try{
-			sql = "select * from content where privacy = 'friends'";
+			sql = "select * from content c, friends f where privacy = 'friends' and ((f.get_id = ? and c.id = f.send_id) or (f.send_id = ? and c.id = f.get_id)) order by regdate desc";
 			
 			stmt = con.prepareStatement(sql);
+			stmt.setString(1, id);
+			stmt.setString(2, id);
 			rs = stmt.executeQuery();
 			
 			while(rs.next()){
@@ -149,7 +151,7 @@ public class ContentDao {
 		Vector v = new Vector();
 		String sql;
 		try{
-			sql = "select * from content where privacy = 'contest'";
+			sql = "select * from content where privacy = 'contest' order by regdate desc";
 			
 			stmt = con.prepareStatement(sql);
 			rs = stmt.executeQuery();

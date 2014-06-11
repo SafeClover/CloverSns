@@ -155,9 +155,9 @@
    </div>
 </form>
 
-<br/><br/><br/><br/>
-<br/><br/><br/><br/>
-<br/><br/><br/><br/>
+<div style="text-align: center;">
+		<jsp:include page="/clover/bar/footer.jsp"></jsp:include>
+	</div>
    
 
 </body>

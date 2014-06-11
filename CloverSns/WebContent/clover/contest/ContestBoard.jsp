@@ -23,6 +23,26 @@
    $(document).ready(function() { // 페이지 로딩이 끝나면 처리합니다.
         $(".iframe", parent.document).height($(document).height());  // 부모창에있는 아이프레임(클래스가 ifrm인) 높이 조절
    });  
+   
+   $(document).ready(function(){
+	      $("#vote input").one("click", function like_cnt(){
+	         $(this).prev().html(parseInt($(this).prev().html()) + 1);            
+	            if(typeof(Storage)!=="undefined"){
+	                if (localStorage.clickcount){  //localStorage 객체는 데이터를 날짜 기한 없이 데이터를 저장한다. 
+	                     localStorage.clickcount=Number(localStorage.clickcount)+1;
+	                  }
+	                else{
+	                     localStorage.clickcount=1;
+	                  }
+	                   document.getElementById("result").innerHTML= localStorage.clickcount + " 명이 행복을 기부했습니다.";
+	                   document.getElementById("like").disabled="disabled";
+	             }
+	              else{
+	                document.getElementById("result").innerHTML="당신이 사용하고 있는 브라우저는 web storage를 지원하지 않습니다.";
+	             }
+	         return false;
+	      });
+	   });
 </script>
 
 </head>
@@ -80,7 +100,7 @@
             <!-- Indicators -->
             <ol class="carousel-indicators">
             	<% 
-            	for(int i=0; i<3; i++){
+            	for(int i=0; i<1; i++){
             		if(i == 0){
             	%>      <li class="active" data-target="#transition-timer-carousel" data-slide-to="<%= i %>" id="list"></li>
 					<%}else{ %>
@@ -92,7 +112,7 @@
 			<!-- 카루셀 레이아웃 -->
 			<div class="carousel-inner">
 				<% 
-					for(int i=0; i<3; i++){ 
+					for(int i=0; i<1; i++){ 
 						dto = (ContentDto)v.get(i);
 						
 						if(i == 0){
@@ -233,6 +253,11 @@
                      </button>
                      <h3 class="modal-title"><%= dto.getSubject() %></h3>
                      <h5>작성일 : <%= dto.getRegdate() %></h5>
+                     <div id="vote" style="text-align: center">
+                        <span>0</span>명                  
+                        <input type="button" value="like" id="like" name="like" onclick="like_cnt()" />
+                        <div id="result"></div>
+                     </div>
                   </div> <!-- 모달 헤더끝 -->
                   <div class="modal-body">
                      <img src="/CloverSns/img/<%= dto.getImg_route() %>" class="img-responsive center-block">
@@ -251,6 +276,8 @@
    </div> <!-- container 끝 -->
 <% } %>
 
-	<jsp:include page="/clover/bar/footer.jsp"></jsp:include>
+	<div style="text-align: center;">
+		<jsp:include page="/clover/bar/footer.jsp"></jsp:include>
+	</div>
 
 </body>

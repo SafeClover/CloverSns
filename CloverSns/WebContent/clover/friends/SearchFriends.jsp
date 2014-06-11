@@ -1,8 +1,9 @@
 
-<%@page import="login_reg.MemberDto"%>
 <%@page import="java.util.Vector"%>
+<%@page import="login_reg.MemberDto"%>
 <%@ page contentType="text/html; charset=EUC-KR"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<jsp:useBean id="dto" class="login_reg.MemberDto"></jsp:useBean>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR" />
@@ -11,9 +12,14 @@
 	<script  type="text/javascript">
 		function fnFriendRequest(name){
 			var del=confirm(name+"님께 친구 요청을 보내시겠습니까?");
-			alert(del);
 			document.friendRequest.submit();
 			
+		}
+		
+		function isNull(){
+			if(document.keyword.value != null || document.keyword.value != ""){
+				document.search.submit();
+			}
 		}
 	</script>
 	<style>
@@ -94,7 +100,7 @@
 					<div class="input-group col-md-12">
 						<input type="text" name="keyword" class="search-query form-control" placeholder="Search" title="r"/> 
 						<span class="input-group-btn">
-							<button class="btn btn-danger" type="submit">
+							<button class="btn btn-danger" type="button" onclick="isNull()">
 								<span class=" glyphicon glyphicon-search"></span>
 							</button>
 						</span>
@@ -121,11 +127,15 @@
 		<%	
 		}else{
 	    	for(int i =0; i< searchResult.size();i++){
-	    		MemberDto dto = (MemberDto)searchResult.get(i);
+	    		 dto = (MemberDto)searchResult.get(i);
 	    %>
 			<article class="search-result row">
 				<div class="col-xs-12 col-sm-12 col-md-3">
+					<%if(dto.getMem_img() !=null){ %>
+					<a href="#" title="Lorem ipsum" class="thumbnail"><img src="<%=dto.getMem_img() %>" alt="Lorem ipsum" /></a>
+					<%}else{ %>
 					<a href="#" title="Lorem ipsum" class="thumbnail"><img src="http://lorempixel.com/250/140/people" alt="Lorem ipsum" /></a>
+					<%} %>
 				</div>
 				<div class="col-xs-12 col-sm-12 col-md-2">
 					<ul class="meta-search">

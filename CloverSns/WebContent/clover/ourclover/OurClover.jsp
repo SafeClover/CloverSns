@@ -40,10 +40,6 @@
 	}
 	 */
 	 
-	function UpNo(upno){
-		document.getElementById("upno").value = upno;
-	}
-	 
 	function pic_ModalClose(){
 		$(".modal").modal("hide");
 	}
@@ -71,12 +67,44 @@
 -->
 
 <%
+	String id = (String)session.getAttribute("id");
+
 	ContentDao dao = new ContentDao();
 	ContentDto dto = new ContentDto();
-	
-	Vector ourclover_vector = dao.getOurclover();
 
-	for(int i=0; i<ourclover_vector.size(); i++){
+	Vector ourclover_vector = dao.getOurclover(id);
+
+	int totalRecord = 0; // 전체 글의 갯수
+	int numPerPage = 15; // 한 페이지당 보여질 글의 갯수
+	int pagePerBlock = 5; // 한 블럭당 페이지 수
+	int totalPage = 0; // 전체 페이지 수
+	int totalBlock = 0; // 전체 블럭 수
+	int nowPage = 0; // 현재 페이지 번호
+	int nowBlock = 0; // 현재 블럭 번호
+	int beginPerPage = 0; // 페이지당 시작 번호
+	
+	totalRecord = ourclover_vector.size();
+	totalPage = (int)(Math.ceil((double)totalRecord/numPerPage));
+	
+	if(request.getParameter("nowPage") != null)
+		nowPage = Integer.parseInt(request.getParameter("nowPage"));
+	
+	if(request.getParameter("nowBlock") != null)
+		nowBlock = Integer.parseInt(request.getParameter("nowBlock"));
+	
+	beginPerPage = nowPage * numPerPage;
+	
+	totalBlock = (int)(Math.ceil((double)totalPage/pagePerBlock));
+%>
+
+<div class="container">
+	<div class="row">
+<%
+	for(int i=beginPerPage; i<beginPerPage + numPerPage; i++){
+		if(i == totalRecord){
+			break;
+		}
+		
 		dto = (ContentDto)ourclover_vector.get(i);
 %>
 
@@ -84,7 +112,7 @@
 
 	<div style="position: absolute; top: <%=(Math.floor((double)i/5)*300)+50%>px; left: <%=((i%5)*300)+100%>px;">
 		<div class="position2">
-			<a href="#" data-toggle="modal" data-target=".ourclover<%=dto.getUpNo()%>" onclick="UpNo('<%=dto.getUpNo()%>')">
+			<a href="#" data-toggle="modal" data-target=".ourclover<%=dto.getUpNo()%>" >
 				<img class="picture" src="/CloverSns/style/img/clover.png">
 			</a>
 		</div>
@@ -92,10 +120,55 @@
 			<img class="picture" src="/CloverSns/img/<%= dto.getImg_route() %>">
 		</div>
 	</div>
+	
 
 <%		
 	}
 %>
+</div>
+	<hr/>
+
+<!-- 페이징 입니다.!! -->
+      <div class="row text-center" style="position: absolute; top:<%=Math.floor(((double)ourclover_vector.size()/5)*200)+250%>px; left:50%;">
+
+            <div class="paging">
+                <ul class="pagination">
+                	<%
+                		if(nowBlock==0){ //첫번째 블럭일때 클릭방지
+                	%>
+                   		<li class="disabled"><a>&laquo;</a></li>                			
+                    <% 
+                		}else{
+                			%>
+                   		<li><a href="OurClover.jsp?nowBlock=<%=nowBlock-1%>&nowPage=<%=pagePerBlock*(nowBlock-1)%>">&laquo;</a></li>                			
+                		<% 
+                		}
+                		for(int i=0; i<pagePerBlock; i++){ //for문 돌면서 블럭 출력
+	                    	if(i == 0){ %>
+	                    		<script>document.getElementById("list2").class="active";</script>
+	                    	<% } 
+	                    	if((nowBlock*pagePerBlock) + i<totalPage){//필요한 페이지만 블럭에 나타나도록 
+	                    		if(i == nowPage){
+	                    	%>		<li class="active"><a href="OurClover.jsp?nowBlock=<%=nowBlock%>&nowPage=<%=(nowBlock*pagePerBlock) + i%>" id="list2"><%=(nowBlock*pagePerBlock) + i + 1%></a></li>
+		                    <%	}else{
+	                    	%>		<li><a href="OurClover.jsp?nowBlock=<%=nowBlock%>&nowPage=<%=(nowBlock*pagePerBlock) + i%>" id="list2"><%=(nowBlock*pagePerBlock) + i + 1%></a></li>		
+		                    <%
+		                    	}
+	                    	} 
+                    	} 
+                    	if(nowBlock+1<totalBlock){
+                    	%>
+                    		<li><a href="OurClover.jsp?nowBlock=<%=nowBlock+1%>&nowPage=<%=pagePerBlock*(nowBlock+1)%>">&raquo;</a></li>
+                		<%
+                    	}else{ //마지막 블럭일 때 클릭 방지 
+                		%>
+                    		<li class="disabled"><a>&raquo;</a></li>                			
+                		<% 
+                		}%>
+                </ul>	
+            </div>
+        </div>
+</div>
 
 
 <!-- 
@@ -104,7 +177,7 @@
 	footer의 top 속성값은 사진 갯수에 비례해서 증가하도록 해야할듯?
 -->
 
-	<div style="position: absolute; top:<%=Math.floor(((double)ourclover_vector.size()/5)*300)+100%>px;">
+	<div style="position: absolute; top:<%=Math.floor(((double)ourclover_vector.size()/5)*200)+300%>px; left:50%;">
 		<jsp:include page="/clover/bar/footer.jsp"></jsp:include>
 	</div>
 	

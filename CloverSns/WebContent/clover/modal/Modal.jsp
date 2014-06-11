@@ -4,6 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
 <title>Modal</title>
 
 <script>
@@ -26,9 +27,16 @@
         	//alert(this.value); //선택한 이미지 경로 표시 
         	readURL(this); 
       	}); 
-	}); 
-    		
-	//라디오버튼용
+	});
+	
+    function UpLoad(){
+		var theForm = document.uploadModal;
+		var link =  document.location.href;
+		theForm.action = "/CloverSns/clover/modal/UploadModal_proc.jsp?link=" + link ;
+		theForm.submit();
+	}
+    
+    //라디오버튼
     function privacy(select){
     	document.getElementById("select").value = select.id;
     }
@@ -36,24 +44,24 @@
 
 </head>
 <body>
-
  <!-- 업로드 모달 -->
-   <div class="container">
+   <div class="container" >
       <div class="row">
          <div class="modal fade uploadModal" id="uploadModal">
             <div class="modal-dialog">
-               <div class="modal-content">
+               <div class="modal-content" style="background-color:hotpink;">
                   <div class="modal-header">
                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                      	X
 					 </button>
-                     <h3 class="modal-title">파일업로드</h3> 
+                     <h3 class="modal-title">행복했던 순간을 담아 보세요.</h3> 
                   </div> <!-- 모달 헤더끝 -->
                   
-                  <form method="post" action="/CloverSns/clover/upload_test/UploadModal_proc.jsp" name="fr" enctype="multipart/form-data" >
+<!--                   <form method="post" action="/CloverSns/clover/modal/UploadModal_proc.jsp" name="fr" enctype="multipart/form-data" > -->
+                  <form method="post" id="uploadModal" enctype="multipart/form-data" name = "uploadModal">
                  	 <div>
                   		<div class="modal-body" style="float:left; width:50%; height:330px;">            
-                     		<div class="modal-body" style="width:100%; height:105%;">
+                     		<div class="modal-body" style="width:100%; height:105%; background-color:white;">
                     	 		<img style="width:100%; height:105%;" class="img-responsive center-block" id="blah" alt="your image" name="image"/>
                      		</div>
                    		</div>
@@ -61,10 +69,10 @@
                   		<div class="modal-body">
                   			<div class="modal-body" align="center">
                   				<h6 align="center">공개범위를 정해주세요</h6>         
-                  				<input type="radio" name="btn" value="private" id="비공개" onclick="privacy(this)"/>비공개&nbsp;
-                  				<input type="radio" name="btn" value="friends" id="친구공개" onclick="privacy(this)"/>친구공개&nbsp;
-                  				<input type="radio" name="btn" value="contest" id="자랑하기" onclick="privacy(this)"/>자랑하기
-                  				<input type="text" name="select" id="select" size="5" style="text-align: center;" readonly />로 저장됩니다.
+                  				<input type="radio" name="btn" value="privacy" />비공개&nbsp;
+                  				<input type="radio" name="btn" value="friends" />친구공개&nbsp;
+                  				<input type="radio" name="btn" value="contest" />전체공개
+                  				<input type="text" name="select" id="select" size="5" style="text-align: center;" readonly />를 선택하셨습니다.
                   			</div>
                   	
                   			<div class="modal-body" align="center">
@@ -72,10 +80,12 @@
                   				<textarea rows="10" cols="30" name="writing" style="overflow-y:scroll" placeholder="글입력" name="contents"></textarea>
                   			</div>
                   		</div>
+                  		
+                  		
                   </div>
                   
                   	<div align="right" style="margin-right: 40px">
-                  		<input type="submit" name="upload" value="업로드"/>
+                  		<input type="button" name="upload" value="업로드" onclick="UpLoad()"/>
                   	</div>
                   
                   	<div class="modal-body">                   

@@ -5,7 +5,7 @@
 <head>
 <link href="/CloverSns/style/css/bootstrap.css" rel="stylesheet" />
 <link href="/CloverSns/style/css/bar/header.css" rel="stylesheet" />
-<script src="/CloverSns/clover/style/js/ajax.js"></script>
+<script src="/CloverSns/style/js/header_ajax.js"></script>
 <script src="/CloverSns/style/js/jquery-2.1.1.min.js"></script>
 <script src="/CloverSns/style/js/bootstrap.js"></script>
 <script>
@@ -13,8 +13,10 @@
 var send_id = new Array;
 var receive = null;
 
+
 history.go(1); // 로그인 페이지에서 뒤로가기 막는것, 지우면 T^T
-	
+
+
 <% 
 	String id = (String)session.getAttribute("id");
 	Vector v = (Vector)request.getAttribute("getAlarm");
@@ -25,6 +27,7 @@ history.go(1); // 로그인 페이지에서 뒤로가기 막는것, 지우면 T^T
 		sendRequest(url, params, callback, null);
 		/* document.getalarm.submit(); */
 	}
+
 
 function callback() {
       if (httpRequest.readyState == 4) {
@@ -38,12 +41,14 @@ function callback() {
             var data = httpRequest.responseText;
             var cutTmp = data.split(',');
 
+
             for(var i=0; i<cutTmp.length; i++){
 		  		$("#send").remove();
             }
 
+
             for(var i=0; i<cutTmp.length; i++) {
-                $("#alarm").append("<li id='send'><a href='#'>" + cutTmp[i] + "</a></li><input type='hidden' name='id_send' value='" + cutTmp[i] + "' />");
+                $("#alarm").append("<li id='send'><a href='#'>" + cutTmp[i] + "</a></li>");
             	send_id[i] = cutTmp[i];
             }
            	$("#alarm li").each(
@@ -54,10 +59,12 @@ function callback() {
            			function(){
            				receive = confirm(send_id[$(this).attr("idx")-1] + "님의 친구 요청을 수락하시겠습니까?");
            				if(receive==true){
-           					document.getalarm.command.value = "acceptedfriend";
-           					alert(document.getalarm.command.value);
-           					   
-           					document.getalarm.submit();
+           					/* document.getalarm.command.value = "acceptedfriend";
+           					alert(document.getalarm.command.value); */
+           					var url = "/CloverSns/friend.action";
+           					var params = "command=acceptedfriend&send_id="+send_id[$(this).attr("idx")-1];
+           					sendRequest(url, params, callback2, null);    
+           					/* document.getalarm.submit(); */
            				}
            			}
            		);
@@ -66,7 +73,16 @@ function callback() {
          }
       }
    }
-   
+	function callback2(){
+		   if (httpRequest.readyState == 4) {
+		         if (httpRequest.status == 200) {
+		        	 var message = httpRequest.responseText;
+		        	 alert(message);
+		         }else {
+		             alert(httpRequest.status);
+		         }
+		   }
+	}
    $(document).ready(
 		function(){
 			$("#upload").click(
@@ -96,7 +112,7 @@ function callback() {
             <span id="main_icon" class="glyphicon glyphicon-align-justify" onclick="fnGetalarm()"></span>
          </a>
          <ul class="dropdown-menu" >
-            <li><a href="#"><span class="glyphicon glyphicon-user"></span> 친구목록</a></li>
+            <li><a href="/CloverSns/clover/friends/FriendsList.jsp" target="head"><span class="glyphicon glyphicon-user"></span> 친구목록</a></li>
             
             <form style="color: #dddddd">
             <li class="dropdown-submenu">
@@ -114,7 +130,7 @@ function callback() {
                </ul>
             </li>
             </form>
-            <form method="post" action="/CloverSns/friend.action" name="getalarm" >
+          <!--   <div name="getalarm" > -->
                <li class="dropdown-submenu" >
                   <a href="#">
                      <span class="glyphicon glyphicon-bell"></span> 친구신청알림
@@ -124,9 +140,9 @@ function callback() {
                   		<li id="send"></li>
                   </ul>   
                </li>
-               <input type="hidden" name="command" value="getFriendAlarm" />
+              <!--  <input type="hidden" name="command" value="getFriendAlarm" /> -->
                <!-- <input type="hidden" name="id_get" value="scvasas" /> -->
-            </form>
+            <!-- </div> -->
             <li>
                <a href="#"><span class="glyphicon glyphicon-cloud"></span> 채팅</a>
             </li>
@@ -141,7 +157,7 @@ function callback() {
          </a>
          <ul class="dropdown-menu">
             <li>
-               <a href="#"><span class="glyphicon glyphicon-user"></span>회원정보수정</a>
+               <a href="Infoedit.index?index=Infoedit"><span class="glyphicon glyphicon-user"></span>회원정보수정</a>
             </li>
             <li>
                <a href="/CloverSns/clover/login_reg/Login.jsp"><span class="glyphicon glyphicon-cloud"></span>로그아웃</a>
@@ -162,10 +178,10 @@ function callback() {
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="/CloverSns/clover/mypage/MyPage.jsp" target="head" alt="마이페이지"><img class="img-header" src="/CloverSns/style/img/headerIcon/mypage.png" class="img-responsive center-block">마이페이지</a></li>
-                    <li><a href="/CloverSns/clover/ourclover/OurClover.jsp" target="head" alt="뉴스피드"><img class="img-header" src="/CloverSns/style/img/headerIcon/newsfeed.png" class="img-responsive center-block"> 뉴스피드</a></li>
-                    <li><a href="/CloverSns/clover/contest/ContestBoard.jsp" target="head" alt="자랑하기"><img class="img-header" src="/CloverSns/style/img/headerIcon/contest.png" class="img-responsive center-block">자랑하기</a></li>
-                    <li><a href="#" alt=" 업로드" id="upload" data-toggle="modal" data-target="uploadModal"><img class="img-header" target="head" src="/CloverSns/style/img/headerIcon/upload.png" class="img-responsive center-block"> 업로드</a></li>
+                    <li><a href="Mypage.index?index=Mypage" alt=""><img class="img-header" src="/CloverSns/style/img/headerIcon/mypage.png" class="img-responsive center-block">마이페이지</a></li>
+                    <li><a href="Ourclover.index?index=Ourclover" alt="클로버"><img class="img-header" src="/CloverSns/style/img/headerIcon/newsfeed.png" class="img-responsive center-block">클로버</a></li>
+                    <li><a href="Contest.index?index=Contest" alt="자랑하기"><img class="img-header" src="/CloverSns/style/img/headerIcon/contest.png" class="img-responsive center-block">자랑하기</a></li>
+                    <li><a href="#" alt=" 업로드" id="upload" data-toggle="modal" data-target="uploadModal"><img class="img-header" src="/CloverSns/style/img/headerIcon/upload.png" class="img-responsive center-block"> 업로드</a></li>
                 </ul>
             </div>
             

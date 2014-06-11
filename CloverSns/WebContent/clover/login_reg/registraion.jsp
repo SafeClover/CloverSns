@@ -20,8 +20,8 @@
 		var id = document.getElementById("id");
 		
 		if(!id.value){
-			alert("아이디를 입력해 주세요");
-			id.focus();
+			var idcomment = document.getElementById("idComment");
+			idComment.innerHTML = "아이디를 입력해주세요.";
 			return;
 		}
 		else{			
@@ -127,10 +127,10 @@
 			
 			<p>
 				<label for="id">아이디</label>
-				<input type="text" id="id" name="id" placeholder="아이디" required="required"/>
+				<input type="text" id="id" name="id" placeholder="아이디" required="required" onkeyup="idCheck()"/>
 				<input type="hidden" name="sameIdCheck" />
 				<p id="idComment" style=" color: red;"></p>
-				<input type="button" value="중복확인" onclick="idCheck()" /><br/><br/>
+				<!-- <input type="button" value="중복확인" onclick="idCheck()" /> -->
 			</p>
 			
 			<p>

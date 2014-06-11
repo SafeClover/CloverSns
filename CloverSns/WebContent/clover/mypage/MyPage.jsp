@@ -19,7 +19,31 @@
 
 <body>
 
-<% Vector v = dao.getMypage((String)session.getAttribute("id"));%>
+<% 
+	Vector v = dao.getMypage((String)session.getAttribute("id"));
+	
+	int totalRecord = 0; // 전체 글의 갯수
+	int numPerPage = 10; // 한 페이지당 보여질 글의 갯수
+	int pagePerBlock = 5; // 한 블럭당 페이지 수
+	int totalPage = 0; // 전체 페이지 수
+	int totalBlock = 0; // 전체 블럭 수
+	int nowPage = 0; // 현재 페이지 번호
+	int nowBlock = 0; // 현재 블럭 번호
+	int beginPerPage = 0; // 페이지당 시작 번호
+	
+	totalRecord = v.size();
+	totalPage = (int)(Math.ceil((double)totalRecord/numPerPage));
+
+	if(request.getParameter("nowPage") != null)
+		nowPage = Integer.parseInt(request.getParameter("nowPage"));
+
+	if(request.getParameter("nowBlock") != null)
+		nowBlock = Integer.parseInt(request.getParameter("nowBlock"));
+
+	beginPerPage = nowPage * numPerPage;
+
+	totalBlock = (int)(Math.ceil((double)totalPage/pagePerBlock));
+%>
    
 	<!-- 프로필 -->
 
@@ -27,11 +51,8 @@
 		<div class="row">
 			<div align="right">
 				<a href="/CloverSns/clover/infoedit/InfoEdit.jsp" target="head">
-					<img alt="" src="/CloverSns/style/img/Gear.png" style="width:40px; height:40px;"/>프로필수정</a>
-			
-				<!-- <img class="img-responsive profilesize" 
-				src="/CloverSns/style/img/lim.jpg"> 
-				<a href="javascript:popupOpen();"> 프로필 편집 </a> -->
+					<img src="/CloverSns/style/img/Gear.png" style="width:40px; height:40px;"/>프로필수정
+				</a>
 			</div>
 		</div>
 	</div>
@@ -48,8 +69,12 @@
    
       <div class="row">
         <% 
-         for(int i=0; i<v.size(); i++){ 
-         dto = (ContentDto)v.get(i);    
+        	for(int i=beginPerPage; i<beginPerPage + numPerPage; i++){
+    			if(i == totalRecord){
+    				break;
+    			}
+         		
+    			dto = (ContentDto)v.get(i);    
         %>
          <div class="col portfolio-item">
             <a href="#" data-toggle="modal" data-target=".contest<%= dto.getUpNo() %>">
@@ -68,15 +93,39 @@
 
             <div class="paging">
                 <ul class="pagination">
-                    <li><a href="#">&laquo;</a></li>
-                    <% for(int i=1; i<=5; i++){ 
-                       if(i == 1){ %>
-                          <script>document.getElementById("list2").class="active";</script>
-                       <% } %>
-                    <li><a href="#" id="list2"><%= i %></a></li>
-                    <% } %>
-                    <li><a href="#">&raquo;</a></li>
-                </ul>
+                	<%
+                		if(nowBlock==0){ //첫번째 블럭일때 클릭방지
+                	%>
+                   		<li class="disabled"><a>&laquo;</a></li>                			
+                    <% 
+                		}else{
+                			%>
+                   		<li><a href="MyPage.jsp?nowBlock=<%=nowBlock-1%>&nowPage=<%=pagePerBlock*(nowBlock-1)%>">&laquo;</a></li>                			
+                		<% 
+                		}
+                		for(int i=0; i<pagePerBlock; i++){ //for문 돌면서 블럭 출력
+	                    	if(i == 0){ %>
+	                    		<script>document.getElementById("list2").class="active";</script>
+	                    	<% } 
+	                    	if((nowBlock*pagePerBlock) + i<totalPage){//필요한 페이지만 블럭에 나타나도록 
+	                    		if(i == nowPage){
+	                    	%>		<li class="active"><a href="MyPage.jsp?nowBlock=<%=nowBlock%>&nowPage=<%=(nowBlock*pagePerBlock) + i%>" id="list2"><%=(nowBlock*pagePerBlock) + i + 1%></a></li>
+		                    <%	}else{
+	                    	%>		<li><a href="MyPage.jsp?nowBlock=<%=nowBlock%>&nowPage=<%=(nowBlock*pagePerBlock) + i%>" id="list2"><%=(nowBlock*pagePerBlock) + i + 1%></a></li>		
+		                    <%
+		                    	}
+	                    	} 
+                    	} 
+                    	if(nowBlock+1<totalBlock){
+                    	%>
+                    		<li><a href="MyPage.jsp?nowBlock=<%=nowBlock+1%>&nowPage=<%=pagePerBlock*(nowBlock+1)%>">&raquo;</a></li>
+                		<%
+                    	}else{ //마지막 블럭일 때 클릭 방지 
+                		%>
+                    		<li class="disabled"><a>&raquo;</a></li>                			
+                		<% 
+                		}%>
+                </ul>	
             </div>
         </div>
    </div> <!-- container 끝 -->
@@ -117,8 +166,9 @@
    </div> <!-- container 끝 -->
 <% } %>
 
-
-<jsp:include page="/clover/bar/footer.jsp"></jsp:include>
+	<div style="text-align: center;">
+		<jsp:include page="/clover/bar/footer.jsp"></jsp:include>
+	</div>
 
 </body>
 </html>

@@ -143,15 +143,16 @@ public class MemberDao {
 
 	
 	
-	public Vector<MemberDto> SearchFriends(String keyword){
+	public Vector<MemberDto> SearchFriends(String keyword, String id){
 	      Vector<MemberDto> v = new Vector<MemberDto>();
+	      Vector list = new Vector();
+	      Vector total = new Vector();
+	      
 	      try{
-	         //keyword가 null값인지 확인
+	  
 	         String sql = "select mem_name, mem_id from member where mem_name like '%"+keyword+"%' and mem_id != 'admin'";
 	         
 	         stmt = con.prepareStatement(sql);
-
-	         
 	         rs = stmt.executeQuery();
 	         int size = getResultSetSize(rs);
 	         if(size == 0){
@@ -159,27 +160,66 @@ public class MemberDao {
 	         }else{
 	            int i = 0;
 	            while(rs.next()){
-	               MemberDto dto = new MemberDto();
+	            	  MemberDto dto = new MemberDto();
 	                  dto.setMem_name(rs.getString("mem_name"));
 	                  dto.setMem_id(rs.getString("mem_id"));
 	                  v.add(dto);
 	                  i++;
 	               }
-	            return v;
+	         }
+	         for(int i = 0; i<v.size();i++){
+	        	 MemberDto dto = v.get(i);
+	        	 String list_id = dto.getMem_id();
+	        	
+	        	 //이미 친구 인지 검사
+		         sql="select count(get_id) from friends where (send_id=? or get_id=?) and (send_id=? or get_id=?)";
+		         stmt = con.prepareStatement(sql);
+		         stmt.setString(1, id);
+		         stmt.setString(2, id);
+		         stmt.setString(3, list_id);
+		         stmt.setString(4, list_id);
+		         rs = stmt.executeQuery();
+		         rs.next();
+		         int isfriend = rs.getInt(1);
+		         System.out.println("isfriend"+isfriend);
+		         
+		         //이미 친구 신청중인지 검사
+		         sql="select count(get_id) from alarm where (send_id=? or get_id=?) and (send_id=? or get_id=?)";
+		         stmt = con.prepareStatement(sql);
+		         stmt.setString(1, id);
+		         stmt.setString(2, id);
+		         stmt.setString(3, list_id);
+		         stmt.setString(4, list_id);
+		         rs = stmt.executeQuery();
+		         rs.next();
+		         int havealarm = rs.getInt(1);
+		         System.out.println("havealarm : "+havealarm);
+		         list.add(dto.getMem_id());
+		         list.add(dto.getMem_name());
+		         if(isfriend>0){ //친구 일때
+		        	 list.add("3");
+		         }
+		         else if(havealarm>0){ //친구 신청 알람이 있을 경우
+		        	 list.add("2");
+		         }
+		         else{
+		        	 list.add("1");
+		         }
+		         total.add(list);
 	         }
 	      }
 	      catch(Exception err){
-	         System.out.println("LoginConfirm : " + err);
+	         System.out.println("searchFriends : " + err);
 	      }
 	      finally{
 	         pool.freeConnection(con, stmt, rs);
 	      }
-	      return null;
+	      return total;
 	        
 	      
 	   }
 	   
-	   public static int getResultSetSize(ResultSet resultSet) { //resultset size 리턴하는 메서드
+	 public static int getResultSetSize(ResultSet resultSet) { //resultset size 리턴하는 메서드
 	       int size = -1;
 
 	       try {
@@ -194,76 +234,78 @@ public class MemberDao {
 	   }
 	   
 	   public void friendRequest(String id_get, String id_req){ //친구신청
-	      System.out.println(id_get+","+id_req);
-	      try{
-	         String sql = "INSERT INTO alarm(get_id, send_id) "
-	               +"VALUES(?, ?)";
+		      System.out.println(id_get+","+id_req);
+		      
+		      
+		      try{
+		    	 String sql = "INSERT INTO alarm(get_id, send_id) "
+		               +"VALUES(?, ?)";
 
-	         stmt = con.prepareStatement(sql);
-	         stmt.setString(1, id_get);
-	         stmt.setString(2, id_req);
-	         stmt.executeUpdate();
-	         
-	         System.out.println("친구신청완료");
-	         
-	         }
-	      catch(Exception err){
-	         System.out.println("AlarmInsert() : " + err);
-	      }
-	      finally{
-	         pool.freeConnection(con, stmt, rs);
-	      }
+		         stmt = con.prepareStatement(sql);
+		         stmt.setString(1, id_get);
+		         stmt.setString(2, id_req);
+		         stmt.executeUpdate();
+		         
+		         System.out.println("친구신청완료");
+		         
+		         }
+		      catch(Exception err){
+		         System.out.println("AlarmInsert() : " + err);
+		      }
+		      finally{
+		         pool.freeConnection(con, stmt, rs);
+		      }
 	   }
 	   
-	   public Vector getFriendAlarm(String get_id){
-	      Vector v = new Vector();
-	      try{
-	         String sql = "select send_id from alarm where get_id=?";
-	         
-	         stmt = con.prepareStatement(sql);
-	         stmt.setString(1, get_id);
-	         rs = stmt.executeQuery();
-	         
-	         while(rs.next()){
-	            v.add(rs.getString("send_id"));
-	            
-	         }
-	         
-	      }
-	      catch(Exception err){
-	         System.out.println("getFriendAlarm : " + err);
-	      }finally{
-	         pool.freeConnection(con, stmt, rs);
-	      }
-	      return v;
+	   public Vector getFriendAlarm(String get_id){	// 친구 신청 알림
+		      Vector v = new Vector();
+		      try{
+		         String sql = "select send_id from alarm where get_id=?";
+		         
+		         stmt = con.prepareStatement(sql);
+		         stmt.setString(1, get_id);
+		         rs = stmt.executeQuery();
+		         
+		         while(rs.next()){
+		            v.add(rs.getString("send_id"));
+		            
+		         }
+		         
+		      }
+		      catch(Exception err){
+		         System.out.println("getFriendAlarm : " + err);
+		      }finally{
+		         pool.freeConnection(con, stmt, rs);
+		      }
+		      return v;
 	   }
 	   
 	   public void FriendInsert(String send_id, String get_id){   //친구 수락 후 친구목록에 추가
-	      try{
-	         String sql = "INSERT INTO friends(get_id, send_id) "+"VALUES(?,?)";
+		      try{
+		         String sql = "INSERT INTO friends(get_id, send_id) "+"VALUES(?,?)";
 
-	         stmt = con.prepareStatement(sql);
-	         stmt.setString(1, get_id);
-	         stmt.setString(2, send_id);
-	         stmt.executeUpdate();
-	         System.out.println("친구신청완료");
-	         
-	         sql = "delete from alarm where send_id=? and get_id=?";
-	         stmt = con.prepareStatement(sql);
-	         stmt.setString(1, send_id);
-	         stmt.setString(2, get_id);
-	         stmt.executeUpdate();
-	         
-	         System.out.println("알람 삭제 완료");
-	         
-	         }
-	      catch(Exception err){
-	         System.out.println("FriendInsert() : " + err);
-	      }
-	      finally{
-	         pool.freeConnection(con, stmt, rs);
-	      }
-	   }
+		         stmt = con.prepareStatement(sql);
+		         stmt.setString(1, get_id);
+		         stmt.setString(2, send_id);
+		         stmt.executeUpdate();
+		         System.out.println("친구신청완료");
+		         
+		         sql = "delete from alarm where send_id=? and get_id=?";
+		         stmt = con.prepareStatement(sql);
+		         stmt.setString(1, send_id);
+		         stmt.setString(2, get_id);
+		         stmt.executeUpdate();
+		         
+		         System.out.println("알람 삭제 완료");
+		         
+		         }
+		      catch(Exception err){
+		         System.out.println("FriendInsert() : " + err);
+		      }
+		      finally{
+		         pool.freeConnection(con, stmt, rs);
+		      }
+		   }
 	
 	public void InfomationEdit(MemberDto dto){ //회원 정보 수정
 		try{
@@ -288,6 +330,42 @@ public class MemberDao {
 		finally{
 			pool.freeConnection(con, stmt, rs);
 		}
+	}
+	
+	public Vector getMyfriends(String id){ //내 친구 불러오기
+		Vector<MemberDto> myfriends = new Vector<MemberDto>();
+		try{
+	         String sql = "select mem_img, mem_id, mem_name, mem_birth from member m, friends f where ((f.get_id=?) and (f.send_id=m.mem_id)) or ((f.send_id=?) and (f.get_id=m.mem_id))";
+	         
+	         stmt = con.prepareStatement(sql);
+	         stmt.setString(1, id);
+	         stmt.setString(2, id);
+	         rs = stmt.executeQuery();
+	         int size = getResultSetSize(rs);
+	         System.out.println("myfriends:"+size);
+	         if(size == 0){
+	            return null;
+	         }else{
+	            int i = 0;
+	            while(rs.next()){
+	            	  MemberDto dto = new MemberDto();
+	                  dto.setMem_img(rs.getString("mem_img"));
+	                  dto.setMem_id(rs.getString("mem_id"));
+	                  dto.setMem_name(rs.getString("mem_name"));
+	                  dto.setMem_birth(rs.getString("mem_birth"));
+	                  myfriends.add(dto);
+	                  i++;
+	               }
+	         }
+	         
+	      }
+	      catch(Exception err){
+	         System.out.println("myfriends : " + err);
+	      }
+	      finally{
+	         pool.freeConnection(con, stmt, rs);
+	      }
+		return myfriends;
 	}
 
 
