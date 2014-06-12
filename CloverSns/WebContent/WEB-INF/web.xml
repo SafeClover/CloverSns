@@ -54,6 +54,7 @@
 		<url-pattern>/friend.action</url-pattern>
 	</servlet-mapping>
 	
+	
 	<servlet>
 		<servlet-name>index</servlet-name>
 		<servlet-class>index.mvc.IndexController</servlet-class>

@@ -18,12 +18,20 @@ table{
 	height: 200px;
 }
 
+.pictureCover{
+	margin-left:6%;
+	margin-bottom:50px;
+	padding:4px;
+	width:220px;
+	height:220px;
+}
+
 .picture{
 	margin-left:6%;
 	margin-bottom:50px;
 	padding:4px;
 	width:200px;
-	height:200px;
+	height:200px;	
 }
 
 .position1{

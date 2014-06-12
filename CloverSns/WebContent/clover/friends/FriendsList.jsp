@@ -16,17 +16,20 @@
 <script src="/CloverSns/style/js/bootstrap.js"></script>
  <script  type="text/javascript">
  		
-		function fnFriendRequest(name){
+		function fnFriendRequest(name, id){
+			
 			var del=confirm(name+"님께 친구 요청을 보내시겠습니까?");
 			if(del==true){
-				document.keywordfor.value = document.keyword.value;
-				document.friendRequest.submit();				
+				document.getElementById("keywordfor").value = document.getElementById("keyword").value;
+				document.getElementById("id_get").value=id;
+				document.friendRequest.submit();	
+				
 			}
 			
 		}
 		
 		function isNull(){
-			if(document.keyword.value != null || document.keyword.value != ""){
+			if(document.getElementById("keyword").value != null || document.getElementById("keyword").value != ""){
 				document.search.submit();
 			}
 		}
@@ -222,7 +225,7 @@
 						<%if(request.getAttribute("keyword")==null){ %>
 							<input type="text" name="keyword" class="search-query form-control" placeholder="Search" title="r"/> 
 						<%}else{ %> <!-- 검색어 유지 -->
-							<input type="text" name="keyword" value="<%=request.getAttribute("keyword")%>" class="search-query form-control" placeholder="Search" title="r"/> 
+							<input type="text" id="keyword" name="keyword" value="<%=request.getAttribute("keyword")%>" class="search-query form-control" placeholder="Search" title="r"/> 
 						<%} %>
 							<span class="input-group-btn">
 								<button class="btn btn-danger" type="button" onclick="isNull()">
@@ -247,6 +250,9 @@
 				검색결과가 없습니다.
 			<%	
 			}else{
+				%>
+				<form action="/CloverSns/friend.action" name="friendRequest" method="post">
+				<%
 		    	for(int i =0; i< searchResult.size();i++){
 		    		Vector list = (Vector)searchResult.get(i);
 		    		String getMem_id = (String)list.get(0);
@@ -259,15 +265,15 @@
 					</div>
 					<div class="col-xs-12 col-sm-12 col-md-2">
 						<ul class="meta-search">
-							<li><i class="glyphicon glyphicon-calendar"></i> <span><%=getMem_name%></span></li>
+							<li><i class="glyphicon glyphicon-calendar"></i> <span><%=getMem_name%><%=getMem_id %></span></li>
 						</ul>
 					</div>
 					<!-- 친구 추가 버튼 -->
-					<form action="/CloverSns/friend.action" name="friendRequest" method="post">
+					
 						<div class="col-xs-12 col-sm-12 col-md-7 excerpet">
 						<%if(isFriendorAlarm.equals("1")){%>
 							<span class="plus">친구추가
-								<input type="button" onclick="fnFriendRequest('<%= getMem_name%>')"><i class="glyphicon glyphicon-plus"></i></input>
+								<input type="button" onclick="fnFriendRequest('<%= getMem_name%>','<%=getMem_id%>')"><i class="glyphicon glyphicon-plus"></i></input>
 			               	<!-- <a href="#" title="Lorem ipsum"></a> -->
 			                </span>
 			             <%}else if(isFriendorAlarm.equals("2")){%>
@@ -276,21 +282,39 @@
 			             	우린 이미 친구!
 			             <%} %>
 						</div>
-						<input type="hidden" name="command" value="friendRequest"/>
-						<input type="hidden" name="id_get" value="<%=getMem_id%>" />
-			             <input type="hidden" name="keywordfor" />
-					</form>
+						 <input type="hidden" name="command" value="friendRequest"/>
+			             <input type="hidden" id="keywordfor" name="keywordfor" />
+						<input type="hidden" name="id_get" id="id_get"/> 
+					
 					<span class="clearfix borda"></span>
 				</article>
 				<%
 		    	}
+				%>
+			</form>
+		
+		<%
 			}
 			%>
 		</section>
 	</div> 
 	  </div>
 	</div>
+		
+	<div class="container1" id="center">
+		<div class="row">
+			<div class="navbar1 navbar1-inverse">
+				<form class="navbar1-search pull-right">
+					<input type="text" class="search-query" placeholder="친구검색">
+				</form>
+			</div>
+		</div>
+	</div>
+	<br/>
 
+	
+	
+	
 	<jsp:include page="/clover/bar/footer.jsp"></jsp:include>
 	
 </body>

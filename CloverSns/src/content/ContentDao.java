@@ -30,7 +30,7 @@ public class ContentDao {
 		Vector v = new Vector();
 		String sql;
 		try{
-			sql = "select * from content where privacy = 'privacy' and id=? order by regdate desc";
+			sql = "select * from content where id=? order by regdate desc";
 			
 			stmt = con.prepareStatement(sql);
 			

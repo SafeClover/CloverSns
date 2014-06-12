@@ -72,7 +72,6 @@
                   				<input type="radio" name="btn" value="privacy" />비공개&nbsp;
                   				<input type="radio" name="btn" value="friends" />친구공개&nbsp;
                   				<input type="radio" name="btn" value="contest" />전체공개
-                  				<input type="text" name="select" id="select" size="5" style="text-align: center;" readonly />를 선택하셨습니다.
                   			</div>
                   	
                   			<div class="modal-body" align="center">

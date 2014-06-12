@@ -145,14 +145,15 @@ public class MemberDao {
 	
 	public Vector<MemberDto> SearchFriends(String keyword, String id){
 	      Vector<MemberDto> v = new Vector<MemberDto>();
-	      Vector list = new Vector();
+	     
 	      Vector total = new Vector();
 	      
 	      try{
-	  
-	         String sql = "select mem_name, mem_id from member where mem_name like '%"+keyword+"%' and mem_id != 'admin'";
+	    	  //관리자와 자기자신 빼고 검색
+	         String sql = "select mem_name, mem_id, mem_img from member where mem_name like '%"+keyword+"%' and mem_id != 'admin' and mem_id != ?";
 	         
 	         stmt = con.prepareStatement(sql);
+	         stmt.setString(1, id);
 	         rs = stmt.executeQuery();
 	         int size = getResultSetSize(rs);
 	         if(size == 0){
@@ -163,12 +164,18 @@ public class MemberDao {
 	            	  MemberDto dto = new MemberDto();
 	                  dto.setMem_name(rs.getString("mem_name"));
 	                  dto.setMem_id(rs.getString("mem_id"));
+	                  dto.setMem_img(rs.getString("mem_img"));
 	                  v.add(dto);
 	                  i++;
+	                  
 	               }
 	         }
+	         System.out.println("검사전 아이디 갯수 : "+v.size());
+	         int count =0;
 	         for(int i = 0; i<v.size();i++){
-	        	 MemberDto dto = v.get(i);
+	        	 Vector list = new Vector();
+	        	 MemberDto dto =v.get(i);
+	        	 count++;
 	        	 String list_id = dto.getMem_id();
 	        	
 	        	 //이미 친구 인지 검사
@@ -214,6 +221,7 @@ public class MemberDao {
 	      finally{
 	         pool.freeConnection(con, stmt, rs);
 	      }
+	      System.out.println("검색한 아이디 갯수 : " + total.size());
 	      return total;
 	        
 	      

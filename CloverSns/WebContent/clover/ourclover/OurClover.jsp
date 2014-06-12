@@ -9,9 +9,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>OurClover</title>
 
+<jsp:useBean id="xml" class="ourclover.XMLController"></jsp:useBean>
+
 <link href="/CloverSns/style/css/bootstrap.css" rel="stylesheet">
 <link href="/CloverSns/style/css/ourclover/ourclover.css" rel="stylesheet">
 <script src="/CloverSns/style/js/jquery-2.1.1.min.js"></script>
+<script src="/CloverSns/style/js/ajax.js"></script>
 
 <script>
 /* 
@@ -48,6 +51,31 @@
 		$(".modal").modal("hide");
 		document.impression_form.submit();
 	}
+	
+	function fnSelect(){
+        var params = "params="+0;
+        sendRequest("/CloverSns/clover/ourclover/OurClover_XML.jsp", params, callback, "POST");
+     }
+     
+     function callback(){
+         if(httpRequest.readyState == 4){
+               if(httpRequest.status == 200){
+	              var xmlDoc = httpRequest.responseXML;
+	              var friends = xmlDoc.getElementsByTagName("friends");
+		        /* 
+	              for(var i=0; i<friends.length; i++){
+		              var upNo = xmlDoc.getElementsByTagName("friends")[i].firstChild.firstChild.nodeValue;
+		              alert(upNo[i]);
+	              }
+	            */
+               }
+               else{
+                  alert(httpRequest.status);
+               }
+         }
+     }
+
+     window.onload = function(){ fnSelect(); };
 
 </script>
 
@@ -75,7 +103,7 @@
 	Vector ourclover_vector = dao.getOurclover(id);
 
 	int totalRecord = 0; // 전체 글의 갯수
-	int numPerPage = 15; // 한 페이지당 보여질 글의 갯수
+	int numPerPage = 20; // 한 페이지당 보여질 글의 갯수
 	int pagePerBlock = 5; // 한 블럭당 페이지 수
 	int totalPage = 0; // 전체 페이지 수
 	int totalBlock = 0; // 전체 블럭 수
@@ -97,29 +125,41 @@
 	totalBlock = (int)(Math.ceil((double)totalPage/pagePerBlock));
 %>
 
-<div class="container">
-	<div class="row">
+<div class="container" style="width: 100%;">
+	<div class="row" style="width: 100%;">
 <%
+
+	int already = Integer.parseInt(xml.getXmldata(id));
+
 	for(int i=beginPerPage; i<beginPerPage + numPerPage; i++){
+		int top = i;
+		
+		if(i>=20){
+			top = i%20;
+		}
+		
 		if(i == totalRecord){
 			break;
 		}
+		
+		dto = (ContentDto)ourclover_vector.get(i);
+		 if(dto.getUpNo()==already){
+			continue;
+		} 
 		
 		dto = (ContentDto)ourclover_vector.get(i);
 %>
 
 <!-- 사진 리스트 (for문) -->
 
-	<div style="position: absolute; top: <%=(Math.floor((double)i/5)*300)+50%>px; left: <%=((i%5)*300)+100%>px;">
-		<div class="position2">
-			<a href="#" data-toggle="modal" data-target=".ourclover<%=dto.getUpNo()%>" >
-				<img class="picture" src="/CloverSns/style/img/clover.png">
-			</a>
-		</div>
-		<div class="position1">
-			<img class="picture" src="/CloverSns/img/<%= dto.getImg_route() %>">
-		</div>
+	<div style="position: absolute; top: <%=(Math.floor((double)top/5)*250)%>px; left: <%=((i%5)*293)+80%>px;">
+		<a href="#" data-toggle="modal" data-target=".ourclover<%=dto.getUpNo()%>" >
+			<img class="pictureCover" src="/CloverSns/style/img/clover.png">
+		</a>
 	</div>
+
+	 
+		<img class="picture" src="/CloverSns/img/<%= dto.getImg_route() %>">
 	
 
 <%		
@@ -129,7 +169,7 @@
 	<hr/>
 
 <!-- 페이징 입니다.!! -->
-      <div class="row text-center" style="position: absolute; top:<%=Math.floor(((double)ourclover_vector.size()/5)*200)+250%>px; left:50%;">
+      <div class="row text-center" >
 
             <div class="paging">
                 <ul class="pagination">
@@ -177,7 +217,7 @@
 	footer의 top 속성값은 사진 갯수에 비례해서 증가하도록 해야할듯?
 -->
 
-	<div style="position: absolute; top:<%=Math.floor(((double)ourclover_vector.size()/5)*200)+300%>px; left:50%;">
+	<div style="text-align: center">
 		<jsp:include page="/clover/bar/footer.jsp"></jsp:include>
 	</div>
 	

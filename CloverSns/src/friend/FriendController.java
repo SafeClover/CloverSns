@@ -28,13 +28,13 @@ public class FriendController extends HttpServlet{
       req.setCharacterEncoding("euc-kr");
       resp.setCharacterEncoding("euc-kr");
       MemberDao dao = new MemberDao();
-      System.out.println(req.getParameter("command"));
+  
       RequestDispatcher view = null;
       HttpSession session = req.getSession();
       PrintWriter out = resp.getWriter();
       
       String id = (String)session.getAttribute("id"); //현재 접속자 아이디
-
+      System.out.println("현재 command :"+req.getParameter("command"));
       if(req.getParameter("command").equals("search")){ //아이디 검색할 때
          String keyword = req.getParameter("keyword");
          Vector<MemberDto> searchResult = dao.SearchFriends(keyword, id);
@@ -47,16 +47,19 @@ public class FriendController extends HttpServlet{
       }
       else if(req.getParameter("command").equals("friendRequest")){ //친구 요청을 할때
          String id_get = req.getParameter("id_get");
-         /*String id_req = req.getParameter("id_req");*/
-         
+         String id_req = req.getParameter("id_req");
+         System.out.println("키워드 넘기기 : "+req.getParameter("keywordfor"));
          String keyword = req.getParameter("keywordfor");
-         System.out.println(id_get+","+id);
+         System.out.println("친구 신청 :"+id_get+","+id);
          dao.friendRequest(id_get, id);
-         System.out.println("controller");
+         System.out.println("친구요청후 다시 검색값 넘김");
+         Vector<MemberDto> searchResult = dao.SearchFriends(keyword, id);
+         req.setAttribute("searchResult", searchResult);
          req.setAttribute("tab", "search");
          req.setAttribute("keyword", keyword);
          view = req.getRequestDispatcher("/clover/friends/FriendsList.jsp");
          view.forward(req, resp);
+         
       }else if(req.getParameter("command").equals("getFriendAlarm")){ //친구요청 알람을 가져올 때
          System.out.println(req.getParameter("command"));
     	 String id_get = (String) session.getAttribute("id");
@@ -78,14 +81,8 @@ public class FriendController extends HttpServlet{
          
          dao.FriendInsert(send_id, id);
          out.println("ok");
-         /*view = req.getRequestDispatcher("_self");
-         view.forward(req, resp);*/
-      }/*else if(req.getParameter("command").equals("myfriends")){//자신의 친구 목록을 불러올때
-    	 Vector myfriends = dao.getMyfriends(id);
-    	 req.setAttribute("myfriends", myfriends);
-    	 view = req.getRequestDispatcher("/clover/friends/FriendsList.jsp");
-    	 view.forward(req, resp);    	 
-      }*/
+        
+      }
    }
 
 }
