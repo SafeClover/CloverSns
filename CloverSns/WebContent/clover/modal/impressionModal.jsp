@@ -8,6 +8,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>Insert title here</title>
+<script>
+	function Reload(){
+		history.go(0);
+	}
+</script>
 </head>
 <body>
 
@@ -20,7 +25,7 @@
 	            <div class="modal-dialog" style="width: 30%; margin-top: 12%;">
 	               <div class="modal-content">
 	                  <div class="modal-header">
-	                     <button type="button" class="close" data-dismiss="modal">
+	                     <button type="button" class="close" data-dismiss="modal" onclick="Reload()">
 	                     X
 	                     </button>
 	                     <h3 class="modal-title">감상평을 남겨보세요.</h3>
@@ -30,7 +35,7 @@
 	                     <input class="btn btn-primary" type="button" value="전송" onclick="impression_Submit()"/>
 	                  </div> <!-- 모달 바디 끝 -->
 	                  <div class="modal-footer">
-	                    <button type="button" class="btn btn-primary close" data-dismiss="modal">닫기</button>  
+	                    <button type="button" class="btn btn-primary close" data-dismiss="modal" onclick="Reload()">닫기</button>  
 	                  </div>
 	               </div> <!-- 모달 컨텐트 끝 -->
 	            </div> <!-- 모달 다이아로그 끝 -->

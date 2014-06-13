@@ -203,4 +203,35 @@ public class ContentDao {
 			pool.freeConnection(con, stmt, rs);
 		}
 	}
+	
+	// 마이페이지에 리플 불러오는 쿼리
+		public Vector selectReply(Mypage_replyDto dto){
+			Vector v = new Vector();
+			String sql = null;
+			
+			try{
+				sql = "select * from reply where upNo = ? order by regdate desc";
+				
+				stmt = con.prepareStatement(sql);
+				stmt.setInt(1, dto.getUpNo());
+				rs = stmt.executeQuery();
+				
+				while(rs.next()){
+					dto.setId(rs.getString("id"));
+					dto.setRe(rs.getString("re"));
+					dto.setRegdate(rs.getString("regdate"));
+					dto.setUpNo(rs.getInt("upNo"));
+					dto.setName(rs.getString("name"));
+					
+					v.add(dto);	
+				}
+			}
+			catch(Exception err){
+				System.out.println("selectReply : " + err);
+			}
+			finally{
+				pool.freeConnection(con, stmt, rs);
+			}
+			return v;
+		}
 }

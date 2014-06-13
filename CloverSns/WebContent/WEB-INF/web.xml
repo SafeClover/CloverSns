@@ -65,4 +65,15 @@
 		<url-pattern>*.index</url-pattern>
 	</servlet-mapping>
 
+
+	<servlet>
+		<servlet-name>xml</servlet-name>
+		<servlet-class>ourclover.XMLController</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>xml</servlet-name>
+		<url-pattern>/xml.action</url-pattern>
+	</servlet-mapping>
+
 </web-app>

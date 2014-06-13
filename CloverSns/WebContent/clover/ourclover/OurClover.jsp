@@ -43,6 +43,10 @@
 	}
 	 */
 	 
+	function UpNoInsert(upno){
+		 document.getElementById("upno").value = upno;
+	}
+	
 	function pic_ModalClose(){
 		$(".modal").modal("hide");
 	}
@@ -51,36 +55,31 @@
 		$(".modal").modal("hide");
 		document.impression_form.submit();
 	}
-	
-	function fnSelect(){
-        var params = "params="+0;
-        sendRequest("/CloverSns/clover/ourclover/OurClover_XML.jsp", params, callback, "POST");
-     }
-     
-     function callback(){
-         if(httpRequest.readyState == 4){
-               if(httpRequest.status == 200){
-	              var xmlDoc = httpRequest.responseXML;
-	              var friends = xmlDoc.getElementsByTagName("friends");
-		        /* 
-	              for(var i=0; i<friends.length; i++){
-		              var upNo = xmlDoc.getElementsByTagName("friends")[i].firstChild.firstChild.nodeValue;
-		              alert(upNo[i]);
-	              }
-	            */
-               }
-               else{
-                  alert(httpRequest.status);
-               }
-         }
-     }
 
-     window.onload = function(){ fnSelect(); };
+     
+    function PicDelete(upNo){
+ 		var params = "upNo="+upNo;
+ 		var url = "/CloverSns/xml.action";
+ 		sendRequest(url, params, callback, null);
+ 	}
+ 	
+ 	function callback(){
+ 		 if (httpRequest.readyState == 4) {
+ 	         if (httpRequest.status == 200) {
+ 				
+ 	          	/*   
+ 					$(this).prev().html(parseInt($(this).prev().html()) + 1);
+ 	            	document.getElementById("like").disabled="disabled";
+ 	        	*/
+ 	         }
+ 		}
+ 	}
 
 </script>
 
 </head>
 <body>
+
 <!--
  
 	css에 position2가 겹쳐질 두장의 사진중 위쪽에 배치시키는것.
@@ -128,42 +127,61 @@
 <div class="container" style="width: 100%;">
 	<div class="row" style="width: 100%;">
 <%
+	Vector alreadyContents = new Vector();
+	alreadyContents = xml.getXmldata(id);
+	
 
-	int already = Integer.parseInt(xml.getXmldata(id));
-
+	int x =beginPerPage;
 	for(int i=beginPerPage; i<beginPerPage + numPerPage; i++){
-		int top = i;
 		
-		if(i>=20){
+		int top = x%20;
+		
+		/* if(i>=20){
 			top = i%20;
-		}
+		} */
 		
 		if(i == totalRecord){
 			break;
 		}
 		
 		dto = (ContentDto)ourclover_vector.get(i);
-		 if(dto.getUpNo()==already){
-			continue;
-		} 
 		
-		dto = (ContentDto)ourclover_vector.get(i);
+		boolean check = false;
+		
+		for(int j=0; j<alreadyContents.size(); j++){
+			if(dto.getUpNo() == Integer.parseInt((String)alreadyContents.get(j))){
+				System.out.println("dto.getupno 나와라 : "+dto.getUpNo());
+				System.out.println("Integer 나와라 : "+Integer.parseInt((String)alreadyContents.get(j)));
+				check = true;
+				break;
+			}
+		}
+		
+		if(check == true){
+			continue;
+		}
+		
+		/* if(dto.getUpNo() == already){
+			continue;
+		} */
+		
 %>
 
 <!-- 사진 리스트 (for문) -->
 
-	<div style="position: absolute; top: <%=(Math.floor((double)top/5)*250)%>px; left: <%=((i%5)*293)+80%>px;">
-		<a href="#" data-toggle="modal" data-target=".ourclover<%=dto.getUpNo()%>" >
+	<div class="img_click" style="position: absolute; top: <%=(Math.floor((double)top/5)*380)+100%>px; left: <%=((x%5)*293)+80%>px;">
+		<a href="#" data-toggle="modal" data-target=".ourclover<%=dto.getUpNo()%>" onclick="PicDelete('<%=dto.getUpNo()%>')">
+			<h4><b style="margin-left: 20px"><%= dto.getUpNo() %>&nbsp;&nbsp;&nbsp;<%= dto.getSubject() %></b></h4> 
 			<img class="pictureCover" src="/CloverSns/style/img/clover.png">
 		</a>
 	</div>
-
-	 
-		<img class="picture" src="/CloverSns/img/<%= dto.getImg_route() %>">
+	
+	<img class="picture" src="/CloverSns/img/<%= dto.getImg_route() %>" style="margin-top: 140px;">
 	
 
-<%		
+<%		x++;
 	}
+		
 %>
 </div>
 	<hr/>

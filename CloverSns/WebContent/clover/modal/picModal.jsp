@@ -8,6 +8,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>Insert title here</title>
+
+<script>
+	function Reload(){
+		history.go(0);
+	}
+</script>
+
 </head>
 <body>
 <%
@@ -29,7 +36,7 @@
             <div class="modal-dialog">
                <div class="modal-content">
                   <div class="modal-header">
-                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="Reload()">
                      	X
                      </button>
                      <h3 class="modal-title"><%= dto.getSubject() %></h3>
@@ -43,9 +50,9 @@
                      </div>
                   </div> <!-- 모달 바디 끝 -->
                   <div class="modal-footer">
-                  	<p id="count" style="font-size: 20px; font-weight:bold ; color: red;"></p>	<!-- 15초 카운트 -->
-                  	<input type="button" value="감상평" class="btn btn-primary" data-toggle="modal" data-target=".impression" data-dismiss="modal" aria-hidden="true" />
-                    <button type="button" class="btn btn-primary close" id="close" data-dismiss="modal" aria-hidden="true">닫기</button>  
+                  	<p id="counter" style="font-size: 20px; font-weight:bold ; color: red;"></p>	<!-- 15초 카운트 -->
+                  	<input type="button" value="감상평" class="btn btn-primary" data-toggle="modal" data-target=".impression" data-dismiss="modal" aria-hidden="true" onclick="UpNoInsert('<%=dto.getUpNo()%>')"/>
+                    <button type="button" class="btn btn-primary close" id="close" data-dismiss="modal" aria-hidden="true" onclick="Reload()">닫기</button>  
                   </div>
                </div> <!-- 모달 컨텐트 끝 -->
             </div> <!-- 모달 다이아로그 끝 -->

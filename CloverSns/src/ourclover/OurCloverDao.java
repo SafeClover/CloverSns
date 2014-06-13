@@ -24,19 +24,23 @@ public class OurCloverDao {
 		}
 	}
 	
-	public void InsertImpression(String impression, int upno, String id){
+	public void InsertImpression(String impression, int upno, String id, String name){
 		try{
-			String sql = "INSERT INTO reply(upno, id, regdate, re) VALUES(?, ?, now(), ?)";
+			String sql = "INSERT INTO reply(upno, id, regdate, re, name) VALUES(?, ?, now(), ?, ?)";
 			stmt = con.prepareStatement(sql);
 			stmt.setInt(1, upno);
 			stmt.setString(2, id);
 			stmt.setString(3, impression);
+			stmt.setString(4, name);
 			
 			stmt.executeUpdate();
 			
 		}
 		catch(Exception err){
 			System.out.println("InsertImpression : " + err);
+		}
+		finally{
+			pool.freeConnection(con, stmt, rs);
 		}
 	}
 

@@ -130,6 +130,7 @@ public class MemberDao {
 			 
 			while(rs.next()){
 				dto.setMem_regDate(rs.getString("regdate"));
+				dto.setMem_name(rs.getString("mem_name"));
 			}
 			
 		}
@@ -212,6 +213,7 @@ public class MemberDao {
 		         else{
 		        	 list.add("1");
 		         }
+		         list.add(dto.getMem_img());
 		         total.add(list);
 	         }
 	      }
@@ -317,17 +319,14 @@ public class MemberDao {
 	
 	public void InfomationEdit(MemberDto dto){ //회원 정보 수정
 		try{
-			String sql = "UPDATE member SET mem_pw=?, mem_name=?, mem_birth=?, mem_email=?, mem_gender=?, mem_img=? where mem_id=?";
+			String sql = "UPDATE member SET mem_pw=?, mem_img=?, mem_email=? where mem_id=?";
 
 			stmt = con.prepareStatement(sql);
 			
 			stmt.setString(1, dto.getMem_pw());
-			stmt.setString(2, dto.getMem_name());
-			stmt.setString(3, dto.getMem_birth());
-			stmt.setString(4, dto.getMem_email());
-			stmt.setString(5, dto.getMem_gender());
-			stmt.setString(6, dto.getMem_img());
-			stmt.setString(7, dto.getMem_id());
+			stmt.setString(2, dto.getMem_img());
+			stmt.setString(3, dto.getMem_email());
+			stmt.setString(4, dto.getMem_id());
 			
 			stmt.executeUpdate();
 
@@ -374,6 +373,37 @@ public class MemberDao {
 	         pool.freeConnection(con, stmt, rs);
 	      }
 		return myfriends;
+	}
+	
+	public Vector getInfo(MemberDto dto){
+		Vector v = new Vector();
+		try{
+	         String sql = "select * from member where mem_id = ?";
+	         
+	         stmt = con.prepareStatement(sql);
+	         stmt.setString(1, dto.getMem_id());
+	         rs = stmt.executeQuery();
+	         
+            while(rs.next()){
+                  
+            	  dto.setMem_id(rs.getString("mem_id"));
+            	  dto.setMem_name(rs.getString("mem_name"));
+            	  dto.setMem_birth(rs.getString("mem_birth"));
+            	  dto.setMem_email(rs.getString("mem_email"));
+            	  dto.setMem_gender(rs.getString("mem_gender"));
+            	  dto.setMem_img(rs.getString("mem_img"));
+            	  
+                  v.add(dto);
+            }
+            
+		 }	
+	      catch(Exception err){
+	         System.out.println("myfriends : " + err);
+	      }
+	      finally{
+	         pool.freeConnection(con, stmt, rs);
+	      }
+		return v;
 	}
 
 

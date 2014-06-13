@@ -17,7 +17,8 @@
 	function like_cnt(upNo){
 		this.upNo = upNo;
 		var params = "upNo="+upNo;
-		sendRequest("/CloverSns/clover/contest/Contest_proc.jsp", params, callback, "POST");
+		var url = "/CloverSns/clover/contest/Contest_proc.jsp";
+		sendRequest(url, params, callback, "POST");
 	}
 	
 	function callback(){

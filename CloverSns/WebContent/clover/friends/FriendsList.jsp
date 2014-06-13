@@ -197,7 +197,7 @@
 					<%if(dto.getMem_img()==null){ %>
 						<img src="/CloverSns/style/img/hero.jpg">
 					<%}else{ %> 
-						<img src="<%=dto.getMem_img()%>">
+						<img src="/CloverSns/img/<%= dto.getMem_img() %>">
 					<%}%> 
 						<i><%=dto.getMem_name()%></i><br/>
 						<i><%=dto.getMem_birth()%></i>
@@ -258,16 +258,24 @@
 		    		String getMem_id = (String)list.get(0);
 		    		String getMem_name = (String)list.get(1);
 		    		String isFriendorAlarm = (String)list.get(2);
+		    		String getMem_img = (String)list.get(3);
 		    %>
 				<article class="search-result row">
+
+
 					<div class="col-xs-12 col-sm-12 col-md-3">
-						<a href="#" title="Lorem ipsum" class="thumbnail"><img src="http://lorempixel.com/250/140/people" alt="Lorem ipsum" /></a>
+						<a href="#" title="Lorem ipsum" class="thumbnail">
+							<img src="/CloverSns/img/<%= getMem_img %>" alt="Lorem ipsum" />
+						</a>
 					</div>
+
 					<div class="col-xs-12 col-sm-12 col-md-2">
 						<ul class="meta-search">
 							<li><i class="glyphicon glyphicon-calendar"></i> <span><%=getMem_name%><%=getMem_id %></span></li>
 						</ul>
 					</div>
+					
+					
 					<!-- 친구 추가 버튼 -->
 					
 						<div class="col-xs-12 col-sm-12 col-md-7 excerpet">

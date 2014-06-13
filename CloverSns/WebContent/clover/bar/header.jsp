@@ -93,6 +93,11 @@ function callback() {
 		}	   
    );
 </script>
+<style>
+	#font_over:hover{
+		color: white;
+	}
+</style>
 </head>
 <body>
 <%
@@ -106,7 +111,7 @@ function callback() {
 	}
 	else{
 %>
-<nav class="navbar navbar-fixed-top navbar-inverse" role="navigation">
+<nav class="navbar navbar-fixed-top navbar-inverse" role="navigation" style="background-image: url('/CloverSns/style/img/header.jpg') ">
         <div class="dropdown clearfix">
          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <span id="main_icon" class="glyphicon glyphicon-align-justify" onclick="fnGetalarm()"></span>
@@ -172,16 +177,16 @@ function callback() {
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">토끼풀</a>
+                <img src="/CloverSns/style/img/Logo2.png" style="margin-top:10px ; width: 150px; height: 60px; margin-right: 200px;" />
             </div>
          
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="Mypage.index?index=Mypage" alt=""><img class="img-header" src="/CloverSns/style/img/headerIcon/mypage.png" class="img-responsive center-block">마이페이지</a></li>
-                    <li><a href="Ourclover.index?index=Ourclover" alt="클로버"><img class="img-header" src="/CloverSns/style/img/headerIcon/newsfeed.png" class="img-responsive center-block">클로버</a></li>
-                    <li><a href="Contest.index?index=Contest" alt="자랑하기"><img class="img-header" src="/CloverSns/style/img/headerIcon/contest.png" class="img-responsive center-block">자랑하기</a></li>
-                    <li><a href="#" alt=" 업로드" id="upload" data-toggle="modal" data-target="uploadModal"><img class="img-header" src="/CloverSns/style/img/headerIcon/upload.png" class="img-responsive center-block"> 업로드</a></li>
+                    <li><a href="Mypage.index?index=Mypage" alt=""><img class="img-header" src="/CloverSns/style/img/headerIcon/mypage.png" class="img-responsive center-block"><font style="color: black;"><span id="font_over">마이페이지</span></font></a></li>
+                    <li><a href="Ourclover.index?index=Ourclover" alt="클로버"><img class="img-header" src="/CloverSns/style/img/headerIcon/newsfeed.png" class="img-responsive center-block"><font style="color: black;"><span id="font_over">클로버</span></font></a></li>
+                    <li><a href="Contest.index?index=Contest" alt="자랑하기"><img class="img-header" src="/CloverSns/style/img/headerIcon/contest.png" class="img-responsive center-block"><font style="color: black;"><span id="font_over">자랑하기</span></font></a></li>
+                    <li><a href="#" alt=" 업로드" id="upload" data-toggle="modal" data-target="uploadModal"><img class="img-header" src="/CloverSns/style/img/headerIcon/upload.png" class="img-responsive center-block"><font style="color: black;"><span id="font_over">업로드</span></font></a></li>
                 </ul>
             </div>
             

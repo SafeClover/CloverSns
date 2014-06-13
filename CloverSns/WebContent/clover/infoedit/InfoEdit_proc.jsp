@@ -28,6 +28,7 @@
       filename = multi.getFilesystemName(file);
    
       fullpath = realFolder + "\\" + filename;
+      System.out.println(filename);
    
       dto.setMem_pw(multi.getParameter("pw"));
       dto.setMem_name(multi.getParameter("name"));

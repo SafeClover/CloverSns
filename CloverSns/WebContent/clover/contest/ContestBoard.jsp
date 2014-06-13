@@ -117,7 +117,7 @@
 								<div class="carousel-caption">
 									<h1 class="carousel-caption-header"><%= dto.getSubject() %></h1>
 									<p class="carousel-caption-text hidden-sm hidden-xs">
-										<%= dto.getId() %>
+										<%= dto.getName() %>
 									</p>
 								</div>
 							</div>
@@ -133,7 +133,7 @@
 								<div class="carousel-caption">
 									<h1 class="carousel-caption-header"><%= dto.getSubject() %></h1>
 									<p class="carousel-caption-text hidden-sm hidden-xs">
-										<%= dto.getId() %>
+										<%= dto.getName() %>
 									</p>
 								</div>
 							</div>
@@ -181,7 +181,7 @@
                <img class="img img-responsive img-thumbnail" src="/CloverSns/img/<%= dto.getImg_route() %>" style="width: 150px; height: 150px;">
                <h3 alt="<%= dto.getSubject() %>"><%= dto.getSubject() %></h3>
             </a>
-            <p>累己磊 : <%= dto.getId() %></p>
+            <p>累己磊 : <%= dto.getName() %></p>
          </div> <!-- div 场 -->    
       <% } %>             
       </div> <!-- row 场 -->

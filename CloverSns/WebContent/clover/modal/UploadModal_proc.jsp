@@ -13,6 +13,13 @@
 	ContentDto dto = new ContentDto();
 	ContentDao dao = new ContentDao();
 	
+	MemberDto dto2 = new MemberDto();
+	MemberDao dao2 = new MemberDao();
+	
+	dto2 = dao2.MemberSelect(id);
+	
+	String name = dto2.getMem_name();
+	
 	try{
 		String realFolder = "";
 		String filename = "";
@@ -41,7 +48,7 @@
 		dto.setContent(writing);
 		dto.setSubject(title);
 		dto.setImg_route(filename);
-		
+		dto.setName(name);
 		
 		
 		if(select.equals("privacy")){
