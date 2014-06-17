@@ -24,7 +24,7 @@ history.go(1); // 로그인 페이지에서 뒤로가기 막는것, 지우면 T^T
 	function fnGetalarm() {
 		var url = "/CloverSns/friend.action";
 		var params = "command=getFriendAlarm";
-		sendRequest(url, params, callback, null);
+		sendRequest(url, params, callback, "POST");
 		/* document.getalarm.submit(); */
 	}
 

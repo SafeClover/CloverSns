@@ -25,17 +25,14 @@
 <script src="/CloverSns/style/js/jquery-2.1.1.min.js"></script>
 <script src="/CloverSns/style/js/bootstrap.js"></script>
 <script src="/CloverSns/style/js/carousel.js"></script>
-
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
-   $(document).ready(function() { // 페이지 로딩이 끝나면 처리합니다.
-        $(".iframe", parent.document).height($(document).height());  // 부모창에있는 아이프레임(클래스가 ifrm인) 높이 조절
-   });  
+	$(document).ready(function() { // 페이지 로딩이 끝나면 처리합니다.
+	     $(".iframe", parent.document).height($(document).height());  // 부모창에있는 아이프레임(클래스가 ifrm인) 높이 조절
+	});  
 </script>
-
 </head>
 <body style="overflow: scroll;">
-
 <% 		
 		int num=0;
 

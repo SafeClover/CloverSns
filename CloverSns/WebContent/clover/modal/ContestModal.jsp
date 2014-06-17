@@ -6,6 +6,7 @@
 <jsp:useBean id="dao" class="content.ContentDao"></jsp:useBean>
 <jsp:useBean id="dto1" class="content.HappyDto"></jsp:useBean>
 <jsp:useBean id="dao1" class="content.HappyDao"></jsp:useBean>
+<jsp:useBean id="dto2" class="content.Mypage_replyDto"></jsp:useBean>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR" />
@@ -87,9 +88,29 @@
                      		<div class="modal-body">
                         		작성자 : <%= dto.getId() %><br/>
                         		내용 : <%= dto.getContent() %><br/>
+                        		<%
+                        		dto1.setUpNo(dto.getUpNo());
+                        		
+                        		Vector reply = new Vector();
+                        		
+                        		if(reply.size() > 0){
+                        				for(int j=0; j<reply.size(); j++){
+                        					reply.get(j);
+                        		%>
+                        					<span id="b_hover" style="margin-left: 10px;"><%= dto2.getName() %>  | <%= dto2.getRe() %> | <%= dto2.getRegdate() %></span>
+                        		<%
+                        				}
+                        			}
+                        			else{
+                        		%>
+                        				<span id="b_hover" style="margin-left: 10px;">감상평이 없습니다.</span>
+                        		<%                        		
+                        			}
+                        		%>
                      		</div>
                   		</div> <!-- 모달 바디 끝 -->
                   		<div class="modal-footer">
+                  			<button type="button" class="btn btn-primary" data-dismiss="modal">감상평</button>
                      		<button type="button" class="btn btn-primary close" data-dismiss="modal" >닫기</button>  
                   		</div>
                		</div> <!-- 모달 컨텐트 끝 -->

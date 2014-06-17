@@ -10,15 +10,15 @@
 
 	String id = (String)session.getAttribute("id");
 	String url = request.getParameter("link");
-	ContentDto dto = new ContentDto();
-	ContentDao dao = new ContentDao();
+	ContentDto condto = new ContentDto();
+	ContentDao condao = new ContentDao();
 	
-	MemberDto dto2 = new MemberDto();
-	MemberDao dao2 = new MemberDao();
+	MemberDto memdto = new MemberDto();
+	MemberDao memdao = new MemberDao();
 	
-	dto2 = dao2.MemberSelect(id);
+	memdto = memdao.MemberSelect(id);
 	
-	String name = dto2.getMem_name();
+	String name = memdto.getMem_name();
 	
 	try{
 		String realFolder = "";
@@ -43,22 +43,22 @@
 	 
 	 	fullpath = realFolder + "\\" + filename;
 		
-	 	dto.setId(id);
-	 	dto.setPrivacy(select);
-		dto.setContent(writing);
-		dto.setSubject(title);
-		dto.setImg_route(filename);
-		dto.setName(name);
+	 	condto.setId(id);
+	 	condto.setPrivacy(select);
+	 	condto.setContent(writing);
+	 	condto.setSubject(title);
+	 	condto.setImg_route(filename);
+	 	condto.setName(name);
 		
 		
 		if(select.equals("privacy")){
-			dao.insertMypage(dto);
+			condao.insertMypage(condto);
 		}
 		else if(select.equals("friends")){
-			dao.insertOurclover(dto);
+			condao.insertOurclover(condto);
 		}
 		else if(select.equals("contest")){
-			dao.insertContest(dto);
+			condao.insertContest(condto);
 		}
 		
 		response.sendRedirect(url);

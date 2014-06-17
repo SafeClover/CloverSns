@@ -60,6 +60,7 @@ public class MemberDao {
 	}
 	
 	public String LoginConfirm(String mem_id, String mem_pw){
+		Encrypt encrypt = new Encrypt();
 		String confirm = null;
 
 		try{
@@ -72,7 +73,7 @@ public class MemberDao {
 			rs = stmt.executeQuery();
 
 			if(rs.next()){ // 해당 아이디가 있을 때
-				if(!mem_pw.equals(rs.getString("mem_pw"))){	// 아이디는 있는데 아이디와 비밀번호가 일치하지 않을 때
+				if(!mem_pw.equals(encrypt.decrypt(rs.getString("mem_pw")))){	// 아이디는 있는데 아이디와 비밀번호가 일치하지 않을 때
 					confirm = "false";
 				}
 				else{	// 아이디가 있고 아이디와 비밀번호가 일치 할 때 
@@ -406,5 +407,21 @@ public class MemberDao {
 		return v;
 	}
 
+	 public void DeleteMember(String id){
 
+	      try{
+	         con = pool.getConnection();
+	         String sql = "delete from member where mem_id=?";
+	         stmt = con.prepareStatement(sql);
+	         stmt.setString(1, id);
+	         stmt.executeUpdate();
+	      }
+	      catch(Exception err){
+	         System.out.println("DeleteMember : " + err );
+	      }
+	      finally{
+	         pool.freeConnection(con, stmt, rs);
+	      }
+	   }
+	 
 }

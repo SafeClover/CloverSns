@@ -32,7 +32,7 @@ public class XMLController extends HttpServlet{
 	DocumentBuilderFactory factory = null;
 	DocumentBuilder builder= null;
 	Document doc = null;
-		
+	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -58,7 +58,6 @@ public class XMLController extends HttpServlet{
 			System.out.println("getXmldata:"+e);
 		}
 	}
-	
 	
 	public Vector getXmldata(String id){
 		Vector alreadyContents = new Vector();
@@ -105,8 +104,7 @@ public class XMLController extends HttpServlet{
 		Transformer transform;
 		try {
 			transform = tFactory.newTransformer();
-		
-		
+			
 			transform.setOutputProperty(OutputKeys.ENCODING, "euc-kr");
 			transform.setOutputProperty(OutputKeys.INDENT, "no");
 			//... 여러가지 세팅 가능
@@ -124,8 +122,7 @@ public class XMLController extends HttpServlet{
 			e1.printStackTrace();
 		}catch (TransformerException e) {
 			e.printStackTrace();
-		}
-			
+		}			
 		
 	}
 }

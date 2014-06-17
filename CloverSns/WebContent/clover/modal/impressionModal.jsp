@@ -19,7 +19,7 @@
 <!-- 감상평 팝업 모달창 -->
 	<form action="ImpressionSubmit.jsp" method="post" name="impression_form">
 		<input type="hidden" name="upno" id="upno" />
-		<div class="container">
+		<div class="container ">
 	      <div class="row">
 	         <div class="modal fade impression">
 	            <div class="modal-dialog" style="width: 30%; margin-top: 12%;">

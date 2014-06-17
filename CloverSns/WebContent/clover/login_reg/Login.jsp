@@ -24,7 +24,7 @@
 </script>
 <style>
 	body{
-		background-image: url("/CloverSns/style/img/main02.jpg");
+		background-image: url("/CloverSns/style/img/Main-final.jpg");
 		background-repeat: no-repeat;
 		width: 1600px;
 		height: 750px;

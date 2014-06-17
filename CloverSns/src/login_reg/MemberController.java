@@ -62,12 +62,13 @@ public class MemberController extends HttpServlet {
 	
 	public MemberDto setMember(HttpServletRequest req){
 		MemberDto dto = new MemberDto();
+		Encrypt encrypt = new Encrypt();
 		dto.setMem_birth(req.getParameter("year") + "_" + req.getParameter("month") + "_" + req.getParameter("day"));
 		dto.setMem_email(req.getParameter("email"));
 		dto.setMem_gender(req.getParameter("gender"));
 		dto.setMem_id(req.getParameter("id"));
 		dto.setMem_name(req.getParameter("name"));
-		dto.setMem_pw(req.getParameter("pw"));
+		dto.setMem_pw(encrypt.encrypt(req.getParameter("pw")));
 
 		return dto;
 	}

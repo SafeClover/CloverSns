@@ -9,8 +9,13 @@
 <link href="/CloverSns/style/css/login_reg/reg.css" rel="stylesheet" />
 <style>
 	body{
-		background-color: rgba(0,0,0,0.5);
+		background-image: url("/CloverSns/style/img/registration.jpg");
+		background-repeat: no-repeat;
+		width: 1600px;
+		height: 750px;
+		overflow: hidden;
 	}
+
 </style>
 
 <script src="/CloverSns/style/js/ajax.js"></script>
@@ -100,10 +105,8 @@
 			genderComment.innerHTML = "";					
 		}
 		
-		
 		document.memberAdd.submit();
 
-		
 	}
 
 </script>

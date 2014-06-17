@@ -53,6 +53,7 @@ public class HappyDao {
 				
 			while(rs.next()){
 				count = rs.getInt("count(*)");
+				System.out.println("count : " + count);
 			}
 		}
 		

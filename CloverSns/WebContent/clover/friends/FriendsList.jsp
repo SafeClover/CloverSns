@@ -8,6 +8,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR" />
 <title>Insert title here</title>
 <jsp:useBean id="dao" class="login_reg.MemberDao"></jsp:useBean>
+<jsp:useBean id="dto" class="login_reg.MemberDto"></jsp:useBean>
+<jsp:useBean id="dao2" class="content.ContentDao"></jsp:useBean>
+<jsp:useBean id="dto2" class="content.ContentDto"></jsp:useBean>
 <link href="/CloverSns/style/css/bootstrap.css" rel="stylesheet" />
 <link href="/CloverSns/style/css/friends/bootstrap.min.css" rel="stylesheet" />
 <link href="/CloverSns/style/css/friends/feature-carousel.css" rel="stylesheet" />
@@ -145,19 +148,17 @@
     
 </head>
 <body>
+
+<%
+	dto2.setId((String)session.getAttribute("id"));
+ 	Vector myfriends = dao.getMyfriends((String)session.getAttribute("id"));
+   	Vector searchResult = (Vector)request.getAttribute("searchResult");
+%>
 	<div class="container1" style="margin-top: 50px;">
 		<div class="row">
-			<h1 style="text-align: center">돌아가는 내친구</h1>
-				<div id="carousel" style="background-color: black;">
-					<a href="#"><img src="/CloverSns/style/img/cap.jpg" id="item-1" /></a> 
-					<a href="#"><img src="/CloverSns/style/img/eily.jpg" id="item-2" /></a> 
-					<a href="#"><img src="/CloverSns/style/img/hero.jpg" id="item-3" /></a> 
-					<a href="#"><img src="/CloverSns/style/img/iphone.jpg" id="item-4" /></a> 
-					<a href="#"><img src="/CloverSns/style/img/min.jpg" id="item-5" /></a>
-					<a href="#"><img src="/CloverSns/style/img/super.jpg" id="item-6" /></a> 
-					<a href="#"><img src="/CloverSns/style/img/7.jpg" id="item-7" /></a> 
-					<a href="#"><img src="/CloverSns/style/img/8.jpg" id="item-8" /></a> 
-					<a href="#"><img src="/CloverSns/style/img/9.jpg" id="item-9" /></a>
+			<h1 style="text-align: center"><%=dto2.getId()%> 님의 친구입니다.</h1>
+				<div id="carousel">
+						<a href="#"><img src="/CloverSns/img/1.jpg" id="item" /></a>
 				</div>
 					<a href="#" id="prev">후진</a> | <a href="#" id="next">전진</a>
 				<br/>
@@ -183,14 +184,13 @@
 	<%}else{ %>
 	  <div class="tab-pane" id="home">
 	 <%} 
-	 	Vector myfriends = dao.getMyfriends((String)session.getAttribute("id"));
 	 %>
 	  	<!-- 이부분 for문 이용 하여 친구목록 불러온다 -->
 		<div class="container1">
 			<div class="row">
 		<%  if(myfriends != null){
 				for(int i= 0; i<myfriends.size();i++){
-				MemberDto dto = (MemberDto)myfriends.get(i);
+				dto = (MemberDto)myfriends.get(i);
 			%>
 				<div class="span2">
 					<a href="#" class="thumbnail">
@@ -243,7 +243,6 @@
 		
 	    <section class="col-xs-12 col-sm-6 col-md-12">
 	    <%
-	    	Vector searchResult = (Vector)request.getAttribute("searchResult");
 	    	
 			if(searchResult == null){
 			%>
@@ -308,20 +307,7 @@
 	</div> 
 	  </div>
 	</div>
-		
-	<div class="container1" id="center">
-		<div class="row">
-			<div class="navbar1 navbar1-inverse">
-				<form class="navbar1-search pull-right">
-					<input type="text" class="search-query" placeholder="친구검색">
-				</form>
-			</div>
-		</div>
-	</div>
-	<br/>
 
-	
-	
 	
 	<jsp:include page="/clover/bar/footer.jsp"></jsp:include>
 	

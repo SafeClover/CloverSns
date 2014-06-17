@@ -11,7 +11,7 @@
 %>
 		<script>
 			alert("아이디와 비밀번호가 일치하지 않습니다.");
-			location.href="/CloverSns/clover/login_reg/Login.html"
+			location.href="/CloverSns/clover/login_reg/Login.jsp"
 		</script>
 <%		
 		return;
@@ -20,7 +20,7 @@
 %>
 		<script>
 			alert("없는 아이디 입니다.");
-			location.href="/CloverSns/clover/login_reg/Login.html"
+			location.href="/CloverSns/clover/login_reg/Login.jsp"
 		</script>
 <%	
 		return;

@@ -17,34 +17,10 @@
 <script src="/CloverSns/style/js/ajax.js"></script>
 
 <script>
-/* 
-	var now = new Date();
-	var second = now.getSeconds();
-	second = 0;
-	
-	function startCount(){
-		var count = $("#count");
-		
-		if(second == 0) {
-			second = 15 ;
-		} else{
-			second -= 1;
-		}
-		
-		count.innerHTML = second;
-		
-		if(second != 0){
-			setTimeout("startCount()", 1000);
-		}
-		else{
-			$(".modal").modal("hide");
-			$("#impression1").modal("show");
-		}
-	}
-	 */
 	 
 	function UpNoInsert(upno){
 		 document.getElementById("upno").value = upno;
+		 
 	}
 	
 	function pic_ModalClose(){
@@ -66,15 +42,23 @@
  	function callback(){
  		 if (httpRequest.readyState == 4) {
  	         if (httpRequest.status == 200) {
- 				
- 	          	/*   
- 					$(this).prev().html(parseInt($(this).prev().html()) + 1);
- 	            	document.getElementById("like").disabled="disabled";
- 	        	*/
  	         }
  		}
  	}
-
+ 	
+ // 초카운트
+ 	function fnTimer(upno){
+		var sec = 6;
+		var timer = setInterval(function(){
+	 		$("#counter span").text(--sec + "sec");
+	 		if(sec == 0){
+	 			$(".modal").modal("hide");
+	 			document.getElementById("upno").value = upno;
+	 			$(".impression").modal("show");
+	 			clearInterval(timer);
+	 		}
+	 	}, 1000);
+	 }
 </script>
 
 </head>
@@ -150,8 +134,8 @@
 		
 		for(int j=0; j<alreadyContents.size(); j++){
 			if(dto.getUpNo() == Integer.parseInt((String)alreadyContents.get(j))){
-				System.out.println("dto.getupno 나와라 : "+dto.getUpNo());
-				System.out.println("Integer 나와라 : "+Integer.parseInt((String)alreadyContents.get(j)));
+				/* System.out.println("dto.getupno 나와라 : "+dto.getUpNo());
+				System.out.println("Integer 나와라 : "+Integer.parseInt((String)alreadyContents.get(j))); */
 				check = true;
 				break;
 			}
@@ -170,14 +154,13 @@
 <!-- 사진 리스트 (for문) -->
 
 	<div class="img_click" style="position: absolute; top: <%=(Math.floor((double)top/5)*380)+100%>px; left: <%=((x%5)*293)+80%>px;">
-		<a href="#" data-toggle="modal" data-target=".ourclover<%=dto.getUpNo()%>" onclick="PicDelete('<%=dto.getUpNo()%>')">
+		<a href="#" data-toggle="modal" data-target=".ourclover<%=dto.getUpNo()%>" onclick="PicDelete('<%=dto.getUpNo()%>'); fnTimer('<%=dto.getUpNo()%>')">
 			<h4><b style="margin-left: 20px"><%= dto.getUpNo() %>&nbsp;&nbsp;&nbsp;<%= dto.getSubject() %></b></h4> 
 			<img class="pictureCover" src="/CloverSns/style/img/clover.png">
 		</a>
 	</div>
 	
 	<img class="picture" src="/CloverSns/img/<%= dto.getImg_route() %>" style="margin-top: 140px;">
-	
 
 <%		x++;
 	}
@@ -242,6 +225,7 @@
 	
 	
 <!-- 모달 -->
+<p id="impression"></p>
 <jsp:include page="/clover/modal/impressionModal.jsp"></jsp:include>
 <jsp:include page="/clover/modal/picModal.jsp"></jsp:include>
 

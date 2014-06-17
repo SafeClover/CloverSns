@@ -13,6 +13,11 @@
 	function Reload(){
 		history.go(0);
 	}
+	
+    //esc키 막기
+     $(document).keyup(function (e) { 
+         if (e.keyCode == 27) { e.returnValue = false; }
+     });
 </script>
 
 </head>
@@ -50,9 +55,10 @@
                      </div>
                   </div> <!-- 모달 바디 끝 -->
                   <div class="modal-footer">
-                  	<p id="counter" style="font-size: 20px; font-weight:bold ; color: red;"></p>	<!-- 15초 카운트 -->
+                  	<!-- <p style="font-size: 20px; font-weight:bold ; color: red;"></p>	15초 카운트 -->
+                  	<div id="counter"><span style="font-size: 15pt; color:red;"></span></div>
                   	<input type="button" value="감상평" class="btn btn-primary" data-toggle="modal" data-target=".impression" data-dismiss="modal" aria-hidden="true" onclick="UpNoInsert('<%=dto.getUpNo()%>')"/>
-                    <button type="button" class="btn btn-primary close" id="close" data-dismiss="modal" aria-hidden="true" onclick="Reload()">닫기</button>  
+                    <button type="button" class="btn btn-primary close" id="close" data-dismiss="modal" aria-hidden="true" onclick="Reload()">닫기</button>
                   </div>
                </div> <!-- 모달 컨텐트 끝 -->
             </div> <!-- 모달 다이아로그 끝 -->
@@ -63,37 +69,5 @@
 <%
 	}
 %>
-
-<%-- 
-<div class="container">
-      <div class="row">
-         <div class="modal fade ourclover<%=dto.getUpNo()%>">
-            <div class="modal-dialog">
-               <div class="modal-content">
-                  <div class="modal-header">
-                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                     	X
-                     </button>
-                     <h3 class="modal-title"><%= dto.getSubject() %></h3>
-                     <h5>작성일 : <%= dto.getRegdate() %></h5>
-                  </div> <!-- 모달 헤더끝 -->
-                  <div class="modal-body">
-                     <img src="/CloverSns/img/<%= dto.getImg_route() %>" class="img-responsive center-block">
-                     <div class="modal-body">
-						작성자 : <%= dto.getId() %><br/>
-						내용 : <%= dto.getContent() %><br/>
-                     </div>
-                  </div> <!-- 모달 바디 끝 -->
-                  <div class="modal-footer">
-                  	<p id="count" style="font-size: 20px; font-weight:bold ; color: red;"></p>	<!-- 15초 카운트 -->
-                  	<input type="button" value="감상평" class="btn btn-primary"  onclick="pic_ModalClose()" />
-                    <button type="button" class="btn btn-primary close" id="close" onclick="test()" >닫기</button>  
-                  </div>
-               </div> <!-- 모달 컨텐트 끝 -->
-            </div> <!-- 모달 다이아로그 끝 -->
-         </div> <!-- 모달 pop1 끝 -->
-      </div> <!-- row 끝 -->
-</div> <!-- container 끝 -->
- --%>
 </body>
 </html>
