@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 
 public class MemberController extends HttpServlet {
@@ -43,16 +44,20 @@ public class MemberController extends HttpServlet {
 			MemberDao dao = new MemberDao();
 			dao.MemberInsert(setMember(req));
 			
-			nextPage = "/clover/main/index.jsp";
+			HttpSession session = req.getSession();
+			session.setAttribute("id", req.getParameter("id"));
+			
+			nextPage = "Login.index?index=Login";
 		}
 		else if(cmd.equals("ID_CHECK")){
 			String id = req.getParameter("id");
-			
 			nextPage = "/clover/login_reg/idCheck.jsp?id=" + id;
 		}
 		else if(cmd.equals("INFO_EDIT")){
-			
 			nextPage = "/clover/infoedit/InfoEdit_proc.jsp";
+		}
+		else if(cmd.equals("INFO_EDITIMG")){
+			nextPage = "/clover/infoedit/InfoEditImg_proc.jsp";
 		}
 		
 		RequestDispatcher view = req.getRequestDispatcher(nextPage);

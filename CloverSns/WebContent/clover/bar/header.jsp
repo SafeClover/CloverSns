@@ -12,7 +12,7 @@
 
 var send_id = new Array;
 var receive = null;
-
+var cutTmp = null;
 
 history.go(1); // 로그인 페이지에서 뒤로가기 막는것, 지우면 T^T
 
@@ -39,13 +39,17 @@ function callback() {
             /* document.getElementById("alarm").innerHTML = xmlDoc; */
             
             var data = httpRequest.responseText;
-            var cutTmp = data.split(',');
-
+            cutTmp = data.split(',');
+            if(cutTmp[0] != ""){            	
+            	$(".friends").text(cutTmp.length);
+            }
+            else{
+            	$(".friends").text(0);
+            }
 
             for(var i=0; i<cutTmp.length; i++){
 		  		$("#send").remove();
             }
-
 
             for(var i=0; i<cutTmp.length; i++) {
                 $("#alarm").append("<li id='send'><a href='#'>" + cutTmp[i] + "</a></li>");
@@ -123,7 +127,7 @@ function callback() {
             <li class="dropdown-submenu">
                <a href="#">
                   <span class="glyphicon glyphicon-comment"></span> 댓글,감상평알림
-                  <span class="badge ">42</span>
+                  <span class="badge"></span>
                </a>
                 <ul class="dropdown-menu" >
                   <li><a href="#">jQuery</a></li>
@@ -139,7 +143,7 @@ function callback() {
                <li class="dropdown-submenu" >
                   <a href="#">
                      <span class="glyphicon glyphicon-bell"></span> 친구신청알림
-                     <span class="badge ">42</span>
+                     <span class="badge friends"></span>
                   </a>
                   <ul class="dropdown-menu" id="alarm">
                   		<li id="send"></li>

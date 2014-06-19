@@ -1,15 +1,26 @@
 package login_reg;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Vector;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.sql.DataSource;
+import javax.servlet.http.HttpSession;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import clover.db.DBConnectionMgr;
 
@@ -33,6 +44,7 @@ public class MemberDao {
 
 	
 	public void MemberInsert(MemberDto dto){
+		XMLInsert(dto);
 		try{
 			String sql = "INSERT INTO member(mem_id, mem_pw, mem_name, mem_birth, mem_email, mem_gender, regDate) "
 					+"VALUES(?,?,?,?,?,?,now())";
@@ -46,9 +58,7 @@ public class MemberDao {
 			stmt.setString(6, dto.getMem_gender());
 			
 			stmt.executeUpdate();
-			
-			System.out.println("회원가입 성공");
-			
+					
 			}
 		catch(Exception err){
 			System.out.println("MemberInsert() : " + err);
@@ -59,10 +69,52 @@ public class MemberDao {
 		
 	}
 	
+	
+	public void XMLInsert(MemberDto dto){
+		DocumentBuilderFactory factory = null;
+		DocumentBuilder builder= null;
+		Document doc = null;
+		try{
+			
+			factory = DocumentBuilderFactory.newInstance();
+			builder = factory.newDocumentBuilder();
+			doc = builder.parse(new FileInputStream("C:\\Users\\jhta\\git\\CloverSns\\CloverSns\\WebContent\\clover\\ourclover\\clover.xml"));
+			
+			Element clover = doc.getDocumentElement();
+	
+			Document d = clover.getOwnerDocument();
+			Element e = d.createElement(dto.getMem_id());	// 회원가입시 입력한 id 태그 생성
+			
+			clover.appendChild(e);	// 생성한 id 태그 넣기
+						
+			
+			TransformerFactory tFactory = TransformerFactory.newInstance();
+			Transformer transform;
+	
+			transform = tFactory.newTransformer();
+		
+		
+			transform.setOutputProperty(OutputKeys.ENCODING, "euc-kr");
+			transform.setOutputProperty(OutputKeys.INDENT, "no");
+			//... 여러가지 세팅 가능
+			
+			DOMSource source = new DOMSource(doc);
+			StreamResult result;
+		
+			result = new StreamResult(
+				new FileOutputStream(
+					new File("C:\\Users\\jhta\\git\\CloverSns\\CloverSns\\WebContent\\clover\\ourclover\\clover.xml")));
+			transform.transform(source, result);
+		
+		} catch (Exception err) {
+			System.out.println("MemberDao XMLInsert" + err);
+		}
+	}
+	
+	
 	public String LoginConfirm(String mem_id, String mem_pw){
 		Encrypt encrypt = new Encrypt();
 		String confirm = null;
-
 		try{
 			
 			String sql = "select mem_pw from member where mem_id=?";
@@ -76,7 +128,7 @@ public class MemberDao {
 				if(!mem_pw.equals(encrypt.decrypt(rs.getString("mem_pw")))){	// 아이디는 있는데 아이디와 비밀번호가 일치하지 않을 때
 					confirm = "false";
 				}
-				else{	// 아이디가 있고 아이디와 비밀번호가 일치 할 때 
+				else{	// 아이디가 있고 아이디와 비밀번호가 일치 할 때
 					confirm = "true";
 				}
 				
@@ -132,6 +184,7 @@ public class MemberDao {
 			while(rs.next()){
 				dto.setMem_regDate(rs.getString("regdate"));
 				dto.setMem_name(rs.getString("mem_name"));
+				dto.setMem_email(rs.getString("mem_email"));
 			}
 			
 		}
@@ -320,20 +373,19 @@ public class MemberDao {
 	
 	public void InfomationEdit(MemberDto dto){ //회원 정보 수정
 		try{
-			String sql = "UPDATE member SET mem_pw=?, mem_img=?, mem_email=? where mem_id=?";
+			String sql = "UPDATE member SET mem_pw=?,mem_email=? where mem_id=?";
 
 			stmt = con.prepareStatement(sql);
 			
 			stmt.setString(1, dto.getMem_pw());
-			stmt.setString(2, dto.getMem_img());
-			stmt.setString(3, dto.getMem_email());
-			stmt.setString(4, dto.getMem_id());
+			stmt.setString(2, dto.getMem_email());
+			stmt.setString(3, dto.getMem_id());
 			
 			stmt.executeUpdate();
 
 			}
 		catch(Exception err){
-			System.out.println("FriendInsert() : " + err);
+			System.out.println("MemberDao InfomationEdit : " + err);
 		}
 		finally{
 			pool.freeConnection(con, stmt, rs);
@@ -424,4 +476,48 @@ public class MemberDao {
 	      }
 	   }
 	 
+	 
+	 public void InfomationImgEdit(MemberDto dto){ //회원 정보 이미지 수정
+			try{
+				String sql = "UPDATE member SET mem_img=? where mem_id=?";
+
+				stmt = con.prepareStatement(sql);
+				
+				stmt.setString(1, dto.getMem_img());
+				stmt.setString(2, dto.getMem_id());
+				
+				stmt.executeUpdate();
+
+				}
+			catch(Exception err){
+				System.out.println("FriendInsert() : " + err);
+			}
+			finally{
+				pool.freeConnection(con, stmt, rs);
+			}
+		}
+	 
+	 // 아이디 비번 찾기 쿼리
+	 public ArrayList FindIdPw(){
+		 ArrayList find = new ArrayList();
+		 try{
+			 String sql = "select mem_id, mem_pw from member";
+			 stmt = con.prepareStatement(sql);
+			 rs = stmt.executeQuery();
+			 
+			 while(rs.next()){
+				 MemberDto dto = new MemberDto();
+				 
+				 dto.setMem_id(rs.getString("mem_id"));
+				 dto.setMem_pw(rs.getString("mem_pw"));
+			 }
+		 }
+		 catch(Exception err){
+			 System.out.println("MemberDao FindIdPw : " + err);
+		 }
+		 finally{
+			 pool.freeConnection(con, stmt, rs);
+		 }
+		 return find;
+	 }
 }

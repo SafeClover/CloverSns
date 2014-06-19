@@ -30,6 +30,9 @@
 		height: 750px;
 		overflow: hidden;
 	}
+	#find:hover{
+		background: hotpink;
+	}
 </style>
 </head>
 <body>
@@ -65,7 +68,8 @@
 			</form>
 		</div>
 		<div class="row">
-			<a href="#" style="position: absolute; top: 630px; left: 1100px;" ><small style="font-size: 15px; font-weight: bold;">Forgotten Password??</small></a>
+			<a id="find" href="#" style="position: absolute; top: 630px; left: 1100px; text-decoration: none;" ><small style="font-size: 18px; font-weight: bold;">Forgotten Id??</small></a><br/>
+			<a id="find" href="#" style="position: absolute; top: 655px; left: 1100px; text-decoration: none;" ><small style="font-size: 18px; font-weight: bold;">Forgotten Password??</small></a>
 		</div>
 		<!-- ¹öÆ° Æû ³¡ -->
 	</div>

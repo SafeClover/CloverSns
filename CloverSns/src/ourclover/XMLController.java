@@ -82,20 +82,26 @@ public class XMLController extends HttpServlet{
 	
 	
 	public void appendData(String id, String Upno){
-		Element clover = doc.getDocumentElement();
-
-		for(Node n = clover.getFirstChild(); n != null; n = n.getNextSibling()){
-			if(n.getNodeType() == Node.ELEMENT_NODE){ // 공백 필터링
-				if(n.getNodeName().equals(id)){ // 해당 세션 아이디태그
-					Document d = n.getOwnerDocument();
-					Element e = d.createElement("content");	// content 태그 생성
-					Text t = d.createTextNode(Upno);	// 해당 글번호 텍스트노드 생성
-					
-					n.appendChild(e);	// content 태그 넣기
-					e.appendChild(t);
-					
+		try{
+			doc = builder.parse(new FileInputStream("C:\\Users\\jhta\\git\\CloverSns\\CloverSns\\WebContent\\clover\\ourclover\\clover.xml"));
+			Element clover = doc.getDocumentElement();
+	
+			for(Node n = clover.getFirstChild(); n != null; n = n.getNextSibling()){
+				if(n.getNodeType() == Node.ELEMENT_NODE){ // 공백 필터링
+					if(n.getNodeName().equals(id)){ // 해당 세션 아이디태그
+						Document d = n.getOwnerDocument();
+						Element e = d.createElement("content");	// content 태그 생성
+						Text t = d.createTextNode(Upno);	// 해당 글번호 텍스트노드 생성
+						
+						n.appendChild(e);	// content 태그 넣기
+						e.appendChild(t);
+						
+					}
 				}
 			}
+		}
+		catch(Exception err){
+			System.out.println("XMLController appendData : " + err);
 		}
 		
 		

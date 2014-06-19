@@ -40,47 +40,52 @@ public class HappyDao {
 		}
 	}
 	
-	
 	public int showCount(HappyDto dto){
-		int count = 0;
-		String sql = null;
-		try{
-			sql = "SELECT count(*) FROM happy WHERE upNo=?";
-			
-			stmt = con.prepareStatement(sql);
-			stmt.setInt(1, dto.getUpNo());
-			rs = stmt.executeQuery();
-				
-			while(rs.next()){
-				count = rs.getInt("count(*)");
-				System.out.println("count : " + count);
-			}
-		}
-		
-		catch(Exception err){
-			System.out.println("showCount : " + err);
-		}
-		finally{
-			pool.freeConnection(con, stmt, rs);
-		}
-		return count;
-		
-	}	
+	      int count = 0;
+	      String sql = null;
+	      try{
+	         sql = "SELECT count(*) FROM happy WHERE upNo=?";
+	         
+	         stmt = con.prepareStatement(sql);
+	         stmt.setInt(1, dto.getUpNo());
+	         rs = stmt.executeQuery();
+	            
+	         while(rs.next()){
+	            count = rs.getInt("count(*)");
+	         }
+	      }
+	      
+	      catch(Exception err){
+	         System.out.println("showCount : " + err);
+	      }
+	      finally{
+	         pool.freeConnection(con, stmt, rs);
+	      }
+	      return count;
+	      
+	   }   
 	
-	public String selectSmile(HappyDto dto){
-		String smile = null;
+	public Vector selectSmile(){
+		Vector v = new Vector();
 		String sql = null;
 		
 		try{
-			sql = "select smile from happy where smile=? and upNo=?";
+			sql = "select c.upno, c.img_route, c.regdate, c.subject, count(h.upno) as count " +
+					"from content c, happy h where c.upno = h.upno group by h.upno order by count desc limit 3";
 			
 			stmt = con.prepareStatement(sql);
-			stmt.setString(1, dto.getSmile());
-			stmt.setInt(2, dto.getUpNo());
 			rs = stmt.executeQuery();
 			
-			while(rs.next()){				
-				smile = rs.getString("smile");
+			while(rs.next()){
+				ContentDto content = new ContentDto();
+				
+				content.setUpNo(rs.getInt("upno"));
+				content.setImg_route(rs.getString("img_route"));
+				content.setRegdate(rs.getString("regdate"));
+				content.setSubject(rs.getString("subject"));
+				content.setCount(rs.getInt("count"));
+				
+				v.add(content);
 			}
 			
 		}
@@ -90,9 +95,8 @@ public class HappyDao {
 		finally{
 			pool.freeConnection(con, stmt, rs);
 		}
-		return smile;
+		return v;
 	}
-	
 	
 	public Vector<HappyDto> SelectHappy(){
 		Vector<HappyDto> happy_vector = new Vector<HappyDto>();
@@ -116,11 +120,12 @@ public class HappyDao {
 			
 		}
 		catch(Exception err){
-			System.out.println("" + err);
+			System.out.println("SelectHappy" + err);
 		}
 		finally{
 			pool.freeConnection(con, stmt, rs);
 		}
 		return happy_vector;
 	}
+	
 }

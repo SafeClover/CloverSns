@@ -61,12 +61,37 @@
 	<div class="container" style="margin-top: 20px;">
 		<div class="row">
 			<div class="col" style="float:left">
+				<div style="margin-right: 50px; float:left;">
+
 				<%
 					for(int i=0; i<v1.size(); i++){
 						v1.get(i);
 				%>
-					<div style="float:left; margin-right: 50px;">
-						<img src="/CloverSns/img/<%= dto1.getMem_img() %>" style="width:200px; height: 200px; border-radius: 50px;" />
+					<div style="margin-right: 50px;">
+						<%
+							if(dto1.getMem_img().equals("경로")){
+						%>
+							
+							<img src="/CloverSns/style/img/noimage.jpg" style="width:200px; height: 200px; border-radius: 50px;" />
+							<br/>
+							<a href="/CloverSns/clover/infoedit/InfoEditImg.jsp" target="head" style="margin-left: 15px;">
+							<b>클릭시 프로필 사진 변경</b></a>
+							
+						<%	
+							}
+							else{
+						%>
+							<img src="/CloverSns/img/<%= dto1.getMem_img() %>" style="width:200px; height: 200px; border-radius: 50px;" />
+							<br/>
+							<a href="/CloverSns/clover/infoedit/InfoEditImg.jsp" target="head" style="margin-left: 15px;">
+							<b>클릭시 프로필 사진 변경</b></a>
+						
+						<%		
+							}
+						%>
+						
+					</div>
+									
 					</div>
 					<div style="margin-top: 50px;">
 						<span>

@@ -154,16 +154,31 @@
  	Vector myfriends = dao.getMyfriends((String)session.getAttribute("id"));
    	Vector searchResult = (Vector)request.getAttribute("searchResult");
 %>
-	<div class="container1" style="margin-top: 50px;">
-		<div class="row">
-			<h1 style="text-align: center"><%=dto2.getId()%> 님의 친구입니다.</h1>
-				<div id="carousel">
-						<a href="#"><img src="/CloverSns/img/1.jpg" id="item" /></a>
-				</div>
-					<a href="#" id="prev">후진</a> | <a href="#" id="next">전진</a>
-				<br/>
-		</div>
-	</div>
+   <div class="container1" style="margin-top: 50px;">
+      <div class="row">
+         <h1 style="text-align: center">돌아가는 내친구</h1>
+            <div id="carousel" style="background-color: black;">
+            <%  if(myfriends != null){
+                  for(int i= 0; i<myfriends.size();i++){
+                  dto = (MemberDto)myfriends.get(i);
+                  if(dto.getMem_img().equals("경로")){
+            %>
+                  <a href="#"><img src="/CloverSns/style/img/Logo.png" id="item-<%=i %>" style="width: 250px; height: 300px"/></a>
+            <%
+                  }
+                  
+                  if(!dto.getMem_img().equals("경로")){
+            %>
+                  <a href="#"><img src="/CloverSns/img/<%= dto.getMem_img() %>" id="item-<%=i %>" style="width: 250px; height: 300px"/></a>            
+            <%
+                  }
+               }
+            }%>
+            </div>
+               <a href="#" id="prev">후진</a> | <a href="#" id="next">전진</a>
+            <br/>
+      </div>
+   </div>
 	
 	<!-- 내친구/아이디 검색 탭 -->
 	<ul class="nav nav-tabs">

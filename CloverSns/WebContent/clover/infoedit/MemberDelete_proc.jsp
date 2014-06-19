@@ -1,14 +1,16 @@
+<%@page import="login_reg.Encrypt"%>
 <%@page import="login_reg.MemberDao"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
 
 <%
 	String id = request.getParameter("id");
-	String pass = request.getParameter("pass");
-
+	String code_pass = request.getParameter("pass");
 	
 	MemberDao dao = new MemberDao();
-	String check = dao.LoginConfirm(id, pass);
+	String check = dao.LoginConfirm(id, code_pass);
+	
+	System.out.println("¹¹°¡ ³ª¿À´×? : "+check);
 	
 	if(check.equals("true")){
 		dao.DeleteMember(id);

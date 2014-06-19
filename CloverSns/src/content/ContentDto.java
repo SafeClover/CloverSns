@@ -1,6 +1,7 @@
 package content;
 
 public class ContentDto {
+	int count;
 	int upNo;
 	String img_route;
 	String regdate;
@@ -57,5 +58,11 @@ public class ContentDto {
 	}
 	public void setPrivacy(String privacy) {
 		this.privacy = privacy;
+	}
+	public int getCount() {
+		return count;
+	}
+	public void setCount(int count) {
+		this.count = count;
 	}
 }

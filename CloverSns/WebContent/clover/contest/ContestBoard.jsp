@@ -1,3 +1,4 @@
+<%@page import="content.HappyDto"%>
 <%@ page import="content.ContentDto"%>
 <%@ page import="java.util.Vector"%>
 <%@ page contentType="text/html; charset=EUC-KR" %>
@@ -12,15 +13,15 @@
 	<%
 		String id = (String)session.getAttribute("id");
 		Vector v = dao.getContest();
-		String smile = dao1.selectSmile(dto1);
+		Vector happy = dao1.selectSmile();
 	%>
     <meta charset="euc-kr">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1">
      
     <title>Contest</title>
 
-<link href="/CloverSns/style/css/bootstrap.css" rel="stylesheet">
-<link href="/CloverSns/style/css/contest/contest.css" rel="stylesheet">
+<link href="/CloverSns/style/css/bootstrap.css" rel="stylesheet" />
+<link href="/CloverSns/style/css/contest/contest.css" rel="stylesheet" />
     
 <script src="/CloverSns/style/js/jquery-2.1.1.min.js"></script>
 <script src="/CloverSns/style/js/bootstrap.js"></script>
@@ -86,22 +87,25 @@
             <!-- Indicators -->
             <ol class="carousel-indicators">
             	<% 
-            	for(int i=0; i<1; i++){
+            	for(int i=0; i<happy.size(); i++){
             		if(i == 0){
             	%>      <li class="active" data-target="#transition-timer-carousel" data-slide-to="<%= i %>" id="list"></li>
-					<%}else{ %>
+				<%
+					}
+            		else{ 
+            	%>
 						<li data-target="#transition-timer-carousel" data-slide-to="<%= i %>" id="list"></li>
-				<% 		}
-            	} %>
+				<% 		
+					}
+            	} 
+            	%>
             </ol>
 
 			<!-- 카루셀 레이아웃 -->
 			<div class="carousel-inner">
 				<% 
-					for(int i=0; i<1; i++){ 
-						/* Vector list = (Vector)v.get(i);
-						dto = (ContentDto)list.get(0); */
-						dto = (ContentDto)v.get(i);
+					for(int i=0; i<happy.size(); i++){
+						dto = (ContentDto)happy.get(i);
 						
 						if(i == 0){
 				 %>
@@ -167,9 +171,6 @@
    			if(i == totalRecord){
    				break;
    			}
-   			/* Vector list = (Vector)v.get(i);
-			dto = (ContentDto)list.get(0);
-   			System.out.println("conboard : " + i); */
    			dto = (ContentDto)v.get(i);
    	  %>
          <div class="col portfolio-item" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; width: 150;">
