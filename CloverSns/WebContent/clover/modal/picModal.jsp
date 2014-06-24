@@ -57,7 +57,7 @@
                   <div class="modal-footer">
                   	<!-- <p style="font-size: 20px; font-weight:bold ; color: red;"></p>	15초 카운트 -->
                   	<div id="counter"><span style="font-size: 15pt; color:red;"></span></div>
-                  	<input type="button" value="감상평" class="btn btn-primary" data-toggle="modal" data-target=".impression" data-dismiss="modal" aria-hidden="true" onclick="UpNoInsert('<%=dto.getUpNo()%>')"/>
+                  	<input type="button" value="감상평" class="btn btn-primary" data-toggle="modal" data-target=".impression" data-dismiss="modal" aria-hidden="true" onclick="UpNoInsert('<%=dto.getUpNo()%>','<%=dto.getId()%>')"/>
                     <button type="button" class="btn btn-primary close" id="close" data-dismiss="modal" aria-hidden="true" onclick="Reload()">닫기</button>
                   </div>
                </div> <!-- 모달 컨텐트 끝 -->

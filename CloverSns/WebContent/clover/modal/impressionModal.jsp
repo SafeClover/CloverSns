@@ -19,6 +19,7 @@
 <!-- 감상평 팝업 모달창 -->
 	<form action="ImpressionSubmit.jsp" method="post" name="impression_form">
 		<input type="hidden" name="upno" id="upno" />
+		<input type="hidden" name="id" id="id" />
 		<div class="container ">
 	      <div class="row">
 	         <div class="modal fade impression">

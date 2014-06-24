@@ -50,28 +50,33 @@ function callback() {
             for(var i=0; i<cutTmp.length; i++){
 		  		$("#send").remove();
             }
-
-            for(var i=0; i<cutTmp.length; i++) {
-                $("#alarm").append("<li id='send'><a href='#'>" + cutTmp[i] + "</a></li>");
-            	send_id[i] = cutTmp[i];
-            }
-           	$("#alarm li").each(
-           			function(i){
-           				$(this).attr("idx", i+1);
-           			}
-           		).click(
-           			function(){
-           				receive = confirm(send_id[$(this).attr("idx")-1] + "님의 친구 요청을 수락하시겠습니까?");
-           				if(receive==true){
-           					/* document.getalarm.command.value = "acceptedfriend";
-           					alert(document.getalarm.command.value); */
-           					var url = "/CloverSns/friend.action";
-           					var params = "command=acceptedfriend&send_id="+send_id[$(this).attr("idx")-1];
-           					sendRequest(url, params, callback2, null);    
-           					/* document.getalarm.submit(); */
-           				}
-           			}
-           		);
+            if(cutTmp[0]==""){
+				$("#friendalarm").append("<li id='send'>친구 신청이 없음</a></li>");
+			}else{
+	            for(var i=0; i<cutTmp.length; i++) {
+	                $("#alarm").append("<li id='send'><a href='#'>" + cutTmp[i] + "</a></li>");
+	            	send_id[i] = cutTmp[i];
+	            }
+	           	$("#alarm li").each(
+	           			function(i){
+	           				$(this).attr("idx", i+1);
+	           			}
+	           		).click(
+	           			function(){
+	           				receive = confirm(send_id[$(this).attr("idx")-1] + "님의 친구 요청을 수락하시겠습니까?");
+	           				if(receive==true){
+	           					/* document.getalarm.command.value = "acceptedfriend";
+	           					alert(document.getalarm.command.value); */
+	           					var url = "/CloverSns/friend.action";
+	           					var params = "command=acceptedfriend&send_id="+send_id[$(this).attr("idx")-1];
+	           					sendRequest(url, params, callback2, null);    
+	           					/* document.getalarm.submit(); */
+	           				}
+	           			}
+	           		);
+			}
+            //감상평 알람 가져옴
+            sendRequest("/CloverSns/friend.action", "command=getReplyalarm", callback3, "POST"); 
          }else {
             alert(httpRequest.status);
          }
@@ -87,6 +92,48 @@ function callback() {
 		         }
 		   }
 	}
+	
+	function callback3(){
+		if (httpRequest.readyState == 4) {
+	         if (httpRequest.status == 200) {
+	        	 var data = httpRequest.responseText;
+	        	 
+	             var cutTmp = data.split('|');
+	             
+	             for(var i=0; i<cutTmp.length+1; i++){
+	 		  		$("#alarm").remove();
+	             }
+	 			if(cutTmp[0]==""){
+	 				$("#replyalarm").append("<li id='alarm'>알람 없음</a></li>");
+	 			}else{
+	 				var upNos = new Array();
+	 				var ids = new Array();
+	 	            for(var i=0; i<cutTmp.length; i++){
+	 	            	var reply = cutTmp[i].split('`');
+	 	            	upNos[i]=reply[2];
+	 	            	ids[i] = reply[3];
+	 	                $("#replyalarm").append("<li id='alarm'><a href='#'>" +reply[0]+"님께서 '"+reply[1]+"'에 감상평을 남기셨습니다." + "</a></li>");
+	 	            }
+	 	           $("#replyalarm li").each(
+		           			function(i){
+		           				$(this).attr("idx", i+1);
+		           			}
+		           		).click(
+		           			function(){
+		           					alert("눌렀지"+upNos[$(this).attr("idx")-1]+","+ids[$(this).attr("idx")-1]);
+		           					var url = "/CloverSns/friend.action";
+		           					var params = "command=deleteReplyAlarm&upNos="+upNos[$(this).attr("idx")-1]+"&send_id="+ids[$(this).attr("idx")-1];
+		           					sendRequest(url, params, null, "POST"); 
+		           				}
+		           			
+		           		);
+	 			}
+	         }else {
+	             alert(httpRequest.status);
+	         }
+	   }
+	}
+	
    $(document).ready(
 		function(){
 			$("#upload").click(
@@ -129,13 +176,7 @@ function callback() {
                   <span class="glyphicon glyphicon-comment"></span> 댓글,감상평알림
                   <span class="badge"></span>
                </a>
-                <ul class="dropdown-menu" >
-                  <li><a href="#">jQuery</a></li>
-                  <li><a href="#">jQueryUI</a></li>
-                  <li><a href="#">jQueryUI</a></li>
-                  <li><a href="#">jQueryUI</a></li>
-                  <li><a href="#">jQueryUI</a></li>
-                  <li><a href="#">jQueryUI</a></li>   
+                <ul class="dropdown-menu" id="replyalarm">
                </ul>
             </li>
             </form>

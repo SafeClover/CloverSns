@@ -21,6 +21,14 @@
 		}
 		document.login.submit();
 	}
+	
+	function open_id(){
+		window.open("/CloverSns/clover/find/Find_id.jsp", "아이디 찾기", "width=400, height=300, scrollbars=yes, left=150, top=150");
+	}
+	
+	function open_pw(){
+		window.open("/CloverSns/clover/find/Find_pw.jsp", "비밀번호 찾기", "width=400, height=300, scrollbars=yes, resizeable=no, left=150, top=150");
+	}
 </script>
 <style>
 	body{
@@ -68,8 +76,8 @@
 			</form>
 		</div>
 		<div class="row">
-			<a id="find" href="#" style="position: absolute; top: 630px; left: 1100px; text-decoration: none;" ><small style="font-size: 18px; font-weight: bold;">Forgotten Id??</small></a><br/>
-			<a id="find" href="#" style="position: absolute; top: 655px; left: 1100px; text-decoration: none;" ><small style="font-size: 18px; font-weight: bold;">Forgotten Password??</small></a>
+			<a href="javascript:open_id()" style="position: absolute; top: 630px; left: 1100px; text-decoration: none;" ><small style="font-size: 18px; font-weight: bold;">Forgotten Id??</small></a><br/>
+			<a href="javascript:open_pw()" style="position: absolute; top: 655px; left: 1100px; text-decoration: none;" ><small style="font-size: 18px; font-weight: bold;">Forgotten Password??</small></a>
 		</div>
 		<!-- 버튼 폼 끝 -->
 	</div>

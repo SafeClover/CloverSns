@@ -217,13 +217,15 @@ public class ContentDao {
 				rs = stmt.executeQuery();
 				
 				while(rs.next()){
-					dto.setId(rs.getString("id"));
-					dto.setRe(rs.getString("re"));
-					dto.setRegdate(rs.getString("regdate"));
-					dto.setUpNo(rs.getInt("upNo"));
-					dto.setName(rs.getString("name"));
+					Mypage_replyDto dto2 = new Mypage_replyDto();
 					
-					v.add(dto);	
+					dto2.setId(rs.getString("id"));
+					dto2.setRe(rs.getString("re"));
+					dto2.setRegdate(rs.getString("regdate"));
+					dto2.setUpNo(rs.getInt("upNo"));
+					dto2.setName(rs.getString("name"));
+					
+					v.add(dto2);	
 				}
 			}
 			catch(Exception err){
@@ -234,35 +236,83 @@ public class ContentDao {
 			}
 			return v;
 		}
+
 		
-		// 자랑하기 리플 불러오는 쿼리
-		public Vector replySelectContest(Mypage_replyDto dto){
-			Vector v = new Vector();
-			String sql = null;
-			
-			try{
-				sql = "select * from reply where upNo = ? order by regdate desc";
-				
-				stmt = con.prepareStatement(sql);
-				stmt.setInt(1, dto.getUpNo());
-				rs = stmt.executeQuery();
-				
-				while(rs.next()){
-					dto.setId(rs.getString("id"));
-					dto.setRe(rs.getString("re"));
-					dto.setRegdate(rs.getString("regdate"));
-					dto.setUpNo(rs.getInt("upNo"));
-					dto.setName(rs.getString("name"));
-					
-					v.add(dto);	
+		// 자랑하기 리플 전송
+				public void InsertContestReply(Contest_replyDto dto){
+					String sql = null;
+					try{
+						sql = "insert into reply_contest(id, regdate, re, upNo, name) values(?, now(), ?, ?, ?)";
+						
+						stmt = con.prepareStatement(sql);
+						stmt.setString(1, dto.getId());
+						stmt.setString(2, dto.getRe());
+						stmt.setInt(3, dto.getUpno());
+						stmt.setString(4, dto.getName());
+						
+						stmt.executeUpdate();
+						
+					}
+					catch(Exception err){
+						System.out.println("ContestDao InsertContestReply : " + err);
+					}
+					finally{
+						pool.freeConnection(con, stmt, rs);
+					}
 				}
-			}
-			catch(Exception err){
-				System.out.println("replySelectContest : " + err);
-			}
-			finally{
-				pool.freeConnection(con, stmt, rs);
-			}
-			return v;
-		}
+				
+				
+				// 자랑하기 리플 불러오기
+				public Vector SelectContestReply(Contest_replyDto dto){
+					Vector v = new Vector();
+					String sql = null;
+					
+					try{
+						sql = "select * from reply_contest where upNo = ? order by regdate desc";
+						
+						stmt = con.prepareStatement(sql);
+						stmt.setInt(1, dto.getUpno());
+						rs = stmt.executeQuery();
+						
+						while(rs.next()){
+							dto = new Contest_replyDto();
+							
+							dto.setId(rs.getString("id"));
+							dto.setRegdate(rs.getString("regdate"));
+							dto.setRe(rs.getString("re"));
+							dto.setUpno(rs.getInt("upNo"));
+							dto.setName(rs.getString("name"));
+							dto.setGet_id(rs.getString("get_id"));
+							dto.setRe_no(rs.getInt("re_no"));
+							
+							v.add(dto);	
+						}
+					}
+					catch(Exception err){
+						System.out.println("replySelectContest : " + err);
+					}
+					finally{
+						pool.freeConnection(con, stmt, rs);
+					}
+					return v;
+				}
+				
+				//마이페이지 글 삭제
+			      
+			      public void deleteMypage(int num){
+			         try{
+			            String sql ="delete from content where upno=?";
+			            System.out.println("dao : " + num);
+			            
+			            stmt = con.prepareStatement(sql);
+			            stmt.setInt(1, num);
+			            stmt.executeUpdate();
+			         }
+			         catch(Exception err){
+			            System.out.println("deleteMypage : " + err);
+			         }
+			         finally{
+			            pool.freeConnection(con, stmt, rs);
+			         }
+			      }
 }

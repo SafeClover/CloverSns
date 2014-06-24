@@ -20,7 +20,7 @@
 	 
 	function UpNoInsert(upno){
 		 document.getElementById("upno").value = upno;
-		 
+		 document.getElementById("id").value = id;
 	}
 	
 	function pic_ModalClose(){

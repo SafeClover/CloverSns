@@ -82,6 +82,27 @@ public class FriendController extends HttpServlet{
          dao.FriendInsert(send_id, id);
          out.println("ok");
         
+      }else if(req.getParameter("command").equals("deleteReplyAlarm")){ //감상평 알람 확인하고 알람테이블에서 삭제
+    	  String upNo = req.getParameter("upNos");
+    	  String send_id = req.getParameter("send_id");
+    	  System.out.println("deleteReplyAlarm 컨트롤러:"+send_id);
+    	  dao.deleteReplyAlarm(send_id, upNo);
+      }else if(req.getParameter("command").equals("getReplyalarm")){   //감상평, 댓글 알람 가져올때
+    	  System.out.println("getReplyAlarm");
+    	  Vector v = dao.getReplyAlarm(id);
+    	  if(v.size()!=0){
+    		  for(int i=0;i<v.size();i++){
+    			Vector reply = (Vector)v.get(i); //댓글한 이름, 게시물번호, 게시물 제목, 댓글한 아이디
+    			String name = (String)reply.get(0);
+    			int upNo = (int)reply.get(1);
+    			String subject =(String)reply.get(2);
+    			String send_id = (String)reply.get(3);
+    			out.print(name+"`"+subject+"`"+upNo+"`"+send_id);
+  	            if(i != v.size()-1){
+  	            out.print("|");
+  	            }
+    		  }
+    	  }
       }
    }
 

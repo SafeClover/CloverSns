@@ -75,5 +75,13 @@
 		<servlet-name>xml</servlet-name>
 		<url-pattern>/xml.action</url-pattern>
 	</servlet-mapping>
-
+	
+	<servlet>
+		<servlet-name>find</servlet-name>
+		<servlet-class>find.mvc.FindController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>find</servlet-name>
+		<url-pattern>*.find</url-pattern>
+	</servlet-mapping>
 </web-app>

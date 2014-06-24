@@ -92,7 +92,7 @@
             	%>      <li class="active" data-target="#transition-timer-carousel" data-slide-to="<%= i %>" id="list"></li>
 				<%
 					}
-            		else{ 
+            		else{
             	%>
 						<li data-target="#transition-timer-carousel" data-slide-to="<%= i %>" id="list"></li>
 				<% 		

@@ -920,7 +920,7 @@
         var that = this
         if (this.isShown && this.options.keyboard) {
           this.$element.on('keyup.dismiss.modal', function ( e ) {
-            e.which == 27 && that.hide()
+            e.which == null && that.hide()
           })
         } else if (!this.isShown) {
           this.$element.off('keyup.dismiss.modal')

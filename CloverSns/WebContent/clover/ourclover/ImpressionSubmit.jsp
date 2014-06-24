@@ -8,7 +8,8 @@
 
 	String impression_text = request.getParameter("impression_text");
 	
-	int upno = Integer.parseInt(request.getParameter("upno"));
+	int upno = Integer.parseInt(request.getParameter("upno")); //게시글 번호
+	String content_id = request.getParameter("id"); //게시글 작성자 ID
 	String id = (String)session.getAttribute("id");
 	
 	MemberDao dao = new MemberDao();
@@ -17,7 +18,7 @@
 	String name = dto.getMem_name();
 
 	OurCloverDao ourclover_dao = new OurCloverDao();
-	ourclover_dao.InsertImpression(impression_text, upno, id, name);
+	ourclover_dao.InsertImpression(impression_text, upno, id, name, content_id);
 
 %>
 	<script>

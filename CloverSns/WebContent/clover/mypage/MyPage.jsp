@@ -17,6 +17,19 @@
 <link href="/CloverSns/style/css/bootstrap.css" rel="stylesheet" />
 <link href="/CloverSns/style/css/contest/contest.css" rel="stylesheet">
 <script src="/CloverSns/style/js/jquery-2.1.1.min.js"></script>
+<script type="text/javascript">
+	function del(upNo){
+		
+		if (!confirm("삭제하시겠습니까?")){
+			return;
+		}
+		else{
+			document.getElementById("upNo").value = upNo;
+			document.deleteModal.action="Delete.jsp";
+			document.deleteModal.submit();
+		}
+	}
+</script>
 <style>
 	#b_hover:HOVER {
 		background: skyblue;
@@ -121,9 +134,12 @@
 	<br />
 	<br />
 	
+
    <div class="container">
    
       <div class="row">
+      <div align="right">
+      </div>
         <% 
         	for(int i=beginPerPage; i<beginPerPage + numPerPage; i++){
     			if(i == totalRecord){
@@ -184,10 +200,12 @@
             </div>
         </div>
    </div> <!-- container 끝 -->
+
 	
 	
 
 	<!-- 모달 (Popover) 창 -->
+	<form method="post" name="deleteModal">
       <% 
       for(int i=0; i<v.size(); i++){
          dto = (ContentDto)v.get(i);
@@ -206,10 +224,12 @@
                   </div> <!-- 모달 헤더끝 -->
                   <div class="modal-body">
                      <img src="/CloverSns/img/<%= dto.getImg_route() %>" class="img-responsive center-block">
+                     
                      <div class="modal-body">
                         작성자 : <b id="b_hover"><%= dto.getName() %></b><br/>
                         내용 : <span id="b_hover"><%= dto.getContent() %><br/></span>
                      </div>
+                     
                   </div> <!-- 모달 바디 끝 -->
                   <div>
                   <%
@@ -230,6 +250,11 @@
               	  	<%
               	  		}
               	  	%>
+              	  	
+	          	  	<div align="right" style="margin-right: 15px">
+	              	 <a href="javascript:del('<%=dto.getUpNo()%>')">삭제</a>
+	              	 <input type="hidden" name="upNo" id="upNo"/>
+	          	  	</div>
                   </div>
                   <div class="modal-footer">
                      <button type="button" class="btn btn-primary close" data-dismiss="modal" >닫기</button>  
@@ -240,6 +265,7 @@
       </div> <!-- row 끝 -->
    </div> <!-- container 끝 -->
 <% } %>
+</form>
 
 	<div style="text-align: center;">
 		<jsp:include page="/clover/bar/footer.jsp"></jsp:include>

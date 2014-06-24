@@ -495,21 +495,71 @@ public class MemberDao {
 			finally{
 				pool.freeConnection(con, stmt, rs);
 			}
+	}
+	 //Alarm 테이블에서 리플 알람 삭제
+	 public void deleteReplyAlarm(String sendid, String upNo) {
+			try{
+				System.out.println("deleteReplyAlarm 파라미터 :"+sendid+upNo);
+				String sql = "delete from alarm where send_id=? and upNo=?";
+		        stmt = con.prepareStatement(sql);
+		        stmt.setString(1, sendid);
+		        stmt.setInt(2, Integer.parseInt(upNo));
+		        stmt.executeUpdate();
+		        
+		        System.out.println("감상평알람 삭제 완료");
+			}catch(Exception err){
+				System.out.println("deleteReplyAlarm: "+err);
+			}finally{
+				pool.freeConnection(con, stmt, rs);
+		
+			}
 		}
+	 
+	 public Vector getReplyAlarm(String get_id){	// 감상평, 댓글 알림
+		   Vector v = new Vector();
+		   try{
+			   String sql = "select m.mem_name, a.upNo, c.subject, a.send_id  from alarm a, content c, member m where a.get_id=? and a.upNo = c.upNo and a.send_id = m.mem_id";
+			   
+			   stmt = con.prepareStatement(sql);
+			   stmt.setString(1, get_id);
+			   rs = stmt.executeQuery();
+			   
+		
+			   while(rs.next()){
+				   Vector reply = new Vector<>();
+				   reply.add(rs.getString(1));
+				   reply.add(rs.getInt(2));
+				   reply.add(rs.getString(3));
+				   reply.add(rs.getString(4));
+				   v.add(reply);
+			   }
+			   
+		   }
+		   catch(Exception err){
+			   System.out.println("getReplyAlarm : " + err);
+		   }finally{
+			   pool.freeConnection(con, stmt, rs);
+		   }
+		   return v;
+	   }
 	 
 	 // 아이디 비번 찾기 쿼리
 	 public ArrayList FindIdPw(){
 		 ArrayList find = new ArrayList();
 		 try{
-			 String sql = "select mem_id, mem_pw from member";
+			 String sql = "select mem_id, mem_pw, mem_name, mem_email from member";
 			 stmt = con.prepareStatement(sql);
 			 rs = stmt.executeQuery();
 			 
 			 while(rs.next()){
 				 MemberDto dto = new MemberDto();
 				 
+				 dto.setMem_name(rs.getString("mem_name"));
+				 dto.setMem_email(rs.getString("mem_email"));
 				 dto.setMem_id(rs.getString("mem_id"));
 				 dto.setMem_pw(rs.getString("mem_pw"));
+				 
+				 find.add(dto);
 			 }
 		 }
 		 catch(Exception err){
@@ -519,5 +569,26 @@ public class MemberDao {
 			 pool.freeConnection(con, stmt, rs);
 		 }
 		 return find;
+	 }
+	 
+	 public void UpdatePw(String pw, String email){
+		 String rndpw = pw;
+		 String remail = email;
+		 try{
+			 String sql = "update member set mem_pw = ? where mem_email = ?";
+			 
+			 stmt = con.prepareStatement(sql);
+			 
+			 stmt.setString(1, rndpw);
+			 stmt.setString(2, remail);
+			 
+			 stmt.executeUpdate();
+		 }
+		 catch(Exception err){
+			 System.out.println("MemeberDao UpdatePw : " + err);
+		 }
+		 finally{
+			 
+		 }
 	 }
 }
