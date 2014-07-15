@@ -1,0 +1,49 @@
+/* ourclover css */
+table{
+	border: red 2px solid;
+}
+
+.row-fluid {
+	width: 100%;
+	*zoom: 1;
+}
+
+.portfolio-item {
+	margin-bottom: 25px;
+}
+
+.space{
+	margin-top:100px;
+	height: 200px;
+}
+
+.pictureCover{
+	margin-left:6%;
+	margin-bottom:50px;
+	padding:4px;
+	width:170px;
+	height:170px;
+}
+
+.picture{
+	margin-left:6%;
+	margin-bottom:50px;
+	padding:4px;
+	width:150px;
+	height:150px;	
+}
+
+.position1{
+	position:absolute;
+
+	z-index: 1
+}
+
+.position2{
+	position:absolute;
+
+	z-index: 2
+}
+
+
+

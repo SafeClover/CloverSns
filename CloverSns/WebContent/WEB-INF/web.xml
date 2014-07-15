@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+                      http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	version="3.0" metadata-complete="true">
+
+	<display-name>Welcome to Tomcat</display-name>
+	<description>
+   	  Welcome to Tomcat
+  	</description>
+
+
+	<servlet>
+		<servlet-name>member</servlet-name>
+		<servlet-class>login_reg.MemberController</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>member</servlet-name>
+		<url-pattern>/member.action</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet>
+		<servlet-name>notice</servlet-name>
+		<servlet-class>board.mvc.notice.el.NoticeController</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>notice</servlet-name>
+		<url-pattern>*.notice</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet>
+		<servlet-name>question</servlet-name>
+		<servlet-class>board.mvc.question.el.QuestionController</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>question</servlet-name>
+		<url-pattern>*.question</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>friend</servlet-name>
+		<servlet-class>friend.FriendController</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>friend</servlet-name>
+		<url-pattern>/friend.action</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>index</servlet-name>
+		<servlet-class>index.mvc.IndexController</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>index</servlet-name>
+		<url-pattern>*.index</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet>
+		<servlet-name>xml</servlet-name>
+		<servlet-class>ourclover.XMLController</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>xml</servlet-name>
+		<url-pattern>/xml.action</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>find</servlet-name>
+		<servlet-class>find.mvc.FindController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>find</servlet-name>
+		<url-pattern>*.find</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>header</servlet-name>
+		<servlet-class>header.mvc.HeaderController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>header</servlet-name>
+		<url-pattern>*.header</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>mypage</servlet-name>
+		<servlet-class>mypage.el.MypageController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>mypage</servlet-name>
+		<url-pattern>*.mypage</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet>
+		<servlet-name>contest_ajax</servlet-name>
+		<servlet-class>contest.el.Contest_ajax</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>contest_ajax</servlet-name>
+		<url-pattern>*.contest_ajax</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>member_delete</servlet-name>
+		<servlet-class>infoedit.el.Member_Delete</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>member_delete</servlet-name>
+		<url-pattern>*.member_delete</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>uploadmodal_proc</servlet-name>
+		<servlet-class>upload.el.UploadModal_proc</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>uploadmodal_proc</servlet-name>
+		<url-pattern>*.uploadmodal_proc</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>mypage_ajax</servlet-name>
+		<servlet-class>mypage.el.Mypage_Ajax</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>mypage_ajax</servlet-name>
+		<url-pattern>*.mypage_ajax</url-pattern>
+	</servlet-mapping>
+	
+</web-app>
