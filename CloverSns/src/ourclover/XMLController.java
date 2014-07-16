@@ -52,7 +52,7 @@ public class XMLController extends HttpServlet{
 		try{
 			factory = DocumentBuilderFactory.newInstance();
 			builder = factory.newDocumentBuilder();
-			doc = builder.parse("E:\\Joo\\CloverSns_Web\\CloverSns\\WebContent\\clover.xml");
+			doc = builder.parse(new FileInputStream(getClass().getResource("/ourclover/clover.xml").getFile()));
 		}catch(Exception e){
 			System.out.println("getXmldata:"+e);
 		}
@@ -81,7 +81,7 @@ public class XMLController extends HttpServlet{
 	
 	public void appendData(String id, String Upno){
 		try{
-			doc = builder.parse(new FileInputStream("E:\\Joo\\CloverSns_Web\\CloverSns\\WebContent\\clover.xml"));
+			doc = builder.parse(new FileInputStream(getClass().getResource("/ourclover/clover.xml").getFile()));
 			Element clover = doc.getDocumentElement();
 	
 			for(Node n = clover.getFirstChild(); n != null; n = n.getNextSibling()){
@@ -118,7 +118,7 @@ public class XMLController extends HttpServlet{
 		
 			result = new StreamResult(
 				new FileOutputStream(
-					new File("E:\\Joo\\CloverSns_Web\\CloverSns\\WebContent\\clover.xml")));
+					new File(getClass().getResource("/ourclover/clover.xml").getFile())));
 			transform.transform(source, result);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();

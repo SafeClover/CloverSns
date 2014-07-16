@@ -78,7 +78,7 @@ public class MemberDao {
 			
 			factory = DocumentBuilderFactory.newInstance();
 			builder = factory.newDocumentBuilder();
-			doc = builder.parse(new FileInputStream("E:\\Joo\\CloverSns_Web\\CloverSns\\WebContent\\clover.xml"));
+			doc = builder.parse(new FileInputStream(getClass().getResource("/ourclover/clover.xml").getFile()));
 			
 			Element clover = doc.getDocumentElement();
 	
@@ -103,7 +103,7 @@ public class MemberDao {
 		
 			result = new StreamResult(
 				new FileOutputStream(
-					new File("E:\\Joo\\CloverSns_Web\\CloverSns\\WebContent\\clover.xml")));
+					new File(getClass().getResource("/ourclover/clover.xml").getFile())));
 			transform.transform(source, result);
 		
 		} catch (Exception err) {
