@@ -371,4 +371,86 @@ public class ContentDao {
 		         }
 	      }
 	      
+	      // 이미지 update 할때 upno가 필요해서 추가함
+	         public int selUpNo(String id, String privacy){
+	            int upno = 0;
+	            try{
+	               con = pool.getConnection();
+	               String sql = "select upno from content where id=? and privacy=? order by upno desc limit 1";
+	               stmt = con.prepareStatement(sql);
+	               stmt.setString(1, id);
+	               stmt.setString(2, privacy);
+	               rs = stmt.executeQuery();
+	               
+	               while(rs.next()){
+	                  upno = rs.getInt("upNo");
+	               }
+	            }
+	            catch(Exception err){
+	               err.printStackTrace();
+	            }
+	            finally{
+	               pool.freeConnection(con, stmt, rs);
+	            }
+	            return upno;
+	         }
+	         
+	      // 마이페이지 android 이미지 update 쿼리
+	        public void upImgMypage(String img, String id, int upno){
+	           try{
+	              con = pool.getConnection();
+	              String sql = "update content set img_route = ? where id = ? and upno = ?";
+	              stmt = con.prepareStatement(sql);
+	              stmt.setString(1, img);
+	              stmt.setString(2, id);
+	              stmt.setInt(3, upno);
+	              stmt.executeUpdate();
+	           }
+	           catch(Exception err){
+	              err.printStackTrace();
+	           }
+	           finally{
+	              pool.freeConnection(con, stmt, rs);
+	           }
+	        }
+	        
+	    // 아워클로버 android 이미지 update 쿼리
+	          public void upImgOurclover(String img, String id, int upno){
+	             try{
+	                con = pool.getConnection();
+	                String sql = "update content set img_route = ? where id = ? and upno = ?";
+	                stmt = con.prepareStatement(sql);
+	                stmt.setString(1, img);
+	                stmt.setString(2, id);
+	                stmt.setInt(3, upno);
+	                stmt.executeUpdate();
+	             }
+	             catch(Exception err){
+	                err.printStackTrace();
+	             }
+	             finally{
+	                pool.freeConnection(con, stmt, rs);
+	             }
+	          }
+	          
+	       // 콘테스트 android 이미지 update 쿼리
+	         public void upImgContest(String img, String id, int upno){
+	            System.out.println("dao : " + img + ", " + id);
+	            try{
+	               con = pool.getConnection();
+	               String sql = "update content set img_route = ? where id = ? and upno = ?";
+	               stmt = con.prepareStatement(sql);
+	               stmt.setString(1, img);
+	               stmt.setString(2, id);
+	               stmt.setInt(3, upno);
+	               stmt.executeUpdate();
+	            }
+	            catch(Exception err){
+	               err.printStackTrace();
+	            }
+	            finally{
+	               pool.freeConnection(con, stmt, rs);
+	            }
+	         }
+	      
 }

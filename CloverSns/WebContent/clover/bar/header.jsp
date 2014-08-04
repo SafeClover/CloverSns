@@ -107,7 +107,7 @@ function callback() {
                   $("#alarm").remove();
                 }
              if(cutTmp[0]==""){
-                $("#replyalarm").append("<li id='alarm'>알람 없음</a></li>");
+                $("#replyalarm").append("<li id='alarm'>감상평 없음</a></li>");
              }else{
                 var upNos = new Array();
                 var ids = new Array();

@@ -53,16 +53,16 @@
 
 							<img src="/CloverSns/style/img/noimage.jpg" style="width:200px; height: 200px; border-radius: 50px;" />
 							<br/>
-							<a href="InfoEditImg.index?index=InfoEditImg" style="margin-left: 15px;">
-							<b>클릭시 프로필 사진 변경</b></a>
+							<a href="InfoEditImg.index?index=InfoEditImg" style="margin-left: 45px;">
+							<b>프로필 사진 변경</b></a>
 							
 							</c:when>
 							<c:otherwise>
 
 							<img src="/CloverSns/img/${mv1.mem_img}" style="width:200px; height: 200px; border-radius: 50px;" />
 							<br/>
-							<a href="InfoEditImg.index?index=InfoEditImg" style="margin-left: 15px;">
-							<b>클릭시 프로필 사진 변경</b></a>
+							<a href="InfoEditImg.index?index=InfoEditImg" style="margin-left: 45px;">
+							<b>프로필 사진 변경</b></a>
 						
 							</c:otherwise>
 						</c:choose>

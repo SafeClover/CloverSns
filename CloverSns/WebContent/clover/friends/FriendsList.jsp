@@ -1,4 +1,3 @@
-
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -21,7 +20,7 @@
       }
 
       function fnFriendRequest(name, id){
-         
+       
          var del=confirm(name+"님께 친구 요청을 보내시겠습니까?");
          if(del==true){
             document.getElementById("keywordfor").value = document.getElementById("keyword").value;
@@ -45,11 +44,11 @@
       <img alt="우리는 친구?" src="/CloverSns/style/img/Friends.jpg">
    </div>
    
-   <!-- 내친구/아이디 검색 탭 -->
+   <!-- 내친구/친구 찾기 탭 -->
    <ul class="nav nav-tabs">
    <c:if test="${tab != 'search'}">
          <li class="active"><a href="#home" data-toggle="tab">내 친구</a></li>
-        <li><a href="#searchID" data-toggle="tab">이름 검색</a></li>
+        <li><a href="#searchID" data-toggle="tab">친구 찾기</a></li>
     </c:if>
     <c:if test="${tab == 'search'}">   
          <li><a href="#home" data-toggle="tab">내 친구</a></li>
@@ -91,7 +90,7 @@
          <c:if test="${myfriends == null}">
             <div style="height: 200px; margin-left: 200px; font-size: 15px;">
                <br/><br/><br/><br/>
-               아직 친구가 없네요!  바로 위 이름 검색 탭을 눌러서 친구 신청을 해보세요 :)
+               아직 친구가 없네요!  바로 위 친구 찾기 탭을 눌러서 친구 신청을 해보세요 :)
             </div>
          </c:if>
 
@@ -99,7 +98,7 @@
       </div>
    </div>
      
-     <!-- 아이디 검색 부분 -->
+     <!-- 친구 찾기 부분 -->
      <c:if test="${tab != 'search'}">
       <div class="tab-pane" id="searchID">
      </c:if>

@@ -527,7 +527,7 @@ public class MemberDao {
 			   
 		
 			   while(rs.next()){
-				   Vector reply = new Vector<>();
+				   Vector reply = new Vector();
 				   reply.add(rs.getString(1));
 				   reply.add(rs.getInt(2));
 				   reply.add(rs.getString(3));
@@ -592,4 +592,25 @@ public class MemberDao {
 			 
 		 }
 	 }
+	 
+	 public String findName(String id){
+	       String name = "";
+	       try{
+	          String sql = "select mem_name from member where mem_id = ?";
+	          stmt = con.prepareStatement(sql);
+	          stmt.setString(1, id);
+	          rs = stmt.executeQuery();
+	          
+	          while(rs.next()){
+	             name = rs.getString("mem_name");
+	          }
+	       }
+	       catch(Exception err){
+	          System.out.println("MemberDao findName : " + err);
+	       }
+	       finally{
+	          pool.freeConnection(con, stmt, rs);
+	       }
+	       return name;
+	    }
 }

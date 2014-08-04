@@ -103,7 +103,7 @@
 
 	<div class="img_click" style="position: absolute; top: ${((((top/5))-((top/5)%1))*340)+150}px; left: ${((x%5)*224)+210}px;">
 		<a href="#" data-toggle="modal" data-target=".ourclover${cDto.upNo}" onclick="PicDelete('${cDto.upNo}'); fnTimer('${cDto.upNo}')" title="${cDto.subject}">
-			<div style="white-space:nowrap;text-overflow:ellipsis; overflow:hidden; width: 150px;"><h4><b style="margin-left: 20px">${cDto.upNo}&nbsp;&nbsp;&nbsp;${cDto.subject}</b></h4></div> 
+			<div style="white-space:nowrap;text-overflow:ellipsis; overflow:hidden; width: 150px;"><h4><b style="margin-left: 20px">${cDto.name}&nbsp;&nbsp;&nbsp;${cDto.subject}</b></h4></div> 
 			
 			<img class="pictureCover" src="/CloverSns/style/img/clover.png">
 		</a>
