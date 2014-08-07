@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:scrollbars="vertical"
+    android:id="@+id/readinfo_layout" >
+    
+    <ListView 
+        android:id="@+id/readinfo_replylist"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="15dp"
+        />
+	
+    <LinearLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="visible"
+        >
+        
+        <EditText 
+            android:id="@+id/readinfo_editreply"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:lines="25"
+            android:inputType="textUri"
+            android:hint="감상평을 남겨보세요~!"
+            />
+        
+        <Button 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onReplySend"
+            android:text="감상평 남기기"
+            />
+        
+    </LinearLayout>
+    
+</LinearLayout>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:background="#99FF99">
+    
+    <TextView 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="토끼풀"
+        android:textSize="20sp"
+        android:padding="15dp"
+        />
+    <TextView 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="행복을 전하는 SNS"
+        android:textSize="18sp"
+        android:padding="10dp"
+        />
+    <TextView 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="소개 "
+        android:textSize="20sp"
+        android:paddingTop="20dp"
+        />
+    <TextView 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="세잎클로버의 영원한 주장! 김선주"
+        android:textSize="14sp"
+        android:padding="5dp"
+        />
+    <TextView 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="세잎클로버의 잘생긴 내친구! 임주석"
+        android:textSize="14sp"
+        android:padding="5dp"
+        />
+    <TextView 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="이 세상에 신은 하나! 이길용"
+        android:textSize="14sp"
+        android:padding="5dp"
+        />
+    <TextView 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="모든 글귀는 나에게 맡겨라! 권준영"
+        android:textSize="14sp"
+        android:padding="5dp"
+        />
+	
+</LinearLayout>

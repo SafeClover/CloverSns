@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/subup" >
+        
+    	<TextView 
+    	    android:layout_width="match_parent"
+    	    android:layout_height="wrap_content"
+    	    android:layout_gravity="center"
+    	    android:textSize="20sp"
+    	    android:text="업로드 페이지"
+    	    />
+    
+        <ImageView 
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:id="@+id/upimg"
+            android:layout_gravity="center" />
+
+        <Button 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="사진 가져오기"
+            android:onClick="onFindImg"
+            android:layout_gravity="center" />
+
+        <RadioGroup 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radioGroup"
+			android:layout_gravity="clip_horizontal" 
+			android:orientation="horizontal">
+
+	            <RadioButton 
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:text="비공개"
+	                android:id="@+id/radio_mypage" />
+	            
+	            <RadioButton 
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:text="친구공개"
+	                android:id="@+id/radio_clover" />
+	            
+	            <RadioButton 
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:text="전체공개"
+	                android:id="@+id/radio_contest" />
+            
+        </RadioGroup>
+        
+        <EditText
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:id="@+id/title"
+	        android:hint="글 제목" />
+        
+        <EditText
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:id="@+id/content"
+	        android:hint="글 내용" />
+        
+        <Button 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="업로드"
+            android:onClick="onUpload"
+            android:layout_gravity="center" />
+
+</LinearLayout>

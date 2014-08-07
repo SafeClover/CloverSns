@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="services1">
+        <item >회원가입 및 로그인</item>
+        <item >비밀번호</item>
+        <item >토끼풀 시작하기</item>
+    </string-array>
+	
+    <!-- MemberJoin & login -->
+    <string-array name="login">
+        <item >계정을 만들려면 어떻게 해야 되나요?</item>
+        <item >로그인을 하는 방법은 무엇인가요?</item>
+        <item >로그인이 되지 않습니다.</item>
+        <item >로그아웃을 하는 방법은 무엇인가요?</item>
+        <item >회원정보를 수정하고 싶어요.</item>
+    </string-array>
+    
+    <!-- pw -->
+    <string-array name="pw">
+        <item >비밀번호를 잃어버렸을 경우에는 어떻게 해야 되나요?</item>
+        <item >비밀번호를 재설정하고 싶어요.</item>
+    </string-array>
+    
+    <!-- startClover -->
+    <string-array name="startClover">
+        <item >프로필 사진 설정</item>
+        <item >친구찾기</item>
+        <item >회원정보 수정</item>
+        <item >게시방법</item>
+        <item >뉴스피드</item>
+    </string-array>
+    
+</resources>

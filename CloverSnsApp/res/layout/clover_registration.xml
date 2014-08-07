@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="30sp"
+   	android:background="@drawable/insertmember"
+   	android:id="@+id/regi_layout">
+<!-- 회원가입 폼 --> 
+
+	
+    <!-- 이름 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="150dp"
+        android:gravity="center">
+        <EditText
+			android:id="@+id/tv_name"
+			android:layout_width="250dp"
+			android:layout_height="wrap_content"
+			android:hint="이름을 입력하세요"
+			android:textSize="15sp"
+			
+			android:gravity="center"
+			/>
+
+    
+    <!-- 아이디 -->
+        <EditText
+			android:id="@+id/tv_id"
+			android:layout_width="250dp"
+			android:layout_height="wrap_content"
+			android:hint="아이디를 입력하세요"
+			android:textSize="15sp"
+			android:inputType="textUri"
+			android:gravity="center"
+			android:layout_marginTop="10dp"/>
+	<!-- 비밀번호 -->
+		<EditText
+			android:id="@+id/tv_pw"
+			android:layout_width="250dp"
+			android:layout_height="wrap_content"
+			android:hint="비밀번호를 입력하세요"
+			android:textSize="15sp" 
+			android:inputType="textPassword"
+			android:gravity="center"
+			android:layout_marginTop="10dp"/>
+    <!-- 비밀번호 확인 -->
+		<EditText
+		    android:id="@+id/tv_pw1"
+		    android:layout_width="250dp"
+		    android:layout_height="wrap_content"
+		    android:hint="같은 비밀번호를 입력하세요"
+		    android:inputType="textPassword"
+		    android:textSize="15sp"
+		    android:gravity="center"
+		    android:layout_marginTop="10dp" />
+   <!-- 이메일 -->
+		<EditText
+			android:id="@+id/tv_email"
+			android:layout_width="250dp"
+			android:layout_height="wrap_content"
+			android:hint="이메일주소를 입력하세요"
+			android:inputType="textWebEmailAddress"
+			android:textSize="15sp"
+			android:gravity="center"
+			android:layout_marginTop="10dp"/>
+	</LinearLayout>
+    <!-- 생년월일 -->   
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="10dp"
+        android:gravity="center">
+         <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/dateText"
+            android:hint="날짜를 선택해주세요."
+            android:textSize="17sp"/>
+         
+        <Button
+            android:id="@+id/btnDate"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+	        android:background="@drawable/cal"/>
+    </LinearLayout>
+    <!-- 성별 -->
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="10dp"
+        android:gravity="center">
+		<RadioGroup 
+		    android:id="@+id/radiogp"
+         	android:layout_width="wrap_content"
+         	android:layout_height="wrap_content"
+         	android:checkedButton="@+id/male"
+        	android:orientation="horizontal" >
+	        <RadioButton 
+	            android:layout_width="wrap_content"
+	        	android:layout_height="wrap_content"
+	        	android:id="@+id/male"
+	        	android:text="남자"/>
+	
+	        <RadioButton 
+	            android:layout_width="wrap_content"
+	        	android:layout_height="wrap_content"
+	        	android:id="@+id/female"
+	        	android:text="여자"/>
+		</RadioGroup>        
+		
+    </LinearLayout>
+    <!-- 확인/취소 버튼 -->
+    <LinearLayout 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp">
+        <Button 
+            android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:onClick="fnRegOk"
+        	android:text="확인"/>
+        
+        <Button
+            android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:onClick="Cancel"
+        	android:text="취소"/>
+    </LinearLayout>
+ 
+        
+   		
+
+</LinearLayout> 

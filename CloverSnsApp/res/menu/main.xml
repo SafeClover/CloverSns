@@ -1,0 +1,36 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.cloversns.MainActivity" >
+    
+	<item 
+	    android:id="@+id/action_settings"
+	    android:orderInCategory="100"
+	    android:showAsAction="never"
+	    android:title="@string/action_settings"
+	    />
+	<item 
+	    android:id="@+id/logo"
+	    android:showAsAction="always"
+	    android:icon="@drawable/logo"
+	    android:title=""
+	    />
+	<item android:id="@+id/action_search"
+          android:icon="@android:drawable/ic_media_play"
+          android:title="Action Bar Search"
+          android:showAsAction="ifRoom"
+          android:actionViewClass="android.support.v7.widget.SearchView" />
+	<item
+	    android:id="@+id/overflow"
+	    android:showAsAction="ifRoom"
+	    android:title=""
+	    android:icon="@drawable/menu1"
+	    >
+	    <menu >
+	        <item android:id="@+id/upload" android:title="업로드"/>
+	        <item android:id="@+id/re_alarm" android:title="감상평 알림"/>
+	        <item android:id="@+id/friend_alarm" android:title="친구신청 알림"/>
+	    </menu>
+	</item>
+    
+</menu>

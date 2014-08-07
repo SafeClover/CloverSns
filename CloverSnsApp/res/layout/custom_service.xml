@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#ffffff"
+    android:orientation="vertical" >
+    <!-- 회원 가입 및 로그인 아코디언 -->
+	<TextView 
+	    android:layout_width="match_parent"
+    	android:layout_height="wrap_content"
+    	android:text="회원가입 및 로그인"/>
+
+	<!-- 계정만드는 방법 -->
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/loginText1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#dcdcdc"
+            android:padding="5dip"
+            android:text="계정을 만들려면 어떻게 해야 되나요?" />
+
+        <LinearLayout
+            android:id="@+id/loginPanel1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone" >
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dip"
+                android:background="#ffffff"
+                android:padding="5dip"
+                android:text="토끼풀 홈페이지 접속 -> 회원가입 버튼 클릭 -> 개인 정보 입력 -> 회원가입 완료 " />
+        </LinearLayout>
+    </LinearLayout>
+
+   	<!-- 로그인 방법 -->
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="2dip"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/loginText2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#dcdcdc"
+            android:padding="5dip"
+            android:text="로그인을 하는 방법은 무엇인가요?" />
+
+        <LinearLayout
+            android:id="@+id/loginPanel2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone" >
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dip"
+                android:background="#ffffff"
+                android:padding="5dip"
+                android:text="토끼풀 홈페이지 접속 -> 아이디 입력 -> 비밀번호 입력 -> 로그인 버튼 클릭 " />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- 로그인 안 될 경우 -->
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="2dip"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/loginText3"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#dcdcdc"
+            android:padding="5dip"
+            android:text="로그인이 되지 않습니다." />
+
+        <LinearLayout
+            android:id="@+id/loginPanel3"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone" >
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dip"
+                android:background="#ffffff"
+                android:padding="5dip"
+                android:text="- 회원님의 아이디 및 비밀번호가 일치하는지 확인합니다.
+							  - 비밀번호를 재설정하세요." />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- 로그아웃 방법 -->
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="2dip"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/loginText4"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#dcdcdc"
+            android:padding="5dip"
+            android:text="로그아웃을 하는 방법은 무엇인가요?" />
+
+        <LinearLayout
+            android:id="@+id/loginPanel4"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone" >
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dip"
+                android:background="#ffffff"
+                android:padding="5dip"
+                android:text="토끼풀 페이지 오른쪽 상단에서 로그아웃 선택 " />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- 회원정보 수정방법 -->
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="2dip"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/loginText5"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#dcdcdc"
+            android:padding="5dip"
+            android:text="회원정보를 수정하고 싶어요." />
+
+        <LinearLayout
+            android:id="@+id/loginPanel5"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone" >
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dip"
+                android:background="#ffffff"
+                android:padding="5dip"
+                android:text="우측 상단의 아이디 클릭 -> 회원정보 수정 클릭 -> 정보 입력 후 정보변경 클릭 " />
+        </LinearLayout>
+    </LinearLayout>
+    <!-- 회원 가입 및 로그인 아코디언 끝!! -->
+    
+    <!-- 비밀번호 -->
+	<TextView 
+	    android:layout_width="match_parent"
+    	android:layout_height="wrap_content"
+    	android:text="비밀번호"/>
+
+	<!-- 비밀번호 찾기 -->
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/pwText1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#dcdcdc"
+            android:padding="5dip"
+            android:text="비밀번호를 잊어버렸을 경우에는 어떻게 해야 되나요?" />
+
+        <LinearLayout
+            android:id="@+id/pwPanel1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone" >
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dip"
+                android:background="#ffffff"
+                android:padding="5dip"
+                android:text="로그인 페이지에서 중앙의 Forgotten Password?? 클릭 -> 변경할 비밀번호 입력 -> 수정 클릭  " />
+        </LinearLayout>
+    </LinearLayout>
+
+   	<!-- 비밀번호 재설정 -->
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="2dip"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/pwText2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#dcdcdc"
+            android:padding="5dip"
+            android:text="비밀번호를 재설정하고 싶어요." />
+
+        <LinearLayout
+            android:id="@+id/pwPanel2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone" >
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dip"
+                android:background="#ffffff"
+                android:padding="5dip"
+                android:text="우측 상단의 아이디 클릭 -> 회원정보 수정 클릭 -> 정보 입력 후 정보변경 클릭  " />
+        </LinearLayout>
+    </LinearLayout>
+    <!-- 비밀번호 끝!! -->
+    
+    <!-- 클로버 시작하기 -->
+	<TextView 
+	    android:layout_width="match_parent"
+    	android:layout_height="wrap_content"
+    	android:text="클로버 시작하기"/>
+
+	<!-- 친구 찾기 -->
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/startText1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#dcdcdc"
+            android:padding="5dip"
+            android:text="친구를 찾고 싶어요." />
+
+        <LinearLayout
+            android:id="@+id/startPanel1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone" >
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dip"
+                android:background="#ffffff"
+                android:padding="5dip"
+                android:text="왼쪽 상단의 서브메뉴 클릭 -> 친구목록 클릭 -> 친구 검색 -> 친구 추가 클릭  " />
+        </LinearLayout>
+    </LinearLayout>
+
+   	<!-- 업로드 방법 -->
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="2dip"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/startText2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#dcdcdc"
+            android:padding="5dip"
+            android:text="업로드 방법을 알고싶어요!" />
+
+        <LinearLayout
+            android:id="@+id/startPanel2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone" >
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dip"
+                android:background="#ffffff"
+                android:padding="5dip"
+                android:text="중앙 상단의 업로드 버튼 클릭 -> 업로드할 사진 및 글 작성 후 업로드  " />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- 게시물 공개 설정 -->
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="2dip"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/startText3"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#dcdcdc"
+            android:padding="5dip"
+            android:text="게시물 공개 설정방법이 궁금합니다." />
+
+        <LinearLayout
+            android:id="@+id/startPanel3"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone" >
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dip"
+                android:background="#ffffff"
+                android:padding="5dip"
+                android:text="게시물 업로드시 비공개, 친구공개, 자랑하기버튼 선택 " />
+        </LinearLayout>
+    </LinearLayout>
+
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="fill_parent"
+        android:layout_height="340dip"
+        android:dividerHeight="0px"
+        android:drawSelectorOnTop="false"
+        android:visibility="gone" />
+
+</LinearLayout>
